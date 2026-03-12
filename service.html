@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>INOFER — Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#F5A800;--gold2:#FFD060;--glow:rgba(245,168,0,.6);--glow2:rgba(245,168,0,.15);--bg:#080A0C;--border:rgba(245,168,0,.22);--text:#C8D4DE;--dim:#5a6a7a}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;overflow-x:hidden}
+
+#bg-canvas{position:fixed;inset:0;z-index:0;opacity:.35;pointer-events:none}
+.scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 4px)}
+
+header{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;background:linear-gradient(180deg,rgba(8,10,12,.98),rgba(8,10,12,.75));border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+.logo-mark{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:5px;color:#fff;display:flex;align-items:center;position:relative;text-decoration:none}
+.logo-mark .brk{color:var(--gold);font-size:2.2rem;line-height:1}
+.logo-mark .tagline{font-family:'Share Tech Mono',monospace;font-size:.5rem;letter-spacing:3px;color:var(--dim);text-transform:uppercase;position:absolute;bottom:-9px;left:0;white-space:nowrap}
+.header-right{display:flex;align-items:center;gap:20px}
+.nav-back{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;display:flex;align-items:center;gap:7px;transition:color .2s}
+.nav-back svg{width:14px;height:14px;stroke:var(--dim);fill:none;stroke-width:2;transition:stroke .2s}
+.nav-back:hover{color:var(--gold)}
+.nav-back:hover svg{stroke:var(--gold)}
+.status-badge{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.status-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 7px var(--gold);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.cta-header{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:9px 20px;border:none;cursor:pointer;clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);transition:background .2s,box-shadow .2s;text-decoration:none;display:inline-block;white-space:nowrap}
+.cta-header:hover{background:var(--gold2);box-shadow:0 0 26px var(--glow)}
+@media(max-width:600px){.status-badge{display:none}.header-right{gap:12px}}
+
+.page{position:relative;z-index:2;padding-top:64px}
+
+/* HERO */
+.hero{position:relative;height:clamp(280px,38vh,420px);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:0 60px 48px;overflow:hidden;border-bottom:1px solid var(--border)}
+@media(max-width:600px){.hero{padding:0 24px 36px}}
+.hero-hex{position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0L56 16L56 48L28 64L0 48L0 16Z' fill='none' stroke='%23F5A800' stroke-width='.8'/%3E%3C/svg%3E")}
+.hero-line{position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.breadcrumb{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:14px;display:flex;align-items:center;gap:8px;z-index:2;position:relative}
+.breadcrumb a{color:var(--dim);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--gold)}
+.breadcrumb .sep{color:var(--border)}
+.breadcrumb .cur{color:var(--gold)}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,6.5rem);line-height:.88;letter-spacing:3px;color:#fff;z-index:2;position:relative}
+.hero h1 em{font-style:normal;color:transparent;-webkit-text-stroke:2px var(--gold)}
+.hero-sub{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.9rem;color:var(--dim);margin-top:14px;z-index:2;position:relative;letter-spacing:1px}
+
+/* NAV SERVICES (ancres) */
+.service-nav{position:sticky;top:64px;z-index:100;display:flex;align-items:center;gap:0;padding:0 60px;border-bottom:1px solid var(--border);background:rgba(8,10,12,.95);backdrop-filter:blur(12px);overflow-x:auto;scrollbar-width:none}
+.service-nav::-webkit-scrollbar{display:none}
+@media(max-width:600px){.service-nav{padding:0 16px}}
+.snav-btn{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);background:transparent;border:none;padding:15px 18px;cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap;text-decoration:none;display:block}
+.snav-btn:hover{color:var(--text)}
+.snav-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* SECTION SERVICE GÉNÉRIQUE */
+.service-section{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
+@media(max-width:860px){.service-section{grid-template-columns:1fr}}
+.service-section.reverse{direction:rtl}
+.service-section.reverse > *{direction:ltr}
+
+.svc-visual{position:relative;overflow:hidden;min-height:380px;background:#0a0d10}
+.svc-visual img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(15%) brightness(.75);transition:filter .5s}
+.service-section:hover .svc-visual img{filter:grayscale(0%) brightness(.9)}
+.svc-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,10,12,.55),transparent 60%)}
+.svc-number{position:absolute;bottom:20px;left:24px;font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(245,168,0,.12);letter-spacing:4px;line-height:1;z-index:2;pointer-events:none}
+.svc-tag{position:absolute;top:20px;left:20px;font-family:'Share Tech Mono',monospace;font-size:.5rem;letter-spacing:3px;text-transform:uppercase;padding:5px 12px;background:rgba(8,10,12,.85);border:1px solid var(--border);color:var(--gold);clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%)}
+
+.svc-content{padding:52px 52px 52px 56px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border)}
+.service-section.reverse .svc-content{border-right:none;border-left:1px solid var(--border);padding:52px 56px 52px 52px}
+@media(max-width:860px){.svc-content,.service-section.reverse .svc-content{padding:40px 28px;border:none;border-top:1px solid var(--border)}}
+
+.section-eye{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-eye::before{content:'';width:20px;height:1px;background:var(--gold)}
+.svc-content h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3vw,3rem);letter-spacing:2px;color:#fff;line-height:.95;margin-bottom:18px}
+.svc-content p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.9rem;line-height:1.78;color:var(--text);margin-bottom:20px;border-left:2px solid var(--gold);padding-left:16px}
+.svc-list{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:28px}
+.svc-list li{font-family:'Exo 2',sans-serif;font-size:.85rem;color:var(--dim);display:flex;align-items:center;gap:10px}
+.svc-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.svc-specs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:28px}
+.svc-spec{background:rgba(245,168,0,.03);border:1px solid rgba(245,168,0,.1);padding:10px 14px;clip-path:polygon(0 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%)}
+.svc-spec-label{font-family:'Share Tech Mono',monospace;font-size:.46rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.svc-spec-value{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.82rem;color:var(--text)}
+.btn-service{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.76rem;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:13px 28px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:all .25s;text-decoration:none;display:inline-block;align-self:flex-start;cursor:pointer}
+.btn-service:hover{background:var(--gold2);box-shadow:0 0 30px var(--glow)}
+
+/* PROCESS */
+.process-section{padding:72px 60px;border-bottom:1px solid var(--border)}
+@media(max-width:600px){.process-section{padding:48px 24px}}
+.process-header{display:flex;align-items:center;gap:20px;margin-bottom:52px}
+.process-header h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3vw,3rem);letter-spacing:2px;color:#fff}
+.process-header .line{flex:1;height:1px;background:var(--border)}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+@media(max-width:760px){.process-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.process-steps{grid-template-columns:1fr}}
+.process-step{padding:28px 24px;border-right:1px solid var(--border);position:relative}
+.process-step:last-child{border-right:none}
+@media(max-width:760px){.process-step:nth-child(2){border-right:none}.process-step:nth-child(3){border-top:1px solid var(--border)}}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:rgba(245,168,0,.15);line-height:1;margin-bottom:14px}
+.step-icon{width:40px;height:40px;border:1px solid rgba(245,168,0,.3);border-radius:4px;background:rgba(245,168,0,.05);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.step-icon svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.step-title{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.88rem;letter-spacing:1px;color:#d8e4ee;margin-bottom:8px;text-transform:uppercase}
+.step-desc{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.8rem;line-height:1.7;color:var(--dim)}
+.step-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:24px;height:24px;background:var(--bg);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2}
+.step-arrow svg{width:10px;height:10px;stroke:var(--gold);fill:none;stroke-width:2}
+@media(max-width:760px){.step-arrow{display:none}}
+
+/* SECTEURS */
+.secteurs{padding:60px;border-bottom:1px solid var(--border)}
+@media(max-width:600px){.secteurs{padding:40px 24px}}
+.secteurs-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;gap:20px;flex-wrap:wrap}
+.secteurs-header h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,2.5vw,2.8rem);letter-spacing:2px;color:#fff}
+.secteur-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.secteur-card{border:1px solid var(--border);padding:20px 18px;background:rgba(245,168,0,.02);clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%);transition:border-color .2s,background .2s;cursor:default}
+.secteur-card:hover{border-color:var(--gold);background:rgba(245,168,0,.05)}
+.secteur-icon{width:34px;height:34px;border:1px solid rgba(245,168,0,.25);border-radius:3px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;background:rgba(245,168,0,.04)}
+.secteur-icon svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.secteur-name{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:#c8d4de}
+
+/* CTA */
+.cta-band{position:relative;overflow:hidden;padding:52px 60px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+@media(max-width:700px){.cta-band{padding:40px 24px;flex-direction:column;align-items:flex-start}}
+.cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 100% at 80% 50%,rgba(245,168,0,.06),transparent);pointer-events:none}
+.cta-copy p{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.cta-copy h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:2px;color:#fff;line-height:1}
+.cta-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:14px 32px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:all .25s;text-decoration:none;display:inline-block;cursor:pointer}
+.btn-primary:hover{background:var(--gold2);box-shadow:0 0 36px var(--glow)}
+.btn-secondary{font-family:'Exo 2',sans-serif;font-weight:600;font-size:.76rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:transparent;padding:13px 24px;border:1px solid var(--border);text-decoration:none;display:inline-block;transition:all .25s;cursor:pointer}
+.btn-secondary:hover{border-color:var(--gold);background:var(--glow2)}
+
+/* TICKER */
+.ticker-wrap{overflow:hidden;height:36px;background:rgba(8,10,12,.9);display:flex;align-items:center;border-bottom:1px solid var(--border)}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 40s linear infinite}
+.ticker-item{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--dim);padding:0 6px}
+.ticker-sep{color:var(--gold);padding:0 10px}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* FOOTER */
+footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#060809);border-top:1px solid var(--border)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:60px 60px 48px;border-bottom:1px solid var(--border)}
+@media(max-width:960px){.footer-top{grid-template-columns:1fr 1fr;gap:36px;padding:44px 32px 36px}}
+@media(max-width:560px){.footer-top{grid-template-columns:1fr;gap:28px;padding:36px 24px 28px}}
+.ft-brand .logo-footer{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:5px;color:#fff;display:block;margin-bottom:6px}
+.ft-brand .logo-footer span{color:var(--gold)}
+.ft-brand p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.82rem;line-height:1.7;color:var(--dim);margin-top:12px;max-width:260px}
+.ft-col h4{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-col ul li a{font-family:'Exo 2',sans-serif;font-size:.8rem;color:var(--dim);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:6px}
+.ft-col ul li a::before{content:'›';color:var(--gold);opacity:0;transition:opacity .2s,transform .2s;transform:translateX(-4px)}
+.ft-col ul li a:hover{color:var(--text)}
+.ft-col ul li a:hover::before{opacity:1;transform:translateX(0)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:20px 60px}
+@media(max-width:960px){.footer-bottom{padding:16px 32px}}
+@media(max-width:560px){.footer-bottom{padding:16px 24px;flex-direction:column;align-items:flex-start}}
+.ft-copy{font-family:'Share Tech Mono',monospace;font-size:.56rem;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
+.ft-legal-links{display:flex;gap:20px;flex-wrap:wrap}
+.ft-legal-links a{font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:1.5px;color:var(--dim);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.ft-legal-links a:hover{color:var(--gold)}
+.ft-cert{font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:2px;color:var(--dim);display:flex;align-items:center;gap:7px}
+.ft-cert::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold)}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div class="scanlines"></div>
+
+<header>
+  <a href="index.html" class="logo-mark"><span class="brk">[</span>IN<span style="color:var(--gold)">O</span>FER<span class="brk">]</span><span class="tagline">Industrie &amp; Précision Mécanique</span></a>
+  <div class="header-right">
+    <a href="index.html" class="nav-back"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Retour</a>
+    <div class="status-badge">5 expertises</div>
+    <a href="contact.html" class="cta-header">Devis Gratuit</a>
+  </div>
+</header>
+
+<div class="page">
+
+  <section class="hero">
+    <div class="hero-hex"></div>
+    <div class="hero-line"></div>
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span class="cur">Services</span></div>
+    <h1>NOS <em>SERVICES</em></h1>
+    <p class="hero-sub">5 expertises industrielles — Du terrain à l'ingénierie avancée</p>
+  </section>
+
+  <!-- NAV ANCRES -->
+  <nav class="service-nav">
+    <a href="#maintenance-prev" class="snav-btn active">Maintenance préventive</a>
+    <a href="#maintenance-corr" class="snav-btn">Maintenance corrective</a>
+    <a href="#automatisation" class="snav-btn">Automatisation</a>
+    <a href="#usinage" class="snav-btn">Usinage CNC</a>
+    <a href="#audit" class="snav-btn">Audit &amp; Conseil</a>
+  </nav>
+
+  <!-- 01 MAINTENANCE PRÉVENTIVE -->
+  <div class="service-section" id="maintenance-prev">
+    <div class="svc-visual">
+      <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=900&q=80" alt="Maintenance préventive"/>
+      <div class="svc-number">01</div>
+      <div class="svc-tag">Maintenance préventive</div>
+    </div>
+    <div class="svc-content">
+      <div class="section-eye">Service 01</div>
+      <h2>MAINTENANCE<br>PRÉVENTIVE</h2>
+      <p>Anticipez les pannes avant qu'elles ne surviennent. Nos programmes de maintenance préventive sont conçus sur mesure pour chaque type d'équipement et chaque cadence de production. Planifiés, documentés, traçables.</p>
+      <ul class="svc-list">
+        <li>Inspection périodique selon plan de maintenance</li>
+        <li>Remplacement préventif des pièces d'usure</li>
+        <li>Contrôle géométrique et réglages machine</li>
+        <li>Lubrification, nettoyage, vérification fluides</li>
+        <li>Rapport d'intervention détaillé et préconisations</li>
+      </ul>
+      <div class="svc-specs">
+        <div class="svc-spec"><div class="svc-spec-label">Périodicité</div><div class="svc-spec-value">Hebdo · Mensuelle · Annuelle</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Couverture</div><div class="svc-spec-value">France entière</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Rapport</div><div class="svc-spec-value">Numérique sous 24h</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Certification</div><div class="svc-spec-value">ISO 9001</div></div>
+      </div>
+      <a href="contact.html" class="btn-service">Demander un programme</a>
+    </div>
+  </div>
+
+  <!-- 02 MAINTENANCE CORRECTIVE -->
+  <div class="service-section reverse" id="maintenance-corr">
+    <div class="svc-visual">
+      <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80" alt="Maintenance corrective"/>
+      <div class="svc-number">02</div>
+      <div class="svc-tag">Maintenance corrective</div>
+    </div>
+    <div class="svc-content">
+      <div class="section-eye">Service 02</div>
+      <h2>MAINTENANCE<br>CORRECTIVE</h2>
+      <p>Une panne ne prévient pas. Nos équipes d'astreinte sont mobilisables 24h/24 et 7j/7 pour intervenir sur site dans les 4 heures. Diagnostic, réparation, remise en production : nous minimisons chaque minute d'arrêt.</p>
+      <ul class="svc-list">
+        <li>Astreinte téléphonique permanente 24h/7j</li>
+        <li>Intervention sur site sous 4h en France</li>
+        <li>Diagnostic électromécanique et électronique</li>
+        <li>Réparation ou remplacement de composants</li>
+        <li>Stock de pièces critiques disponible immédiatement</li>
+      </ul>
+      <div class="svc-specs">
+        <div class="svc-spec"><div class="svc-spec-label">Délai intervention</div><div class="svc-spec-value">&lt; 4h sur site</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Disponibilité</div><div class="svc-spec-value">24h / 7j / 365j</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Machines</div><div class="svc-spec-value">Toutes marques</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Garantie</div><div class="svc-spec-value">Réparation 12 mois</div></div>
+      </div>
+      <a href="contact.html" class="btn-service">Déclarer une urgence</a>
+    </div>
+  </div>
+
+  <!-- 03 AUTOMATISATION -->
+  <div class="service-section" id="automatisation">
+    <div class="svc-visual">
+      <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=900&q=80" alt="Automatisation industrielle"/>
+      <div class="svc-number">03</div>
+      <div class="svc-tag">Automatisation</div>
+    </div>
+    <div class="svc-content">
+      <div class="section-eye">Service 03</div>
+      <h2>AUTOMATISATION<br>INDUSTRIELLE</h2>
+      <p>Optimisez vos cadences et réduisez les risques opérateurs. Nous concevons et intégrons des cellules automatisées clés en main : robotique, convoyage, vision industrielle, supervision SCADA.</p>
+      <ul class="svc-list">
+        <li>Étude de faisabilité et simulation 3D</li>
+        <li>Intégration robots collaboratifs et industriels</li>
+        <li>Programmation automates Siemens, Schneider, Allen-Bradley</li>
+        <li>Systèmes de vision artificielle et contrôle qualité auto</li>
+        <li>Formation et accompagnement des équipes client</li>
+      </ul>
+      <div class="svc-specs">
+        <div class="svc-spec"><div class="svc-spec-label">ROI moyen</div><div class="svc-spec-value">18 à 36 mois</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Gain cadence</div><div class="svc-spec-value">+30 à +80%</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Technologies</div><div class="svc-spec-value">PLC · SCADA · Cobot</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Livraison</div><div class="svc-spec-value">Clés en main</div></div>
+      </div>
+      <a href="contact.html" class="btn-service">Étude gratuite</a>
+    </div>
+  </div>
+
+  <!-- 04 USINAGE CNC -->
+  <div class="service-section reverse" id="usinage">
+    <div class="svc-visual">
+      <img src="https://images.unsplash.com/photo-1562408590-e32931084e23?w=900&q=80" alt="Usinage CNC précision"/>
+      <div class="svc-number">04</div>
+      <div class="svc-tag">Usinage CNC</div>
+    </div>
+    <div class="svc-content">
+      <div class="section-eye">Service 04</div>
+      <h2>USINAGE CNC<br>HAUTE PRÉCISION</h2>
+      <p>Notre parc machine de dernière génération nous permet de réaliser vos pièces les plus exigeantes : fraisage 5 axes, tournage, rectification au micron, électroérosion, découpe laser. De la pièce unitaire à la grande série.</p>
+      <ul class="svc-list">
+        <li>Fraisage 5 axes simultanés (MAZAK VARIAXIS, DMG MORI)</li>
+        <li>Tournage bibroche haute productivité</li>
+        <li>Rectification cylindrique Ra 0.04 µm</li>
+        <li>Électroérosion formes complexes</li>
+        <li>Découpe laser fibre acier / inox / alu jusqu'à 20 mm</li>
+      </ul>
+      <div class="svc-specs">
+        <div class="svc-spec"><div class="svc-spec-label">Précision max</div><div class="svc-spec-value">±0.001 mm</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Matériaux</div><div class="svc-spec-value">Acier · Inox · Titane · Alu</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Délai devis</div><div class="svc-spec-value">Sous 24h</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Séries</div><div class="svc-spec-value">Unitaire → Grande série</div></div>
+      </div>
+      <a href="parc.html" class="btn-service">Voir le parc machine</a>
+    </div>
+  </div>
+
+  <!-- 05 AUDIT & CONSEIL -->
+  <div class="service-section" id="audit">
+    <div class="svc-visual">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80" alt="Audit industriel"/>
+      <div class="svc-number">05</div>
+      <div class="svc-tag">Audit &amp; Conseil</div>
+    </div>
+    <div class="svc-content">
+      <div class="section-eye">Service 05</div>
+      <h2>AUDIT &amp;<br>CONSEIL TECHNIQUE</h2>
+      <p>Votre outil de production mérite un regard expert et objectif. Nos ingénieurs réalisent des audits complets pour identifier les axes d'amélioration, réduire vos coûts de maintenance et optimiser vos process.</p>
+      <ul class="svc-list">
+        <li>Audit complet du parc machines (état, fiabilité, risques)</li>
+        <li>Analyse des coûts de maintenance et TCO</li>
+        <li>Plan de renouvellement priorisé sur 3 ans</li>
+        <li>Optimisation des gammes d'usinage et paramètres</li>
+        <li>Accompagnement aux choix d'investissements</li>
+      </ul>
+      <div class="svc-specs">
+        <div class="svc-spec"><div class="svc-spec-label">Durée audit</div><div class="svc-spec-value">1 à 3 jours</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Livrable</div><div class="svc-spec-value">Rapport + plan d'action</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Devis</div><div class="svc-spec-value">Gratuit et sans engagement</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Délai rapport</div><div class="svc-spec-value">7 jours ouvrés</div></div>
+      </div>
+      <a href="contact.html" class="btn-service">Demander un audit</a>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <section class="process-section">
+    <div class="process-header">
+      <div class="section-eye" style="margin-bottom:0;white-space:nowrap">Notre méthode</div>
+      <h2>COMMENT ÇA MARCHE</h2>
+      <div class="line"></div>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/><path d="M1.61 3.18A2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72"/><line x1="1" y1="1" x2="23" y2="23"/></svg></div>
+        <div class="step-title">Prise de contact</div>
+        <div class="step-desc">Formulaire, email ou téléphone. Un ingénieur vous rappelle sous 2h ouvrées pour qualifier votre besoin.</div>
+        <div class="step-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="step-title">Devis sous 24h</div>
+        <div class="step-desc">Après analyse de votre cahier des charges, nous vous transmettons un devis détaillé sous 24h, gratuit et sans engagement.</div>
+        <div class="step-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+        <div class="step-title">Exécution</div>
+        <div class="step-desc">Nos techniciens interviennent selon le planning validé. Suivi en temps réel via votre portail client dédié.</div>
+        <div class="step-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div class="step-title">Livraison &amp; suivi</div>
+        <div class="step-desc">Rapport d'intervention détaillé, contrôle qualité, et suivi post-intervention. Votre satisfaction est notre engagement.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTEURS -->
+  <section class="secteurs">
+    <div class="secteurs-header">
+      <div class="section-eye" style="margin-bottom:0">Secteurs d'activité</div>
+      <h2>NOS MARCHÉS</h2>
+    </div>
+    <div class="secteur-grid">
+      <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div class="secteur-name">Aéronautique</div></div>
+      <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><div class="secteur-name">Automobile</div></div>
+      <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="secteur-name">Médical</div></div>
+      <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="secteur-name">Énergie</div></div>
+      <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div><div class="secteur-name">Industrie générale</div></div>
+      <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="secteur-name">Défense</div></div>
+      <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="secteur-name">Naval</div></div>
+      <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="secteur-name">Agro-alimentaire</div></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <div class="cta-copy">
+      <p>Passez à l'action</p>
+      <h2>DEVIS GRATUIT SOUS 24H</h2>
+    </div>
+    <div class="cta-actions">
+      <a href="contact.html" class="btn-primary">Demander un devis</a>
+      <a href="parc.html" class="btn-secondary">Voir le parc machine →</a>
+    </div>
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">Maintenance préventive & corrective</span><span class="ticker-sep">///</span><span class="ticker-item">Automatisation industrielle</span><span class="ticker-sep">///</span><span class="ticker-item">Usinage CNC 5 axes</span><span class="ticker-sep">///</span><span class="ticker-item">Audit & conseil technique</span><span class="ticker-sep">///</span><span class="ticker-item">Intervention 24h/7j</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Maintenance préventive & corrective</span><span class="ticker-sep">///</span><span class="ticker-item">Automatisation industrielle</span><span class="ticker-sep">///</span><span class="ticker-item">Usinage CNC 5 axes</span><span class="ticker-sep">///</span><span class="ticker-item">Audit & conseil technique</span><span class="ticker-sep">///</span><span class="ticker-item">Intervention 24h/7j</span><span class="ticker-sep">///</span>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div class="ft-brand"><span class="logo-footer">[IN<span>O</span>FER]</span><p>Spécialiste en solutions industrielles de haute précision depuis 2004.</p></div>
+      <div class="ft-col"><h4>Navigation</h4><ul><li><a href="index.html">Accueil</a></li><li><a href="service.html">Services</a></li><li><a href="parc.html">Parc Machine</a></li><li><a href="histoire.html">Notre histoire</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Services</h4><ul><li><a href="#maintenance-prev">Maintenance préventive</a></li><li><a href="#maintenance-corr">Maintenance corrective</a></li><li><a href="#automatisation">Automatisation</a></li><li><a href="#usinage">Usinage CNC</a></li><li><a href="#audit">Audit & Conseil</a></li></ul></div>
+      <div class="ft-col"><h4>Informations</h4><ul><li><a href="#">Mentions légales</a></li><li><a href="#">Confidentialité</a></li><li><a href="#">CGV</a></li><li><a href="#">Certifications</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="ft-copy">&copy; 2024 INOFER — Tous droits réservés — SIRET : XXX XXX XXX XXXXX</span>
+      <div class="ft-legal-links"><a href="#">Mentions légales</a><a href="#">Confidentialité</a><a href="#">CGV</a></div>
+      <span class="ft-cert">ISO 9001 certifié</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+// Canvas particules léger
+const bgC=document.getElementById('bg-canvas'),bgX=bgC.getContext('2d');
+function resizeBg(){bgC.width=window.innerWidth;bgC.height=window.innerHeight}
+resizeBg();window.addEventListener('resize',resizeBg);
+const pts=Array.from({length:55},()=>({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*.9+.3,a:Math.random()*.4+.1}));
+(function loop(){bgC.width=bgC.width;bgX.strokeStyle='rgba(245,168,0,.025)';bgX.lineWidth=1;for(let x=0;x<bgC.width;x+=64){bgX.beginPath();bgX.moveTo(x,0);bgX.lineTo(x,bgC.height);bgX.stroke()}for(let y=0;y<bgC.height;y+=64){bgX.beginPath();bgX.moveTo(0,y);bgX.lineTo(bgC.width,y);bgX.stroke()}pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=bgC.width;if(p.x>bgC.width)p.x=0;if(p.y<0)p.y=bgC.height;if(p.y>bgC.height)p.y=0;bgX.beginPath();bgX.arc(p.x,p.y,p.r,0,Math.PI*2);bgX.fillStyle=`rgba(245,168,0,${p.a})`;bgX.fill()});requestAnimationFrame(loop)})();
+
+// Highlight nav ancre active au scroll
+const sections=document.querySelectorAll('[id]');
+const navBtns=document.querySelectorAll('.snav-btn');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id});
+  navBtns.forEach(b=>{b.classList.toggle('active',b.getAttribute('href')==='#'+cur)});
+},{passive:true});
+</script>
+</body>
+</html>

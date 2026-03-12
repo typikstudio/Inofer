@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>INOFER — Contact</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#F5A800;--gold2:#FFD060;--glow:rgba(245,168,0,.6);--glow2:rgba(245,168,0,.15);--bg:#080A0C;--border:rgba(245,168,0,.22);--text:#C8D4DE;--dim:#5a6a7a}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;overflow-x:hidden;cursor:none}
+@media(pointer:coarse){body{cursor:auto}}
+#cursor,#cursor-ring{display:none}
+@media(pointer:fine){
+  #cursor{display:block;position:fixed;width:11px;height:11px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .15s,height .15s}
+  #cursor-ring{display:block;position:fixed;width:34px;height:34px;border:1.5px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.45;transition:width .2s,height .2s,opacity .2s}
+  body{cursor:none}
+}
+#bg-canvas{position:fixed;inset:0;z-index:0;opacity:.4;pointer-events:none}
+.scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 4px)}
+header{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;background:linear-gradient(180deg,rgba(8,10,12,.98),rgba(8,10,12,.75));border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+.logo-mark{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:5px;color:#fff;display:flex;align-items:center;position:relative;text-decoration:none}
+.logo-mark .brk{color:var(--gold);font-size:2.2rem;line-height:1}
+.logo-mark .tagline{font-family:'Share Tech Mono',monospace;font-size:.5rem;letter-spacing:3px;color:var(--dim);text-transform:uppercase;position:absolute;bottom:-9px;left:0;white-space:nowrap}
+.header-right{display:flex;align-items:center;gap:20px}
+.nav-back{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;display:flex;align-items:center;gap:7px;transition:color .2s}
+.nav-back svg{width:14px;height:14px;stroke:var(--dim);fill:none;stroke-width:2;transition:stroke .2s}
+.nav-back:hover{color:var(--gold)}
+.nav-back:hover svg{stroke:var(--gold)}
+.status-badge{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.status-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 7px var(--gold);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@media(max-width:600px){.status-badge{display:none}.header-right{gap:12px}}
+.page{position:relative;z-index:2;padding-top:64px}
+
+/* ── HERO ── */
+.contact-hero{position:relative;height:clamp(240px,32vh,360px);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:0 60px 44px;overflow:hidden;border-bottom:1px solid var(--border)}
+@media(max-width:600px){.contact-hero{padding:0 24px 32px}}
+.hero-hex{position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0L56 16L56 48L28 64L0 48L0 16Z' fill='none' stroke='%23F5A800' stroke-width='.8'/%3E%3C/svg%3E")}
+.hero-sweep{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 0%,rgba(245,168,0,.03) 50%,transparent 100%);animation:sweep 6s ease-in-out infinite}
+@keyframes sweep{0%{transform:translateY(-100%);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(100%);opacity:0}}
+.breadcrumb{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:14px;display:flex;align-items:center;gap:8px;z-index:2;position:relative}
+.breadcrumb a{color:var(--dim);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--gold)}
+.breadcrumb .sep{color:var(--border)}
+.breadcrumb .cur{color:var(--gold)}
+.contact-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,6.5rem);line-height:.88;letter-spacing:3px;color:#fff;z-index:2;position:relative}
+.contact-hero h1 em{font-style:normal;color:transparent;-webkit-text-stroke:2px var(--gold)}
+.hero-sub{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.9rem;color:var(--dim);margin-top:14px;z-index:2;position:relative;letter-spacing:1px}
+
+/* ── MAIN GRID ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1.6fr;min-height:70vh}
+@media(max-width:860px){.contact-grid{grid-template-columns:1fr}}
+
+/* ── LEFT : INFOS ── */
+.contact-info{padding:56px 48px 56px 60px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:40px}
+@media(max-width:860px){.contact-info{padding:44px 28px;border-right:none;border-bottom:1px solid var(--border)}}
+
+.info-block-title{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.info-block-title::before{content:'';width:20px;height:1px;background:var(--gold)}
+
+.info-item{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}
+.info-item:last-child{margin-bottom:0}
+.info-icon{width:38px;height:38px;border:1px solid rgba(245,168,0,.3);border-radius:3px;background:rgba(245,168,0,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-icon svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.info-label{font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.info-value{font-family:'Exo 2',sans-serif;font-weight:400;font-size:.9rem;color:var(--text)}
+.info-value a{color:var(--text);text-decoration:none;transition:color .2s}
+.info-value a:hover{color:var(--gold)}
+
+/* horaires */
+.hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.hour-row{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:1px;color:var(--dim)}
+.hour-row span{color:var(--text)}
+
+/* réseaux */
+.social-row{display:flex;gap:10px;flex-wrap:wrap}
+.social-btn{width:38px;height:38px;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .25s;background:rgba(245,168,0,.04)}
+.social-btn svg{width:16px;height:16px;stroke:var(--dim);fill:none;stroke-width:1.8;transition:stroke .25s}
+.social-btn:hover{border-color:var(--gold);background:rgba(245,168,0,.1);box-shadow:0 0 14px var(--glow2)}
+.social-btn:hover svg{stroke:var(--gold)}
+
+/* urgence badge */
+.urgence-card{border:1px solid var(--gold);background:rgba(245,168,0,.05);padding:18px 20px;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);position:relative;overflow:hidden}
+.urgence-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,168,0,.08),transparent);pointer-events:none}
+.urgence-label{font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.urgence-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:blink 1.2s ease-in-out infinite}
+.urgence-num{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;color:#fff}
+.urgence-note{font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:1px;color:var(--dim);margin-top:4px}
+
+/* ── RIGHT : FORMULAIRE ── */
+.contact-form-wrap{padding:56px 60px 56px 48px;display:flex;flex-direction:column;justify-content:flex-start}
+@media(max-width:860px){.contact-form-wrap{padding:44px 28px}}
+
+.form-title{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.form-title::before{content:'';width:20px;height:1px;background:var(--gold)}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+
+.form-label{font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+.form-label .req{color:var(--gold)}
+
+.form-input,
+.form-select,
+.form-textarea{
+  font-family:'Exo 2',sans-serif;font-weight:400;font-size:.88rem;
+  color:var(--text);background:rgba(12,15,18,.9);
+  border:1px solid rgba(245,168,0,.18);
+  padding:12px 16px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  appearance:none;-webkit-appearance:none;
+  width:100%;
+}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--dim);font-size:.82rem}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,168,0,.08)}
+.form-textarea{resize:vertical;min-height:130px;line-height:1.6}
+
+/* select custom arrow */
+.select-wrap{position:relative}
+.select-wrap::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--gold);pointer-events:none}
+.form-select{padding-right:38px;cursor:pointer;background:rgba(12,15,18,.9)}
+.form-select option{background:#0d1014;color:var(--text)}
+
+/* fichier joint */
+.file-drop{border:1px dashed rgba(245,168,0,.25);padding:20px;text-align:center;cursor:pointer;transition:all .25s;position:relative;background:rgba(245,168,0,.02)}
+.file-drop:hover{border-color:var(--gold);background:rgba(245,168,0,.04)}
+.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.file-drop svg{width:24px;height:24px;stroke:var(--dim);fill:none;stroke-width:1.5;margin:0 auto 8px;display:block;transition:stroke .25s}
+.file-drop:hover svg{stroke:var(--gold)}
+.file-drop p{font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+.file-drop p span{color:var(--gold)}
+.file-name{font-family:'Share Tech Mono',monospace;font-size:.52rem;color:var(--gold);margin-top:6px;display:none}
+
+/* radio group */
+.radio-group{display:flex;flex-wrap:wrap;gap:10px}
+.radio-btn{display:flex;align-items:center;gap:8px;cursor:pointer}
+.radio-btn input{display:none}
+.radio-pill{font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border);color:var(--dim);background:transparent;transition:all .2s;clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%)}
+.radio-btn input:checked + .radio-pill{border-color:var(--gold);color:var(--gold);background:rgba(245,168,0,.08)}
+
+/* submit */
+.form-submit{display:flex;align-items:center;justify-content:space-between;margin-top:28px;flex-wrap:wrap;gap:16px}
+.form-note{font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:1px;color:var(--dim);max-width:260px;line-height:1.6}
+.btn-submit{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:15px 36px;border:none;clip-path:polygon(9px 0,100% 0,calc(100% - 9px) 100%,0 100%);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.btn-submit::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-submit:hover{background:var(--gold2);box-shadow:0 0 36px var(--glow)}
+.btn-submit:hover::after{transform:translateX(100%)}
+
+/* success state */
+.form-success{display:none;text-align:center;padding:48px 24px;flex-direction:column;align-items:center;gap:16px}
+.form-success.show{display:flex}
+.success-icon{width:64px;height:64px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 32px var(--glow)}
+.success-icon svg{width:28px;height:28px;stroke:var(--gold);fill:none;stroke-width:2}
+.success-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:3px;color:#fff}
+.success-msg{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.9rem;color:var(--dim);max-width:360px;line-height:1.7}
+
+/* ── TICKER ── */
+.ticker-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:36px;background:rgba(8,10,12,.9);display:flex;align-items:center;position:relative;z-index:2}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 40s linear infinite}
+.ticker-item{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--dim);padding:0 6px}
+.ticker-sep{color:var(--gold);padding:0 10px}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#060809);border-top:1px solid var(--border)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:60px 60px 48px;border-bottom:1px solid var(--border)}
+@media(max-width:960px){.footer-top{grid-template-columns:1fr 1fr;gap:36px;padding:44px 32px 36px}}
+@media(max-width:560px){.footer-top{grid-template-columns:1fr;gap:28px;padding:36px 24px 28px}}
+.ft-brand .logo-footer{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:5px;color:#fff;display:block;margin-bottom:6px}
+.ft-brand .logo-footer span{color:var(--gold)}
+.ft-brand p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.82rem;line-height:1.7;color:var(--dim);margin-top:12px;max-width:260px}
+.ft-col h4{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-col ul li a{font-family:'Exo 2',sans-serif;font-weight:400;font-size:.8rem;color:var(--dim);text-decoration:none;letter-spacing:.5px;transition:color .2s;display:flex;align-items:center;gap:6px}
+.ft-col ul li a::before{content:'›';color:var(--gold);font-size:.9rem;opacity:0;transition:opacity .2s,transform .2s;transform:translateX(-4px)}
+.ft-col ul li a:hover{color:var(--text)}
+.ft-col ul li a:hover::before{opacity:1;transform:translateX(0)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:20px 60px}
+@media(max-width:960px){.footer-bottom{padding:16px 32px}}
+@media(max-width:560px){.footer-bottom{padding:16px 24px;flex-direction:column;align-items:flex-start}}
+.ft-copy{font-family:'Share Tech Mono',monospace;font-size:.56rem;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
+.ft-legal-links{display:flex;gap:20px;flex-wrap:wrap}
+.ft-legal-links a{font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:1.5px;color:var(--dim);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.ft-legal-links a:hover{color:var(--gold)}
+.ft-cert{font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:2px;color:var(--dim);display:flex;align-items:center;gap:7px}
+.ft-cert::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold)}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-ring"></div>
+<canvas id="bg-canvas"></canvas><div class="scanlines"></div>
+
+<header>
+  <a href="index.html" class="logo-mark"><span class="brk">[</span>IN<span style="color:var(--gold)">O</span>FER<span class="brk">]</span><span class="tagline">Industrie &amp; Précision Mécanique</span></a>
+  <div class="header-right">
+    <a href="index.html" class="nav-back"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Retour</a>
+    <div class="status-badge">Disponible</div>
+  </div>
+</header>
+
+<div class="page">
+  <section class="contact-hero">
+    <div class="hero-hex"></div><div class="hero-sweep"></div>
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span class="cur">Contact</span></div>
+    <h1>NOUS <em>CONTACTER</em></h1>
+    <p class="hero-sub">Réponse garantie sous 24h — Devis gratuit et sans engagement</p>
+  </section>
+
+  <div class="contact-grid">
+    <!-- INFOS -->
+    <div class="contact-info">
+      <div>
+        <div class="info-block-title">Coordonnées</div>
+        <div class="info-item">
+          <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="info-label">Adresse</div><div class="info-value">Zone industrielle — France<br><span style="color:var(--dim);font-size:.8rem">XX rue de l'Industrie, XXXXX Ville</span></div></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div><div class="info-label">Téléphone</div><div class="info-value"><a href="tel:+33000000000">+33 (0)X XX XX XX XX</a></div></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="info-label">Email</div><div class="info-value"><a href="mailto:contact@inofer.fr">contact@inofer.fr</a></div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="info-block-title">Horaires d'ouverture</div>
+        <div class="hours-grid">
+          <div class="hour-row">Lundi – Vendredi</div><div class="hour-row"><span>08h00 – 18h00</span></div>
+          <div class="hour-row">Samedi</div><div class="hour-row"><span>08h00 – 12h00</span></div>
+          <div class="hour-row">Dimanche</div><div class="hour-row" style="color:var(--dim)">Fermé</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="info-block-title">Urgence industrielle</div>
+        <div class="urgence-card">
+          <div class="urgence-label">Hotline 24h/24 — 7j/7</div>
+          <div class="urgence-num">+33 (0)X XX XX XX XX</div>
+          <div class="urgence-note">Intervention sous 4h sur site · Astreinte permanente</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="info-block-title">Réseaux sociaux</div>
+        <div class="social-row">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMULAIRE -->
+    <div class="contact-form-wrap">
+      <div class="form-title">Formulaire de contact</div>
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nom <span class="req">*</span></label>
+            <input class="form-input" type="text" name="nom" placeholder="Dupont" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prénom <span class="req">*</span></label>
+            <input class="form-input" type="text" name="prenom" placeholder="Jean"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Société</label>
+            <input class="form-input" type="text" name="societe" placeholder="ACME Industries"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Téléphone</label>
+            <input class="form-input" type="tel" name="tel" placeholder="+33 6 XX XX XX XX"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email <span class="req">*</span></label>
+          <input class="form-input" type="email" name="email" placeholder="j.dupont@societe.fr" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Objet de la demande <span class="req">*</span></label>
+          <div class="select-wrap">
+            <select class="form-select form-input" name="objet" required>
+              <option value="" disabled selected>Sélectionner…</option>
+              <option>Demande de devis</option>
+              <option>Maintenance préventive</option>
+              <option>Maintenance corrective / Urgence</option>
+              <option>Usinage CNC / Sous-traitance</option>
+              <option>Automatisation</option>
+              <option>Audit industriel</option>
+              <option>Formation technique</option>
+              <option>Autre</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Délai souhaité</label>
+          <div class="radio-group">
+            <label class="radio-btn"><input type="radio" name="delai" value="urgent"/><span class="radio-pill">Urgent &lt; 48h</span></label>
+            <label class="radio-btn"><input type="radio" name="delai" value="semaine"/><span class="radio-pill">Cette semaine</span></label>
+            <label class="radio-btn"><input type="radio" name="delai" value="mois" checked/><span class="radio-pill">Ce mois</span></label>
+            <label class="radio-btn"><input type="radio" name="delai" value="flexible"/><span class="radio-pill">Flexible</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message <span class="req">*</span></label>
+          <textarea class="form-input form-textarea" name="message" placeholder="Décrivez votre besoin, les machines concernées, les matériaux, les tolérances requises…" required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Plan / Cahier des charges (optionnel)</label>
+          <div class="file-drop" id="file-drop">
+            <input type="file" accept=".pdf,.dwg,.step,.dxf,.jpg,.png" id="file-input"/>
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p><span>Cliquer pour joindre</span> ou glisser-déposer<br>PDF · DWG · STEP · DXF · JPG — Max 10 Mo</p>
+            <p class="file-name" id="file-name"></p>
+          </div>
+        </div>
+        <div class="form-submit">
+          <p class="form-note">Vos données sont traitées conformément à notre politique de confidentialité. Réponse sous 24h ouvrées.</p>
+          <button type="submit" class="btn-submit">Envoyer le message</button>
+        </div>
+      </form>
+      <div class="form-success" id="form-success">
+        <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="success-title">Message envoyé !</div>
+        <p class="success-msg">Merci pour votre demande. Notre équipe technique vous recontactera dans les 24 heures ouvrées.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">Réponse sous 24h</span><span class="ticker-sep">///</span><span class="ticker-item">Devis gratuit et sans engagement</span><span class="ticker-sep">///</span><span class="ticker-item">Urgence industrielle 24h/24</span><span class="ticker-sep">///</span><span class="ticker-item">Intervention France entière</span><span class="ticker-sep">///</span><span class="ticker-item">ISO 9001 certifié</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Réponse sous 24h</span><span class="ticker-sep">///</span><span class="ticker-item">Devis gratuit et sans engagement</span><span class="ticker-sep">///</span><span class="ticker-item">Urgence industrielle 24h/24</span><span class="ticker-sep">///</span><span class="ticker-item">Intervention France entière</span><span class="ticker-sep">///</span><span class="ticker-item">ISO 9001 certifié</span><span class="ticker-sep">///</span>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div class="ft-brand">
+        <span class="logo-footer">[IN<span>O</span>FER]</span>
+        <p>Spécialiste en solutions industrielles de haute précision depuis plus de 20 ans.</p>
+      </div>
+      <div class="ft-col"><h4>Navigation</h4><ul><li><a href="index.html">Accueil</a></li><li><a href="service.html">Services</a></li><li><a href="parc.html">Parc Machine</a></li><li><a href="histoire.html">Notre histoire</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Services</h4><ul><li><a href="service.html">Maintenance préventive</a></li><li><a href="service.html">Maintenance corrective</a></li><li><a href="service.html">Automatisation</a></li><li><a href="service.html">Usinage CNC</a></li></ul></div>
+      <div class="ft-col"><h4>Informations</h4><ul><li><a href="#">Mentions légales</a></li><li><a href="#">Politique de confidentialité</a></li><li><a href="#">CGV</a></li><li><a href="#">Certifications</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="ft-copy">&copy; 2024 INOFER — Tous droits réservés</span>
+      <div class="ft-legal-links"><a href="#">Mentions légales</a><a href="#">Confidentialité</a><a href="#">CGV</a></div>
+      <span class="ft-cert">ISO 9001 certifié</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+if(cur&&ring){let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});(function ar(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar)})();document.querySelectorAll('a,button,input,select,textarea').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.style.width='5px';cur.style.height='5px';ring.style.width='52px';ring.style.height='52px';ring.style.opacity='.85'});el.addEventListener('mouseleave',()=>{cur.style.width='11px';cur.style.height='11px';ring.style.width='34px';ring.style.height='34px';ring.style.opacity='.45'})})}
+const bgC=document.getElementById('bg-canvas'),bgX=bgC.getContext('2d');
+function resizeBg(){bgC.width=window.innerWidth;bgC.height=window.innerHeight}resizeBg();window.addEventListener('resize',resizeBg);
+const pts=Array.from({length:60},()=>({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,r:Math.random()*1.1+.3,a:Math.random()*.45+.1}));
+(function ab(){bgC.width=bgC.width;bgX.strokeStyle='rgba(245,168,0,.028)';bgX.lineWidth=1;for(let x=0;x<bgC.width;x+=64){bgX.beginPath();bgX.moveTo(x,0);bgX.lineTo(x,bgC.height);bgX.stroke()}for(let y=0;y<bgC.height;y+=64){bgX.beginPath();bgX.moveTo(0,y);bgX.lineTo(bgC.width,y);bgX.stroke()}pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=bgC.width;if(p.x>bgC.width)p.x=0;if(p.y<0)p.y=bgC.height;if(p.y>bgC.height)p.y=0;bgX.beginPath();bgX.arc(p.x,p.y,p.r,0,Math.PI*2);bgX.fillStyle=`rgba(245,168,0,${p.a})`;bgX.fill()});pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<100){bgX.beginPath();bgX.moveTo(a.x,a.y);bgX.lineTo(b.x,b.y);bgX.strokeStyle=`rgba(245,168,0,${(1-d/100)*.04})`;bgX.lineWidth=1;bgX.stroke()}}));requestAnimationFrame(ab)})();
+// File input
+document.getElementById('file-input').addEventListener('change',function(){const fn=document.getElementById('file-name');if(this.files[0]){fn.textContent='📎 '+this.files[0].name;fn.style.display='block'}});
+// Form submit
+document.getElementById('contact-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  const req=this.querySelectorAll('[required]');
+  let ok=true;
+  req.forEach(f=>{f.style.borderColor=f.value.trim()?'rgba(245,168,0,.18)':'#ef4444';if(!f.value.trim())ok=false});
+  if(!ok)return;
+  this.style.display='none';
+  document.getElementById('form-success').classList.add('show');
+});
+</script>
+</body>
+</html>
