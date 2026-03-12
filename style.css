@@ -117,8 +117,8 @@ header {
 .status-badge::before {
   content: '';
   width: 5px; height: 5px; border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 7px var(--gold);
+  background: var(--green);
+  box-shadow: 0 0 7px var(--green);
   animation: blink 2s ease-in-out infinite;
 }
 
