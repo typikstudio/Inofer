@@ -133,8 +133,8 @@ function drawGear(a) {
   gx.beginPath();
   for (let i = 0; i < teeth; i++) {
     const a0 = step * i - step / 2;
-    const a1 = step * i - step * .17;
-    const a2 = step * i + step * .17;
+    const a1 = step * i - step * .20;
+    const a2 = step * i + step * .20;
     const a3 = step * i + step / 2;
     gx.arc(0, 0, bR, a0, a0);
     gx.lineTo(Math.cos(a1) * iR, Math.sin(a1) * iR);
@@ -142,7 +142,7 @@ function drawGear(a) {
     gx.arc(0, 0, oR, a1, a2);
     gx.lineTo(Math.cos(a2) * iR, Math.sin(a2) * iR);
     gx.lineTo(Math.cos(a3) * bR, Math.sin(a3) * bR);
-    gx.arc(0, 0, bR, a3, a3 + step / 2);
+    gx.arc(0, 0, bR, a3, a3 + step / 30);
   }
   gx.closePath();
 
@@ -153,7 +153,7 @@ function drawGear(a) {
   gx.fillStyle   = fg;
   gx.fill();
   gx.strokeStyle = '#F5A800';
-  gx.lineWidth   = 2.2;
+  gx.lineWidth   = 2;
   gx.shadowColor = '#F5A800';
   gx.shadowBlur  = 11;
   gx.stroke();
