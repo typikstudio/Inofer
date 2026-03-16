@@ -1,331 +1,776 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>INOFER — Industrie & Précision</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>INOFER — Parc Machine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & VARIABLES ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#F5A800;--gold2:#FFD060;
+  --glow:rgba(245,168,0,.65);--glow2:rgba(245,168,0,.14);
+  --bg:#080A0C;--bg2:#0d1014;
+  --border:rgba(245,168,0,.22);--border2:rgba(245,168,0,.08);
+  --text:#C8D4DE;--dim:#5a6a7a;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;overflow-x:hidden}
+
+/* ── CANVAS / SCANLINES ── */
+#bg-canvas{position:fixed;inset:0;z-index:0;opacity:.35;pointer-events:none}
+.scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 4px)}
+
+/* ── HEADER ── */
+header{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 40px;
+  background:linear-gradient(180deg,rgba(8,10,12,.97),rgba(8,10,12,.72));
+  border-bottom:1px solid var(--border);backdrop-filter:blur(14px)}
+.logo-mark{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:5px;
+  color:#fff;display:flex;align-items:center;position:relative;text-decoration:none}
+.logo-mark .brk{color:var(--gold);font-size:2.2rem;line-height:1}
+.logo-mark .tagline{font-family:'Share Tech Mono',monospace;font-size:.48rem;letter-spacing:3px;
+  color:var(--dim);text-transform:uppercase;position:absolute;bottom:-9px;left:0;white-space:nowrap}
+.header-right{display:flex;align-items:center;gap:22px}
+.nav-back{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--dim);text-decoration:none;
+  display:flex;align-items:center;gap:7px;transition:color .2s}
+.nav-back svg{width:13px;height:13px;stroke:var(--dim);fill:none;stroke-width:2;transition:stroke .2s}
+.nav-back:hover{color:var(--gold)}.nav-back:hover svg{stroke:var(--gold)}
+.status-dot{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:2px;
+  color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.status-dot::before{content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 7px var(--gold);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.cta-header{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--bg);background:var(--gold);padding:9px 22px;border:none;cursor:pointer;
+  clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);
+  transition:background .2s,box-shadow .2s;text-decoration:none;white-space:nowrap;display:inline-block}
+.cta-header:hover{background:var(--gold2);box-shadow:0 0 28px var(--glow)}
+@media(max-width:580px){.status-dot{display:none}.header-right{gap:12px}header{padding:0 20px}}
+
+/* ── PAGE ── */
+.page{position:relative;z-index:2;padding-top:64px}
+
+/* ── HERO ── */
+.hero{position:relative;height:clamp(280px,40vh,440px);
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
+  padding:0 60px 52px;overflow:hidden;border-bottom:1px solid var(--border)}
+@media(max-width:600px){.hero{padding:0 24px 36px}}
+.hero-hex{position:absolute;inset:0;pointer-events:none;opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0L56 16L56 48L28 64L0 48L0 16Z' fill='none' stroke='%23F5A800' stroke-width='.8'/%3E%3Cpath d='M28 64L56 80L56 100' fill='none' stroke='%23F5A800' stroke-width='.8'/%3E%3Cpath d='M28 64L0 80L0 100' fill='none' stroke='%23F5A800' stroke-width='.8'/%3E%3C/svg%3E")}
+.hero-glow{position:absolute;bottom:-80px;left:60px;width:480px;height:280px;
+  background:radial-gradient(ellipse,rgba(245,168,0,.07) 0%,transparent 70%);pointer-events:none}
+.breadcrumb{font-family:'Share Tech Mono',monospace;font-size:.56rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--dim);margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;z-index:2;position:relative}
+.breadcrumb a{color:var(--dim);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--gold)}
+.breadcrumb .sep{color:var(--border)}.breadcrumb .cur{color:var(--gold)}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.2rem,8vw,7rem);
+  line-height:.86;letter-spacing:3px;color:#fff;z-index:2;position:relative}
+.hero h1 em{font-style:normal;color:transparent;-webkit-text-stroke:2.5px var(--gold)}
+.hero-meta{display:flex;align-items:stretch;gap:0;margin-top:20px;z-index:2;position:relative;flex-wrap:wrap}
+.hmeta{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--dim);
+  display:flex;flex-direction:column;justify-content:center;gap:3px;
+  padding:10px 24px;border:1px solid var(--border2);border-right:none;background:rgba(8,10,12,.5)}
+.hmeta:first-child{border-left:1px solid var(--border)}.hmeta:last-child{border-right:1px solid var(--border)}
+.hmeta strong{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold);letter-spacing:2px;line-height:1}
+
+/* ── FILTER BAR ── */
+.filter-bar{position:sticky;top:64px;z-index:200;display:flex;align-items:center;gap:0;padding:0 60px;
+  border-bottom:1px solid var(--border);background:rgba(8,10,12,.96);backdrop-filter:blur(14px);
+  overflow-x:auto;scrollbar-width:none}
+.filter-bar::-webkit-scrollbar{display:none}
+@media(max-width:600px){.filter-bar{padding:0 16px}}
+.fbtn{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--dim);background:transparent;border:none;padding:15px 20px;cursor:pointer;
+  border-bottom:2px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap}
+.fbtn:hover{color:var(--text)}.fbtn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.filter-count{font-family:'Share Tech Mono',monospace;font-size:.52rem;color:var(--gold);
+  margin-left:auto;padding:0 20px;white-space:nowrap;flex-shrink:0}
+@media(max-width:700px){.filter-count{display:none}}
+
+/* ── MACHINE GRID ── */
+.grid-section{padding:48px 60px 80px}
+@media(max-width:600px){.grid-section{padding:28px 16px 56px}}
+.grid-label{font-family:'Share Tech Mono',monospace;font-size:.56rem;letter-spacing:4px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:32px;
+  display:flex;align-items:center;gap:14px}
+.grid-label::before{content:'';width:28px;height:1px;background:var(--gold)}
+.grid-label::after{content:'';flex:1;height:1px;background:var(--border2)}
+.machine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2)}
+@media(max-width:1100px){.machine-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.machine-grid{grid-template-columns:1fr}}
+
+/* ── MACHINE CARD ── */
+.mcard{position:relative;background:var(--bg2);cursor:pointer;
+  display:flex;flex-direction:column;overflow:hidden;transition:background .3s}
+.mcard:hover{background:#111417}
+.mcard.featured{grid-column:span 2;flex-direction:row}
+@media(max-width:1100px){.mcard.featured{grid-column:span 1;flex-direction:column}}
+.mcard-photo{position:relative;overflow:hidden;flex-shrink:0}
+.mcard:not(.featured) .mcard-photo{height:220px}
+.mcard.featured .mcard-photo{width:52%;min-height:100%}
+@media(max-width:1100px){.mcard.featured .mcard-photo{width:100%;min-height:unset;height:240px}}
+.mcard-photo img{width:100%;height:100%;object-fit:cover;display:block;
+  filter:grayscale(25%) brightness(.78);transition:transform .7s cubic-bezier(.23,1,.32,1),filter .5s}
+.mcard:hover .mcard-photo img{transform:scale(1.07);filter:grayscale(0%) brightness(.92)}
+.mcard-photo::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(8,10,12,.75) 100%);pointer-events:none}
+.mcard.featured .mcard-photo::after{background:linear-gradient(90deg,transparent 55%,rgba(8,10,12,.85) 100%)}
+@media(max-width:1100px){.mcard.featured .mcard-photo::after{background:linear-gradient(180deg,transparent 40%,rgba(8,10,12,.75) 100%)}}
+.mcard-scan{position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  top:-1px;opacity:0;z-index:3;pointer-events:none}
+.mcard:hover .mcard-scan{opacity:1;animation:scan .8s ease-in-out infinite}
+@keyframes scan{0%{top:0}100%{top:100%}}
+.mcard-type{position:absolute;bottom:14px;left:16px;z-index:4;
+  font-family:'Share Tech Mono',monospace;font-size:.48rem;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 11px;background:rgba(8,10,12,.85);border:1px solid rgba(245,168,0,.35);color:var(--gold);
+  clip-path:polygon(4px 0,100% 0,calc(100% - 4px) 100%,0 100%)}
+.mcard-status{position:absolute;top:14px;right:14px;z-index:4;
+  font-family:'Share Tech Mono',monospace;font-size:.5rem;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 10px;background:rgba(8,10,12,.88);border:1px solid currentColor;
+  clip-path:polygon(4px 0,100% 0,calc(100% - 4px) 100%,0 100%)}
+.mcard-status.online{color:#4ade80}.mcard-status.busy{color:var(--gold)}.mcard-status.offline{color:#f87171}
+.mcard-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
+.mcard-id{font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:7px;display:flex;align-items:center;gap:9px}
+.mcard-id::before{content:'';width:14px;height:1px;background:var(--gold)}
+.mcard-name{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:2px;
+  color:#e8f0f6;line-height:1;margin-bottom:4px;transition:color .25s}
+.mcard:hover .mcard-name{color:var(--gold2)}
+.mcard.featured .mcard-name{font-size:clamp(1.6rem,2.2vw,2.2rem)}
+.mcard-brand{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.78rem;color:var(--dim);margin-bottom:18px}
+.mcard-specs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:18px;flex:1}
+.mspec{background:rgba(245,168,0,.025);border:1px solid var(--border2);padding:8px 11px;
+  transition:border-color .25s,background .25s}
+.mcard:hover .mspec{border-color:rgba(245,168,0,.14);background:rgba(245,168,0,.04)}
+.mspec-lbl{font-family:'Share Tech Mono',monospace;font-size:.44rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--dim);margin-bottom:2px}
+.mspec-val{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.78rem;color:var(--text)}
+.mcard-foot{display:flex;align-items:center;justify-content:space-between;
+  padding-top:14px;border-top:1px solid var(--border2)}
+.mcard-cta{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.64rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--bg);background:var(--gold);padding:7px 16px;
+  clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%);
+  text-decoration:none;transition:background .2s,box-shadow .2s;cursor:pointer}
+.mcard-cta:hover{background:var(--gold2);box-shadow:0 0 20px var(--glow)}
+.mcard-hint{font-family:'Share Tech Mono',monospace;font-size:.5rem;letter-spacing:1px;
+  text-transform:uppercase;color:var(--dim)}
+.reveal{opacity:0;transform:translateY(16px)}
+.reveal.in{opacity:1;transform:translateY(0);transition:opacity .5s,transform .5s}
+
+/* ── TICKER ── */
+.ticker-wrap{overflow:hidden;height:36px;background:rgba(8,10,12,.9);display:flex;align-items:center;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 42s linear infinite}
+.ticker-item{font-family:'Share Tech Mono',monospace;font-size:.56rem;letter-spacing:2px;color:var(--dim);padding:0 7px}
+.ticker-sep{color:var(--gold);padding:0 10px}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── CAPACITÉS ── */
+.cap-section{display:grid;grid-template-columns:1fr 2.8fr;gap:0;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+@media(max-width:800px){.cap-section{grid-template-columns:1fr}}
+.cap-left{padding:48px 44px 48px 60px;border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center}
+@media(max-width:800px){.cap-left{padding:36px 28px;border-right:none;border-bottom:1px solid var(--border)}}
+.cap-label{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:4px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.cap-label::before{content:'';width:20px;height:1px;background:var(--gold)}
+.cap-left h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.2vw,3rem);
+  letter-spacing:2px;color:#fff;line-height:.95}
+.cap-left h2 em{font-style:normal;color:var(--gold)}
+.cap-left p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.85rem;line-height:1.75;
+  color:var(--dim);margin-top:14px}
+.cap-right{padding:48px 60px 48px 44px;display:flex;align-items:center}
+@media(max-width:800px){.cap-right{padding:36px 28px}}
+.cap-tags{display:flex;flex-wrap:wrap;gap:8px}
+.ctag{font-family:'Share Tech Mono',monospace;font-size:.54rem;letter-spacing:2px;text-transform:uppercase;
+  padding:7px 13px;background:rgba(245,168,0,.03);border:1px solid var(--border2);color:var(--dim);
+  clip-path:polygon(4px 0,100% 0,calc(100% - 4px) 100%,0 100%);transition:all .2s}
+.ctag:hover{border-color:var(--gold);color:var(--gold);background:rgba(245,168,0,.07)}
+
+/* ── CTA BAND ── */
+.cta-band{position:relative;overflow:hidden;padding:56px 60px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+  border-bottom:1px solid var(--border)}
+@media(max-width:700px){.cta-band{padding:40px 24px;flex-direction:column;align-items:flex-start}}
+.cta-band::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 55% 100% at 75% 50%,rgba(245,168,0,.07),transparent);pointer-events:none}
+.cta-band::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,transparent,var(--gold),transparent)}
+.cta-copy .eyebrow{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:3px;
+  color:var(--gold);text-transform:uppercase;display:block;margin-bottom:9px}
+.cta-copy h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4.5vw,3.6rem);
+  letter-spacing:2px;color:#fff;line-height:.92}
+.cta-copy > p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.88rem;color:var(--dim);
+  margin-top:10px;max-width:420px;line-height:1.7}
+.cta-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn-primary{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--bg);background:var(--gold);padding:15px 36px;
+  clip-path:polygon(9px 0,100% 0,calc(100% - 9px) 100%,0 100%);
+  transition:all .25s;text-decoration:none;display:inline-block;
+  position:relative;overflow:hidden;cursor:pointer;border:none}
+.btn-primary::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+  transform:translateX(-100%);transition:transform .5s}
+.btn-primary:hover{background:var(--gold2);box-shadow:0 0 40px var(--glow)}
+.btn-primary:hover::after{transform:translateX(100%)}
+.btn-outline{font-family:'Exo 2',sans-serif;font-weight:600;font-size:.76rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gold);background:transparent;padding:14px 26px;
+  border:1px solid var(--border);text-decoration:none;display:inline-block;transition:all .25s;cursor:pointer}
+.btn-outline:hover{border-color:var(--gold);background:var(--glow2)}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#060809);
+  border-top:1px solid var(--border)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:60px 60px 48px;
+  border-bottom:1px solid var(--border)}
+@media(max-width:960px){.footer-top{grid-template-columns:1fr 1fr;gap:36px;padding:44px 32px 36px}}
+@media(max-width:560px){.footer-top{grid-template-columns:1fr;gap:28px;padding:36px 24px 28px}}
+.ft-brand .logo-footer{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:5px;
+  color:#fff;display:block;margin-bottom:6px}
+.ft-brand .logo-footer span{color:var(--gold)}
+.ft-brand>p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.82rem;line-height:1.7;
+  color:var(--dim);margin-top:12px;max-width:260px}
+.ft-contact{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.ft-contact a{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:1px;
+  color:var(--dim);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
+.ft-contact a:hover{color:var(--gold)}
+.ft-contact svg{width:11px;height:11px;stroke:var(--gold);fill:none;stroke-width:2;flex-shrink:0}
+.social-row{display:flex;gap:9px;margin-top:20px;flex-wrap:wrap}
+.sbtn{width:36px;height:36px;border:1px solid var(--border2);border-radius:3px;
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  transition:all .22s;background:rgba(245,168,0,.03)}
+.sbtn svg{width:15px;height:15px;stroke:var(--dim);fill:none;stroke-width:1.8;transition:stroke .22s}
+.sbtn:hover{border-color:var(--gold);background:rgba(245,168,0,.09)}
+.sbtn:hover svg{stroke:var(--gold)}
+.ft-col h4{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:18px;padding-bottom:10px;
+  border-bottom:1px solid var(--border2)}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-col ul li a{font-family:'Exo 2',sans-serif;font-size:.8rem;color:var(--dim);
+  text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:6px}
+.ft-col ul li a::before{content:'›';color:var(--gold);opacity:0;
+  transition:opacity .2s,transform .2s;transform:translateX(-4px)}
+.ft-col ul li a:hover{color:var(--text)}
+.ft-col ul li a:hover::before{opacity:1;transform:translateX(0)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:14px;padding:18px 60px}
+@media(max-width:960px){.footer-bottom{padding:16px 32px}}
+@media(max-width:560px){.footer-bottom{padding:14px 24px;flex-direction:column;align-items:flex-start}}
+.ft-copy{font-family:'Share Tech Mono',monospace;font-size:.54rem;letter-spacing:2px;
+  color:var(--dim);text-transform:uppercase}
+.ft-legal{display:flex;gap:20px;flex-wrap:wrap}
+.ft-legal a{font-family:'Share Tech Mono',monospace;font-size:.53rem;letter-spacing:1.5px;
+  color:var(--dim);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.ft-legal a:hover{color:var(--gold)}
+.ft-iso{font-family:'Share Tech Mono',monospace;font-size:.53rem;letter-spacing:2px;
+  color:var(--dim);display:flex;align-items:center;gap:7px}
+.ft-iso::before{content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 7px var(--gold)}
+
+/* ── LIGHTBOX ── */
+.lightbox{position:fixed;inset:0;z-index:1000;background:rgba(3,5,7,.97);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(10px)}
+.lightbox.open{opacity:1;pointer-events:all}
+.lb-box{position:relative;width:min(960px,95vw);max-height:92vh;
+  display:grid;grid-template-columns:1fr 1fr;background:var(--bg2);
+  border:1px solid var(--border);overflow:hidden;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%);
+  transform:scale(.96) translateY(12px);transition:transform .28s}
+.lightbox.open .lb-box{transform:scale(1) translateY(0)}
+@media(max-width:700px){.lb-box{grid-template-columns:1fr;width:97vw}}
+.lb-photo{position:relative;overflow:hidden;min-height:340px;background:#0a0c0f}
+.lb-photo img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .6s cubic-bezier(.23,1,.32,1)}
+.lightbox.open .lb-photo img{transform:scale(1.04)}
+.lb-photo::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 50%,rgba(8,10,12,.7));pointer-events:none}
+.lb-close{position:absolute;top:14px;right:14px;z-index:10;width:30px;height:30px;
+  background:rgba(245,168,0,.07);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.lb-close svg{width:13px;height:13px;stroke:var(--dim);fill:none;stroke-width:2.2;transition:stroke .2s}
+.lb-close:hover{background:rgba(245,168,0,.18);border-color:var(--gold)}
+.lb-close:hover svg{stroke:var(--gold)}
+.lb-content{padding:36px 34px 32px;display:flex;flex-direction:column;overflow-y:auto}
+@media(max-width:700px){.lb-content{padding:24px 22px}}
+.lb-id{font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.lb-id::before{content:'';width:14px;height:1px;background:var(--gold)}
+.lb-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.7rem,3vw,2.5rem);
+  letter-spacing:2px;color:#fff;line-height:.93;margin-bottom:5px}
+.lb-brand{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.8rem;color:var(--dim);margin-bottom:16px}
+.lb-desc{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.84rem;line-height:1.78;color:var(--text);
+  border-left:2px solid var(--gold);padding-left:14px;margin-bottom:22px}
+.lb-specs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:22px}
+.lbspec{background:rgba(245,168,0,.03);border:1px solid var(--border2);padding:9px 12px}
+.lbspec-lbl{font-family:'Share Tech Mono',monospace;font-size:.44rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--dim);margin-bottom:2px}
+.lbspec-val{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.84rem;color:var(--text)}
+.lb-foot{margin-top:auto;display:flex;gap:12px;padding-top:18px;border-top:1px solid var(--border2);flex-wrap:wrap}
+.lb-cta{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--bg);background:var(--gold);padding:11px 22px;
+  clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);
+  text-decoration:none;transition:background .2s,box-shadow .2s;cursor:pointer}
+.lb-cta:hover{background:var(--gold2);box-shadow:0 0 24px var(--glow)}
+.lb-cta2{font-family:'Exo 2',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gold);background:transparent;padding:10px 18px;
+  border:1px solid var(--border);text-decoration:none;display:inline-block;transition:all .2s;cursor:pointer}
+.lb-cta2:hover{border-color:var(--gold);background:var(--glow2)}
+</style>
 </head>
 <body>
+<canvas id="bg-canvas"></canvas>
+<div class="scanlines"></div>
 
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
-  <canvas id="bg-canvas"></canvas>
-  <div class="scanlines"></div>
-
-  <!-- HEADER -->
-  <header>
-    <a href="index.html" class="logo-mark">
-      <span class="brk">[</span>IN<span style="color:var(--gold)">O</span>FER<span class="brk">]</span>
-      <span class="tagline">Industrie &amp; Précision Mécanique</span>
+<header>
+  <a href="index.html" class="logo-mark">
+    <span class="brk">[</span>IN<span style="color:var(--gold)">O</span>FER<span class="brk">]</span>
+    <span class="tagline">Industrie &amp; Précision Mécanique</span>
+  </a>
+  <div class="header-right">
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Retour
     </a>
-    <div class="header-right">
-      <div class="status-badge">Système opérationnel</div>
-      <a href="contact.html" class="cta-header">Devis Gratuit</a>
+    <div class="status-dot">Parc opérationnel</div>
+    <a href="contact.html" class="cta-header">Devis Gratuit</a>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-hex"></div>
+    <div class="hero-glow"></div>
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a><span class="sep">›</span><span class="cur">Parc Machine</span>
     </div>
-  </header>
+    <h1>PARC <em>MACHINE</em></h1>
+    <div class="hero-meta">
+      <div class="hmeta"><strong>6</strong>Machines</div>
+      <div class="hmeta"><strong>5 AX</strong>CNC Simultanés</div>
+      <div class="hmeta"><strong>24H</strong>Délai devis</div>
+      <div class="hmeta"><strong>±0.001</strong>Précision mm</div>
+    </div>
+  </section>
 
-  <div class="page">
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="fbtn active" data-f="all">Toutes</button>
+    <button class="fbtn" data-f="cnc">Fraisage CNC</button>
+    <button class="fbtn" data-f="tournage">Tournage</button>
+    <button class="fbtn" data-f="rectification">Rectification</button>
+    <button class="fbtn" data-f="edm">Électroérosion</button>
+    <button class="fbtn" data-f="laser">Découpe Laser</button>
+    <span class="filter-count" id="filter-count">6 machines</span>
+  </div>
 
-    <!-- HERO : ROUE DENTÉE + NAV -->
-    <section class="hero">
-      <div class="hex-bg"></div>
-      <div class="gear-ambient"></div>
+  <!-- GRILLE MACHINES -->
+  <section class="grid-section">
+    <div class="grid-label" id="grid-label">Équipements — 6 machines</div>
+    <div class="machine-grid" id="machine-grid">
 
-      <div class="hero-top">
-        <span class="eyebrow">Navigation</span>
-      </div>
+      <article class="mcard featured reveal" data-cat="cnc" data-id="CNC-001">
+        <div class="mcard-photo">
+          <div class="mcard-scan"></div>
+          <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1000&q=80" alt="MAZAK VARIAXIS" loading="lazy"/>
+          <span class="mcard-type">Centre 5 axes</span>
+          <span class="mcard-status online">En ligne</span>
+        </div>
+        <div class="mcard-body">
+          <div class="mcard-id">CNC-001</div>
+          <div class="mcard-name">MAZAK VARIAXIS i-700</div>
+          <div class="mcard-brand">Yamazaki Mazak — 5 axes simultanés</div>
+          <div class="mcard-specs">
+            <div class="mspec"><div class="mspec-lbl">Course X/Y/Z</div><div class="mspec-val">700/650/510 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Broche</div><div class="mspec-val">12 000 tr/min</div></div>
+            <div class="mspec"><div class="mspec-lbl">Précision</div><div class="mspec-val">±0.003 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Magasin</div><div class="mspec-val">40 outils</div></div>
+          </div>
+          <div class="mcard-foot">
+            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
+            <span class="mcard-hint">Cliquer pour détails</span>
+          </div>
+        </div>
+      </article>
 
-      <div class="gear-stage" id="gear-stage">
+      <article class="mcard reveal" data-cat="cnc" data-id="CNC-002">
+        <div class="mcard-photo">
+          <div class="mcard-scan"></div>
+          <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80" alt="DMG MORI" loading="lazy"/>
+          <span class="mcard-type">Fraisage 5 axes</span>
+          <span class="mcard-status busy">En production</span>
+        </div>
+        <div class="mcard-body">
+          <div class="mcard-id">CNC-002</div>
+          <div class="mcard-name">DMG MORI DMU 50</div>
+          <div class="mcard-brand">DMG Mori — Fraisage universel</div>
+          <div class="mcard-specs">
+            <div class="mspec"><div class="mspec-lbl">Course X/Y/Z</div><div class="mspec-val">500/450/400 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Broche</div><div class="mspec-val">18 000 tr/min</div></div>
+            <div class="mspec"><div class="mspec-lbl">Précision</div><div class="mspec-val">±0.004 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Magasin</div><div class="mspec-val">30 outils</div></div>
+          </div>
+          <div class="mcard-foot">
+            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
+            <span class="mcard-hint">Cliquer pour détails</span>
+          </div>
+        </div>
+      </article>
 
-        <!-- Lignes de connexion -->
-        <svg id="node-svg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="lglow">
-              <feGaussianBlur stdDeviation="2.5" result="b"/>
-              <feMerge>
-                <feMergeNode in="b"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-          <line id="ln-accueil"  x1="280" y1="48" x2="280" y2="228" stroke="rgba(245,168,0,.22)" stroke-width="1" stroke-dasharray="5 4"/>
-          <line id="ln-service"  x1="74"  y1="280" x2="218" y2="280" stroke="rgba(245,168,0,.22)" stroke-width="1" stroke-dasharray="5 4"/>
-          <line id="ln-parc"     x1="486" y1="280" x2="342" y2="280" stroke="rgba(245,168,0,.22)" stroke-width="1" stroke-dasharray="5 4"/>
-          <line id="ln-histoire" x1="50"  y1="500" x2="238" y2="340" stroke="rgba(245,168,0,.22)" stroke-width="1" stroke-dasharray="5 4"/>
-          <line id="ln-contact"  x1="500" y1="500" x2="322" y2="340" stroke="rgba(245,168,0,.22)" stroke-width="1" stroke-dasharray="5 4"/>
-        </svg>
+      <article class="mcard reveal" data-cat="tournage" data-id="TOUR-001">
+        <div class="mcard-photo">
+          <div class="mcard-scan"></div>
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80" alt="NAKAMURA-TOME" loading="lazy"/>
+          <span class="mcard-type">Tour bibroche</span>
+          <span class="mcard-status online">En ligne</span>
+        </div>
+        <div class="mcard-body">
+          <div class="mcard-id">TOUR-001</div>
+          <div class="mcard-name">NAKAMURA-TOME WT-300</div>
+          <div class="mcard-brand">Nakamura-Tome — Bibroche bi-tourelle</div>
+          <div class="mcard-specs">
+            <div class="mspec"><div class="mspec-lbl">Ø max</div><div class="mspec-val">300 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Longueur max</div><div class="mspec-val">450 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Broche</div><div class="mspec-val">5 000 tr/min</div></div>
+            <div class="mspec"><div class="mspec-lbl">Outils</div><div class="mspec-val">2 × 12</div></div>
+          </div>
+          <div class="mcard-foot">
+            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
+            <span class="mcard-hint">Cliquer pour détails</span>
+          </div>
+        </div>
+      </article>
 
-        <!-- Canvas de la roue dentée -->
-        <canvas id="gear-canvas" width="240" height="240"></canvas>
+      <article class="mcard reveal" data-cat="rectification" data-id="RECT-001">
+        <div class="mcard-photo">
+          <div class="mcard-scan"></div>
+          <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&q=80" alt="STUDER S33" loading="lazy"/>
+          <span class="mcard-type">Rectifieuse CNC</span>
+          <span class="mcard-status online">En ligne</span>
+        </div>
+        <div class="mcard-body">
+          <div class="mcard-id">RECT-001</div>
+          <div class="mcard-name">STUDER S33</div>
+          <div class="mcard-brand">Fritz Studer AG — Rectification cylindrique</div>
+          <div class="mcard-specs">
+            <div class="mspec"><div class="mspec-lbl">Distance pointes</div><div class="mspec-val">1 000 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Ø max pièce</div><div class="mspec-val">175 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Précision Ø</div><div class="mspec-val">0.001 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Ra min</div><div class="mspec-val">0.04 µm</div></div>
+          </div>
+          <div class="mcard-foot">
+            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
+            <span class="mcard-hint">Cliquer pour détails</span>
+          </div>
+        </div>
+      </article>
 
-        <!-- Navigation desktop radiale -->
-        <nav class="nav-nodes">
+      <article class="mcard reveal" data-cat="edm" data-id="EDM-001">
+        <div class="mcard-photo">
+          <div class="mcard-scan"></div>
+          <img src="https://images.unsplash.com/photo-1562408590-e32931084e23?w=800&q=80" alt="CHARMILLES FORM 20" loading="lazy"/>
+          <span class="mcard-type">Électroérosion</span>
+          <span class="mcard-status offline">Maintenance</span>
+        </div>
+        <div class="mcard-body">
+          <div class="mcard-id">EDM-001</div>
+          <div class="mcard-name">CHARMILLES FORM 20</div>
+          <div class="mcard-brand">GF Machining Solutions — EDM enfoncement</div>
+          <div class="mcard-specs">
+            <div class="mspec"><div class="mspec-lbl">Course X/Y/Z</div><div class="mspec-val">350/250/300 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Ra min</div><div class="mspec-val">0.1 µm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Précision</div><div class="mspec-val">±0.005 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Pièce max</div><div class="mspec-val">400 kg</div></div>
+          </div>
+          <div class="mcard-foot">
+            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
+            <span class="mcard-hint">Cliquer pour détails</span>
+          </div>
+        </div>
+      </article>
 
-          <a href="accueil.html" class="node node-accueil" data-line="ln-accueil">
-            <div class="node-pill">
-              <div class="node-icon">
-                <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
-              </div>
-              <div class="node-text">
-                <span class="node-name">Accueil</span>
-                <span class="node-desc">Page principale</span>
-              </div>
-            </div>
-          </a>
+      <article class="mcard reveal" data-cat="laser" data-id="LASER-001">
+        <div class="mcard-photo">
+          <div class="mcard-scan"></div>
+          <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80" alt="TRUMPF TruLaser" loading="lazy"/>
+          <span class="mcard-type">Découpe Laser</span>
+          <span class="mcard-status busy">En production</span>
+        </div>
+        <div class="mcard-body">
+          <div class="mcard-id">LASER-001</div>
+          <div class="mcard-name">TRUMPF TruLaser 3030</div>
+          <div class="mcard-brand">TRUMPF GmbH — Laser fibre 6 kW</div>
+          <div class="mcard-specs">
+            <div class="mspec"><div class="mspec-lbl">Format tôle</div><div class="mspec-val">3000 × 1500 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Épaisseur max</div><div class="mspec-val">Acier 20 mm</div></div>
+            <div class="mspec"><div class="mspec-lbl">Puissance</div><div class="mspec-val">6 000 W</div></div>
+            <div class="mspec"><div class="mspec-lbl">Vitesse</div><div class="mspec-val">140 m/min</div></div>
+          </div>
+          <div class="mcard-foot">
+            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
+            <span class="mcard-hint">Cliquer pour détails</span>
+          </div>
+        </div>
+      </article>
 
-          <a href="service.html" class="node node-service" data-line="ln-service">
-            <div class="node-pill">
-              <div class="node-icon">
-                <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>
-              </div>
-              <div class="node-text">
-                <span class="node-name">Services</span>
-                <span class="node-desc">Nos prestations</span>
-              </div>
-            </div>
-          </a>
+    </div>
+  </section>
 
-          <a href="parc.html" class="node node-parc" data-line="ln-parc">
-            <div class="node-pill">
-              <div class="node-icon">
-                <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="8" y1="12" x2="8" y2="16"/><line x1="16" y1="12" x2="16" y2="16"/></svg>
-              </div>
-              <div class="node-text">
-                <span class="node-name">Parc Machine</span>
-                <span class="node-desc">Équipements</span>
-              </div>
-            </div>
-          </a>
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">Fraisage 5 axes simultanés</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Tournage haute précision</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Rectification Ra 0.04 µm</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Électroérosion enfoncement</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Découpe laser fibre 6 kW</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Acier · Inox · Titane · Aluminium</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Fraisage 5 axes simultanés</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Tournage haute précision</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Rectification Ra 0.04 µm</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Électroérosion enfoncement</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Découpe laser fibre 6 kW</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Acier · Inox · Titane · Aluminium</span><span class="ticker-sep">///</span>
+    </div>
+  </div>
 
-          <a href="histoire.html" class="node node-histoire" data-line="ln-histoire">
-            <div class="node-pill">
-              <div class="node-icon">
-                <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              </div>
-              <div class="node-text">
-                <span class="node-name">Histoire</span>
-                <span class="node-desc">Notre parcours</span>
-              </div>
-            </div>
-          </a>
-
-          <a href="contact.html" class="node node-contact" data-line="ln-contact">
-            <div class="node-pill">
-              <div class="node-icon">
-                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </div>
-              <div class="node-text">
-                <span class="node-name">Contact</span>
-                <span class="node-desc">Devis &amp; RDV</span>
-              </div>
-            </div>
-          </a>
-
-        </nav>
-      </div><!-- /gear-stage -->
-
-      <!-- Navigation mobile -->
-      <div class="mobile-nav">
-        <a href="accueil.html" class="mobile-nav-btn">
-          <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
-          Accueil
-        </a>
-        <a href="service.html" class="mobile-nav-btn">
-          <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>
-          Services
-        </a>
-        <a href="parc.html" class="mobile-nav-btn">
-          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-          Parc Machine
-        </a>
-        <a href="histoire.html" class="mobile-nav-btn">
-          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          Histoire
-        </a>
-        <a href="contact.html" class="mobile-nav-btn accent">
-          <svg viewBox="0 0 24 24" style="stroke:var(--bg)"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Contact
-        </a>
-      </div>
-
-    </section><!-- /hero -->
-
-    <!-- TICKER -->
-    <div class="ticker-wrap">
-      <div class="ticker-track">
-        <span class="ticker-item">INOFER Industries</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Maintenance industrielle haute précision</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Parc machines CNC dernière génération</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Devis sous 24h</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">+ 60 ans d'expertise</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Certifié ISO 9001</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Entreprise sur carouge</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Livraison dans toute la Suisse</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Service à noter</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Service à noter</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Service à noter</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Service à noter</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Service à noter</span><span class="ticker-sep">///</span>
-        <span class="ticker-item">Service à noter</span><span class="ticker-sep">///</span>
+  <!-- CAPACITÉS -->
+  <div class="cap-section">
+    <div class="cap-left">
+      <div class="cap-label">Capacités techniques</div>
+      <h2>CE QUE NOUS<br><em>MAÎTRISONS</em></h2>
+      <p>De la pièce unitaire de précision à la grande série industrielle — notre parc couvre l'intégralité des procédés de fabrication avancés.</p>
+    </div>
+    <div class="cap-right">
+      <div class="cap-tags">
+        <span class="ctag">Fraisage 5 axes</span><span class="ctag">Tournage CNC</span>
+        <span class="ctag">Rectification µm</span><span class="ctag">Électroérosion</span>
+        <span class="ctag">Découpe laser</span><span class="ctag">Acier inox</span>
+        <span class="ctag">Titane</span><span class="ctag">Aluminium</span>
+        <span class="ctag">Cuivre / Laiton</span><span class="ctag">Pièces unitaires</span>
+        <span class="ctag">Petites séries</span><span class="ctag">Grandes séries</span>
+        <span class="ctag">Proto rapide</span><span class="ctag">Contrôle 3D</span>
+        <span class="ctag">Aéronautique</span><span class="ctag">Médical</span>
+        <span class="ctag">ISO 9001</span>
       </div>
     </div>
+  </div>
 
-    <!-- INFO SECTION -->
-    <section class="info-section">
+  <!-- CTA -->
+  <div class="cta-band">
+    <div class="cta-copy">
+      <span class="eyebrow">Votre projet, notre expertise</span>
+      <h2>DEVIS SOUS 24H<br>GARANTI</h2>
+      <p>Envoyez-nous votre plan ou cahier des charges. Un ingénieur vous répond dans la journée avec une proposition technique et tarifaire complète.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="contact.html" class="btn-primary">Demander un devis</a>
+      <a href="index.html" class="btn-outline">← Retour accueil</a>
+    </div>
+  </div>
 
-      <div class="info-copy">
-        <div class="section-eyebrow">Solutions industrielles avancées</div>
-        <h1>L'INDUSTRIE<br><em>RÉINVENTÉE</em></h1>
-        <p class="subtitle">
-          INOFER conçoit et opère des équipements industriels de haute précision. De la maintenance corrective à l'intégration complète de ligne de production — votre partenaire technique d'excellence depuis plus de 20 ans.
-        </p>
-        <div class="stats-row">
-          <div class="stat">
-            <span class="stat-num">+60</span>
-            <span class="stat-lbl">Ans d'expérience</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">350+</span>
-            <span class="stat-lbl">Projets livrés</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">98%</span>
-            <span class="stat-lbl">Satisfaction</span>
-          </div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="ft-brand">
+        <span class="logo-footer">[IN<span>O</span>FER]</span>
+        <p>Spécialiste en solutions industrielles de haute précision depuis 2004.</p>
+        <div class="ft-contact">
+          <a href="tel:+33000000000">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +33 (0)X XX XX XX XX
+          </a>
+          <a href="mailto:contact@inofer.fr">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            contact@inofer.fr
+          </a>
         </div>
-        <div class="cta-group">
-          <a href="contact.html" class="btn-primary">Demander un devis</a>
-          <a href="service.html" class="btn-secondary">Nos services →</a>
-        </div>
-      </div>
-
-      <div class="info-services">
-        <div class="section-eyebrow">Ce que nous faisons</div>
-        <div class="services-grid">
-
-          <div class="service-card">
-            <div class="sc-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg></div>
-            <div class="sc-title">Maintenance</div>
-            <div class="sc-desc">Interventions préventives et correctives sur tous types de machines industrielles.</div>
-          </div>
-
-          <div class="service-card">
-            <div class="sc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
-            <div class="sc-title">Automatisation</div>
-            <div class="sc-desc">Intégration de systèmes automatisés pour optimiser votre production.</div>
-          </div>
-
-          <div class="service-card">
-            <div class="sc-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
-            <div class="sc-title">Parc Machines</div>
-            <div class="sc-desc">Accès à un parc CNC de dernière génération pour vos pièces de précision.</div>
-          </div>
-
-          <div class="service-card">
-            <div class="sc-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/><path d="M1.61 3.18A2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72"/><line x1="1" y1="1" x2="23" y2="23"/></svg></div>
-            <div class="sc-title">Conseil &amp; Devis</div>
-            <div class="sc-desc">Étude technique gratuite et réponse sous 24h pour tous vos projets.</div>
-          </div>
-
+        <div class="social-row">
+          <a href="#" class="sbtn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="sbtn"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="sbtn"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         </div>
       </div>
-
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-      <div class="footer-top">
-
-        <div class="ft-brand">
-          <span class="logo-footer">[IN<span>O</span>FER]</span>
-          <p>Spécialiste en solutions industrielles de haute précision. Votre partenaire technique pour la maintenance, l'automatisation et l'intégration de lignes de production.</p>
-          <div class="ft-contact-info">
-            <a href="tel:+33000000000">
-              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              +33 (0)X XX XX XX XX
-            </a>
-            <a href="mailto:contact@inofer.fr">
-              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              contact@inofer.fr
-            </a>
-            <span>
-              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Zone industrielle — France
-            </span>
-          </div>
-          <div class="social-row">
-            <a href="#" class="social-btn" title="LinkedIn" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="Facebook" aria-label="Facebook">
-              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="Instagram" aria-label="Instagram">
-              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="YouTube" aria-label="YouTube">
-              <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="X / Twitter" aria-label="X / Twitter">
-              <svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20" stroke-linecap="round"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="ft-col">
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="accueil.html">Accueil</a></li>
-            <li><a href="service.html">Services</a></li>
-            <li><a href="parc.html">Parc Machine</a></li>
-            <li><a href="histoire.html">Notre histoire</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-
-        <div class="ft-col">
-          <h4>Services</h4>
-          <ul>
-            <li><a href="#">Maintenance préventive</a></li>
-            <li><a href="#">Maintenance corrective</a></li>
-            <li><a href="#">Automatisation</a></li>
-            <li><a href="#">Usinage CNC</a></li>
-            <li><a href="#">Audit industriel</a></li>
-            <li><a href="#">Formation technique</a></li>
-          </ul>
-        </div>
-
-        <div class="ft-col">
-          <h4>Informations</h4>
-          <ul>
-            <li><a href="mentions-legales.html">Mentions légales</a></li>
-            <li><a href="politique-confidentialite.html">Politique de confidentialité</a></li>
-            <li><a href="cgv.html">CGV</a></li>
-            <li><a href="cookies.html">Gestion des cookies</a></li>
-            <li><a href="plan-du-site.html">Plan du site</a></li>
-            <li><a href="#">Certifications</a></li>
-          </ul>
-        </div>
-
+      <div class="ft-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="service.html">Services</a></li>
+          <li><a href="parc.html">Parc Machine</a></li>
+          <li><a href="histoire.html">Notre histoire</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </div>
-
-      <div class="footer-bottom">
-        <span class="ft-copy">&copy; 2026 - Atypiquement réalisé par Typik Studio — Tous droits réservés — SIRET : XXX XXX XXX XXXXX</span>
-        <div class="ft-legal-links">
-          <a href="mentions-legales.html">Mentions légales</a>
-          <a href="politique-confidentialite.html">Confidentialité</a>
-          <a href="cgv.html">CGV</a>
-          <a href="cookies.html">Cookies</a>
-        </div>
-        <span class="ft-cert">ISO 9001 certifié</span>
+      <div class="ft-col">
+        <h4>Capacités</h4>
+        <ul>
+          <li><a href="#">Fraisage 5 axes</a></li>
+          <li><a href="#">Tournage CNC</a></li>
+          <li><a href="#">Rectification</a></li>
+          <li><a href="#">Électroérosion</a></li>
+          <li><a href="#">Découpe laser</a></li>
+        </ul>
       </div>
+      <div class="ft-col">
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">CGV</a></li>
+          <li><a href="#">Certifications</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="ft-copy">&copy; 2024 INOFER — Tous droits réservés — SIRET : XXX XXX XXX XXXXX</span>
+      <div class="ft-legal">
+        <a href="#">Mentions légales</a><a href="#">Confidentialité</a><a href="#">CGV</a>
+      </div>
+      <span class="ft-iso">ISO 9001 certifié</span>
+    </div>
+  </footer>
 
-    </footer>
+</div><!-- /.page -->
 
-  </div><!-- /page -->
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox">
+  <div class="lb-box">
+    <div class="lb-photo"><img id="lb-img" src="" alt=""/></div>
+    <div class="lb-content">
+      <button id="lb-close" class="lb-close">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="lb-id"><span id="lb-id-txt"></span></div>
+      <div id="lb-name" class="lb-name"></div>
+      <div id="lb-brand" class="lb-brand"></div>
+      <div id="lb-desc" class="lb-desc"></div>
+      <div id="lb-specs" class="lb-specs"></div>
+      <div class="lb-foot">
+        <a href="contact.html" class="lb-cta">Demander un devis</a>
+        <a href="contact.html" class="lb-cta2">Nous contacter</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <script src="main.js"></script>
+<script>
+// ── CANVAS PARTICLES ──
+const bgC=document.getElementById('bg-canvas'),bgX=bgC.getContext('2d');
+function resizeBg(){bgC.width=window.innerWidth;bgC.height=window.innerHeight}
+resizeBg();window.addEventListener('resize',resizeBg);
+const pts=Array.from({length:55},()=>({
+  x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
+  vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,
+  r:Math.random()*.85+.25,a:Math.random()*.38+.08
+}));
+(function loop(){
+  bgC.width=bgC.width;
+  bgX.strokeStyle='rgba(245,168,0,.024)';bgX.lineWidth=1;
+  for(let x=0;x<bgC.width;x+=64){bgX.beginPath();bgX.moveTo(x,0);bgX.lineTo(x,bgC.height);bgX.stroke()}
+  for(let y=0;y<bgC.height;y+=64){bgX.beginPath();bgX.moveTo(0,y);bgX.lineTo(bgC.width,y);bgX.stroke()}
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=bgC.width;if(p.x>bgC.width)p.x=0;
+    if(p.y<0)p.y=bgC.height;if(p.y>bgC.height)p.y=0;
+    bgX.beginPath();bgX.arc(p.x,p.y,p.r,0,Math.PI*2);
+    bgX.fillStyle=`rgba(245,168,0,${p.a})`;bgX.fill();
+  });
+  requestAnimationFrame(loop);
+})();
+
+// ── FILTRES ──
+const fbtns=document.querySelectorAll('.fbtn');
+const cards=document.querySelectorAll('.mcard');
+const countEl=document.getElementById('filter-count');
+const labelEl=document.getElementById('grid-label');
+const LABELS={all:'Tous les équipements',cnc:'Fraisage CNC',tournage:'Tournage',
+  rectification:'Rectification',edm:'Électroérosion',laser:'Découpe Laser'};
+fbtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    fbtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.f;let count=0;
+    cards.forEach((c,i)=>{
+      const show=f==='all'||c.dataset.cat===f;
+      if(show){c.style.display='';count++;setTimeout(()=>c.classList.add('in'),i*50)}
+      else{c.classList.remove('in');setTimeout(()=>{c.style.display='none'},260)}
+    });
+    setTimeout(()=>{
+      countEl.textContent=count+' machine'+(count>1?'s':'');
+      labelEl.textContent=LABELS[f]+' — '+count+' machine'+(count>1?'s':'');
+    },300);
+  });
+});
+
+// ── REVEAL AU SCROLL ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('in'),i*65)});
+},{threshold:.1});
+cards.forEach(c=>obs.observe(c));
+
+// ── LIGHTBOX DATA ──
+const DATA={
+  'CNC-001':{img:'https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=900&q=80',
+    badge:"Centre d'usinage 5 axes simultanés",name:'MAZAK VARIAXIS i-700',
+    brand:'Yamazaki Mazak Corporation — Série Variaxis',
+    desc:"Centre d'usinage 5 axes simultanés de dernière génération. Idéal pour les pièces complexes en aéronautique, médical et moule. Équipé du système SmoothX pour des trajectoires ultra-fluides.",
+    specs:{'Course X/Y/Z':'700 / 650 / 510 mm','Broche':'12 000 tr/min','Magasin':'40 outils','Précision':'±0.003 mm','Table':'Ø 700 mm / 500 kg','Puissance':'22 kW'}},
+  'CNC-002':{img:'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80',
+    badge:'Fraisage universel 5 axes',name:'DMG MORI DMU 50',
+    brand:'DMG Mori Seiki — Série DMU',
+    desc:'Machine de fraisage universel à 5 axes avec tête pivotante. Polyvalente et compacte, elle traite aussi bien les petites pièces de précision que les grands alésages.',
+    specs:{'Course X/Y/Z':'500 / 450 / 400 mm','Broche':'18 000 tr/min','Magasin':'30 outils','Précision':'±0.004 mm','Inclinaison':'-5° / +110°','Puissance':'15 kW'}},
+  'TOUR-001':{img:'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80',
+    badge:'Tour bibroche bi-tourelle CNC',name:'NAKAMURA-TOME WT-300',
+    brand:'Nakamura-Tome Precision Industry — Série WT',
+    desc:"Tour CNC bibroche bi-tourelle pour la production en série haute précision. Deux broches opposées permettent l'usinage complet en un seul chargement.",
+    specs:{'Ø max tournage':'300 mm','Longueur max':'450 mm','Broche principale':'5 000 tr/min','Outils motorisés':'6 000 tr/min',"Nombre d'outils":'2 × 12','Puissance':'22 kW'}},
+  'RECT-001':{img:'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=900&q=80',
+    badge:'Rectifieuse cylindrique universelle CNC',name:'STUDER S33',
+    brand:'Fritz Studer AG — Série S Universal',
+    desc:"Rectifieuse cylindrique universelle pour l'usinage extérieur, intérieur et de forme. La technologie StuderWIN assure une précision dimensionnelle de l'ordre du micron.",
+    specs:{'Distance pointes':'1 000 mm','Ø max pièce':'175 mm / 80 kg','Meule ext.':'Ø 500 × 63 mm','Précision Ø':'0.001 mm','Rugosité Ra':'0.04 µm','Résolution CN':'0.0001 mm'}},
+  'EDM-001':{img:'https://images.unsplash.com/photo-1562408590-e32931084e23?w=900&q=80',
+    badge:'Électroérosion par enfoncement',name:'CHARMILLES FORM 20',
+    brand:'GF Machining Solutions — Série FORM',
+    desc:"Machine d'électroérosion par enfoncement pour la réalisation de formes complexes impossibles à usiner par voie conventionnelle.",
+    specs:{'Course X/Y/Z':'350 / 250 / 300 mm','Poids pièce max':'400 kg','Ra min':'0.1 µm','Précision':'±0.005 mm','Courant max':'50 A','Diélectrique':'Huile / Eau'}},
+  'LASER-001':{img:'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=900&q=80',
+    badge:'Découpe laser fibre haute puissance',name:'TRUMPF TruLaser 3030',
+    brand:'TRUMPF GmbH — Série TruLaser',
+    desc:"Centre de découpe laser fibre haute puissance. Tête BrightLine Fiber intégrée pour une qualité de coupe optimale sur acier, inox, aluminium et laiton.",
+    specs:{'Format tôle':'3 000 × 1 500 mm','Épaisseur max':'Acier 20 mm / Alu 15 mm','Puissance laser':'6 000 W','Vitesse coupe':'140 m/min','Précision':'±0.05 mm','Puissance élec.':'30 kVA'}}
+};
+
+// ── LIGHTBOX INTERACTIONS ──
+const lb=document.getElementById('lightbox');
+cards.forEach(card=>{
+  card.addEventListener('click',()=>{
+    const d=DATA[card.dataset.id];if(!d)return;
+    document.getElementById('lb-img').src=d.img;
+    document.getElementById('lb-id-txt').textContent=card.dataset.id+' — '+d.badge;
+    document.getElementById('lb-name').textContent=d.name;
+    document.getElementById('lb-brand').textContent=d.brand;
+    document.getElementById('lb-desc').textContent=d.desc;
+    document.getElementById('lb-specs').innerHTML=Object.entries(d.specs)
+      .map(([l,v])=>`<div class="lbspec"><div class="lbspec-lbl">${l}</div><div class="lbspec-val">${v}</div></div>`)
+      .join('');
+    lb.classList.add('open');document.body.style.overflow='hidden';
+  });
+});
+document.getElementById('lb-close').addEventListener('click',()=>{lb.classList.remove('open');document.body.style.overflow='';});
+lb.addEventListener('click',e=>{if(e.target===lb){lb.classList.remove('open');document.body.style.overflow='';}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){lb.classList.remove('open');document.body.style.overflow='';}});
+</script>
 </body>
 </html>
