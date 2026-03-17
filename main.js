@@ -116,7 +116,11 @@ function drawGear(a) {
   gx.translate(cx, cy);
   gx.rotate(a);
 
-  const teeth = 14, oR = 104, iR = 84, bR = 76, hR = 19;
+const teeth = 10;   // moins de dents → plus massif
+const oR = 110;     // rayon extérieur un peu plus grand
+const iR = 90;      // creux de dent plus profond
+const bR = 80;      // base légèrement ajustée
+const hR = 22;      // centre un peu plus gros
   const step  = Math.PI * 2 / teeth;
 
   /* -- ambient glow ring -- */
