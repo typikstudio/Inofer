@@ -39,7 +39,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;
   display:flex;align-items:center;gap:7px;transition:color .2s}
 .nav-back svg{width:13px;height:13px;stroke:var(--dim);fill:none;stroke-width:2;transition:stroke .2s}
 .nav-back:hover{color:var(--gold)}.nav-back:hover svg{stroke:var(--gold)}
-.status-dot{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:2px;
+.status-dot{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;
   color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:7px}
 .status-dot::before{content:'';width:5px;height:5px;border-radius:50%;
   background:var(--gold);box-shadow:0 0 7px var(--gold);animation:blink 2s ease-in-out infinite}
@@ -63,7 +63,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0L56 16L56 48L28 64L0 48L0 16Z' fill='none' stroke='%23F5A800' stroke-width='.8'/%3E%3Cpath d='M28 64L56 80L56 100' fill='none' stroke='%23F5A800' stroke-width='.8'/%3E%3Cpath d='M28 64L0 80L0 100' fill='none' stroke='%23F5A800' stroke-width='.8'/%3E%3C/svg%3E")}
 .hero-glow{position:absolute;bottom:-80px;left:60px;width:480px;height:280px;
   background:radial-gradient(ellipse,rgba(245,168,0,.07) 0%,transparent 70%);pointer-events:none}
-.breadcrumb{font-family:'Share Tech Mono',monospace;font-size:.56rem;letter-spacing:3px;
+.breadcrumb{font-family:'Share Tech Mono',monospace;font-size:20px;letter-spacing:3px;
   text-transform:uppercase;color:var(--dim);margin-bottom:16px;
   display:flex;align-items:center;gap:8px;z-index:2;position:relative}
 .breadcrumb a{color:var(--dim);text-decoration:none;transition:color .2s}
@@ -86,11 +86,11 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;
   overflow-x:auto;scrollbar-width:none}
 .filter-bar::-webkit-scrollbar{display:none}
 @media(max-width:600px){.filter-bar{padding:0 16px}}
-.fbtn{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;
+.fbtn{font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:2px;text-transform:uppercase;
   color:var(--dim);background:transparent;border:none;padding:15px 20px;cursor:pointer;
   border-bottom:2px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap}
 .fbtn:hover{color:var(--text)}.fbtn.active{color:var(--gold);border-bottom-color:var(--gold)}
-.filter-count{font-family:'Share Tech Mono',monospace;font-size:.52rem;color:var(--gold);
+.filter-count{font-family:'Share Tech Mono',monospace;font-size:16px;color:var(--gold);
   margin-left:auto;padding:0 20px;white-space:nowrap;flex-shrink:0}
 @media(max-width:700px){.filter-count{display:none}}
 
@@ -129,14 +129,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;
 .mcard:hover .mcard-scan{opacity:1;animation:scan .8s ease-in-out infinite}
 @keyframes scan{0%{top:0}100%{top:100%}}
 .mcard-type{position:absolute;bottom:14px;left:16px;z-index:4;
-  font-family:'Share Tech Mono',monospace;font-size:.48rem;letter-spacing:2px;text-transform:uppercase;
+  font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:2px;text-transform:uppercase;
   padding:4px 11px;background:rgba(8,10,12,.85);border:1px solid rgba(245,168,0,.35);color:var(--gold);
   clip-path:polygon(4px 0,100% 0,calc(100% - 4px) 100%,0 100%)}
-.mcard-status{position:absolute;top:14px;right:14px;z-index:4;
-  font-family:'Share Tech Mono',monospace;font-size:.5rem;letter-spacing:2px;text-transform:uppercase;
-  padding:4px 10px;background:rgba(8,10,12,.88);border:1px solid currentColor;
-  clip-path:polygon(4px 0,100% 0,calc(100% - 4px) 100%,0 100%)}
-.mcard-status.online{color:#4ade80}.mcard-status.busy{color:var(--gold)}.mcard-status.offline{color:#f87171}
 .mcard-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
 .mcard-id{font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:3px;
   text-transform:uppercase;color:var(--gold);margin-bottom:7px;display:flex;align-items:center;gap:9px}
@@ -145,16 +140,15 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;
   color:#e8f0f6;line-height:1;margin-bottom:4px;transition:color .25s}
 .mcard:hover .mcard-name{color:var(--gold2)}
 .mcard.featured .mcard-name{font-size:clamp(1.6rem,2.2vw,2.2rem)}
-.mcard-brand{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.78rem;color:var(--dim);margin-bottom:18px}
+.mcard-brand{font-family:'Exo 2',sans-serif;font-weight:300;font-size:14px;color:var(--dim);margin-bottom:18px}
 .mcard-specs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:18px;flex:1}
 .mspec{background:rgba(245,168,0,.025);border:1px solid var(--border2);padding:8px 11px;
   transition:border-color .25s,background .25s}
 .mcard:hover .mspec{border-color:rgba(245,168,0,.14);background:rgba(245,168,0,.04)}
 .mspec-lbl{font-family:'Share Tech Mono',monospace;font-size:.44rem;letter-spacing:2px;
   text-transform:uppercase;color:var(--dim);margin-bottom:2px}
-.mspec-val{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.78rem;color:var(--text)}
-.mcard-foot{display:flex;align-items:center;justify-content:space-between;
-  padding-top:14px;border-top:1px solid var(--border2)}
+.mspec-val{font-family:'Exo 2',sans-serif;font-weight:700;font-size:14px;color:var(--text)}
+
 .mcard-cta{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.64rem;letter-spacing:2px;
   text-transform:uppercase;color:var(--bg);background:var(--gold);padding:7px 16px;
   clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%);
@@ -169,7 +163,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;
 .ticker-wrap{overflow:hidden;height:36px;background:rgba(8,10,12,.9);display:flex;align-items:center;
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
 .ticker-track{display:flex;white-space:nowrap;animation:ticker 42s linear infinite}
-.ticker-item{font-family:'Share Tech Mono',monospace;font-size:.56rem;letter-spacing:2px;color:var(--dim);padding:0 7px}
+.ticker-item{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;color:var(#fff);padding:0 7px}
 .ticker-sep{color:var(--gold);padding:0 10px}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
@@ -191,7 +185,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;
 .cap-right{padding:48px 60px 48px 44px;display:flex;align-items:center}
 @media(max-width:800px){.cap-right{padding:36px 28px}}
 .cap-tags{display:flex;flex-wrap:wrap;gap:8px}
-.ctag{font-family:'Share Tech Mono',monospace;font-size:.54rem;letter-spacing:2px;text-transform:uppercase;
+.ctag{font-family:'Share Tech Mono',monospace;font-size:15px;letter-spacing:2px;text-transform:uppercase;
   padding:7px 13px;background:rgba(245,168,0,.03);border:1px solid var(--border2);color:var(--dim);
   clip-path:polygon(4px 0,100% 0,calc(100% - 4px) 100%,0 100%);transition:all .2s}
 .ctag:hover{border-color:var(--gold);color:var(--gold);background:rgba(245,168,0,.07)}
@@ -240,7 +234,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
 .ft-brand>p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.82rem;line-height:1.7;
   color:var(--dim);margin-top:12px;max-width:260px}
 .ft-contact{margin-top:20px;display:flex;flex-direction:column;gap:8px}
-.ft-contact a{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:1px;
+.ft-contact a{font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:1px;
   color:var(--dim);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
 .ft-contact a:hover{color:var(--gold)}
 .ft-contact svg{width:11px;height:11px;stroke:var(--gold);fill:none;stroke-width:2;flex-shrink:0}
@@ -379,26 +373,21 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
     <div class="grid-label" id="grid-label">Équipements — 6 machines</div>
     <div class="machine-grid" id="machine-grid">
 
-      <article class="mcard featured reveal" data-cat="cnc" data-id="CNC-001">
+      <article class="mcard reveal" data-cat="cnc" data-id="CNC-001">
         <div class="mcard-photo">
           <div class="mcard-scan"></div>
           <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1000&q=80" alt="MAZAK VARIAXIS" loading="lazy"/>
           <span class="mcard-type">Centre 5 axes</span>
-          <span class="mcard-status online">En ligne</span>
         </div>
         <div class="mcard-body">
-          <div class="mcard-id">CNC-001</div>
-          <div class="mcard-name">MAZAK VARIAXIS i-700</div>
+          <div class="mcard-id">Tours Schaublin 102</div>
+          <div class="mcard-name">Tours Schaublin 102</div>
           <div class="mcard-brand">Yamazaki Mazak — 5 axes simultanés</div>
           <div class="mcard-specs">
             <div class="mspec"><div class="mspec-lbl">Course X/Y/Z</div><div class="mspec-val">700/650/510 mm</div></div>
             <div class="mspec"><div class="mspec-lbl">Broche</div><div class="mspec-val">12 000 tr/min</div></div>
             <div class="mspec"><div class="mspec-lbl">Précision</div><div class="mspec-val">±0.003 mm</div></div>
             <div class="mspec"><div class="mspec-lbl">Magasin</div><div class="mspec-val">40 outils</div></div>
-          </div>
-          <div class="mcard-foot">
-            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
-            <span class="mcard-hint">Cliquer pour détails</span>
           </div>
         </div>
       </article>
@@ -408,7 +397,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
           <div class="mcard-scan"></div>
           <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80" alt="DMG MORI" loading="lazy"/>
           <span class="mcard-type">Fraisage 5 axes</span>
-          <span class="mcard-status busy">En production</span>
         </div>
         <div class="mcard-body">
           <div class="mcard-id">CNC-002</div>
@@ -420,10 +408,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
             <div class="mspec"><div class="mspec-lbl">Précision</div><div class="mspec-val">±0.004 mm</div></div>
             <div class="mspec"><div class="mspec-lbl">Magasin</div><div class="mspec-val">30 outils</div></div>
           </div>
-          <div class="mcard-foot">
-            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
-            <span class="mcard-hint">Cliquer pour détails</span>
-          </div>
         </div>
       </article>
 
@@ -432,7 +416,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
           <div class="mcard-scan"></div>
           <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80" alt="NAKAMURA-TOME" loading="lazy"/>
           <span class="mcard-type">Tour bibroche</span>
-          <span class="mcard-status online">En ligne</span>
         </div>
         <div class="mcard-body">
           <div class="mcard-id">TOUR-001</div>
@@ -444,10 +427,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
             <div class="mspec"><div class="mspec-lbl">Broche</div><div class="mspec-val">5 000 tr/min</div></div>
             <div class="mspec"><div class="mspec-lbl">Outils</div><div class="mspec-val">2 × 12</div></div>
           </div>
-          <div class="mcard-foot">
-            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
-            <span class="mcard-hint">Cliquer pour détails</span>
-          </div>
         </div>
       </article>
 
@@ -456,7 +435,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
           <div class="mcard-scan"></div>
           <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&q=80" alt="STUDER S33" loading="lazy"/>
           <span class="mcard-type">Rectifieuse CNC</span>
-          <span class="mcard-status online">En ligne</span>
         </div>
         <div class="mcard-body">
           <div class="mcard-id">RECT-001</div>
@@ -467,11 +445,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
             <div class="mspec"><div class="mspec-lbl">Ø max pièce</div><div class="mspec-val">175 mm</div></div>
             <div class="mspec"><div class="mspec-lbl">Précision Ø</div><div class="mspec-val">0.001 mm</div></div>
             <div class="mspec"><div class="mspec-lbl">Ra min</div><div class="mspec-val">0.04 µm</div></div>
-          </div>
-          <div class="mcard-foot">
-            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
-            <span class="mcard-hint">Cliquer pour détails</span>
-          </div>
         </div>
       </article>
 
@@ -480,7 +453,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
           <div class="mcard-scan"></div>
           <img src="https://images.unsplash.com/photo-1562408590-e32931084e23?w=800&q=80" alt="CHARMILLES FORM 20" loading="lazy"/>
           <span class="mcard-type">Électroérosion</span>
-          <span class="mcard-status offline">Maintenance</span>
         </div>
         <div class="mcard-body">
           <div class="mcard-id">EDM-001</div>
@@ -492,10 +464,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
             <div class="mspec"><div class="mspec-lbl">Précision</div><div class="mspec-val">±0.005 mm</div></div>
             <div class="mspec"><div class="mspec-lbl">Pièce max</div><div class="mspec-val">400 kg</div></div>
           </div>
-          <div class="mcard-foot">
-            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
-            <span class="mcard-hint">Cliquer pour détails</span>
-          </div>
         </div>
       </article>
 
@@ -504,7 +472,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
           <div class="mcard-scan"></div>
           <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80" alt="TRUMPF TruLaser" loading="lazy"/>
           <span class="mcard-type">Découpe Laser</span>
-          <span class="mcard-status busy">En production</span>
         </div>
         <div class="mcard-body">
           <div class="mcard-id">LASER-001</div>
@@ -515,10 +482,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
             <div class="mspec"><div class="mspec-lbl">Épaisseur max</div><div class="mspec-val">Acier 20 mm</div></div>
             <div class="mspec"><div class="mspec-lbl">Puissance</div><div class="mspec-val">6 000 W</div></div>
             <div class="mspec"><div class="mspec-lbl">Vitesse</div><div class="mspec-val">140 m/min</div></div>
-          </div>
-          <div class="mcard-foot">
-            <a href="contact.html" class="mcard-cta" onclick="event.stopPropagation()">Demander un devis</a>
-            <span class="mcard-hint">Cliquer pour détails</span>
           </div>
         </div>
       </article>
@@ -553,14 +516,22 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
     </div>
     <div class="cap-right">
       <div class="cap-tags">
-        <span class="ctag">Fraisage 5 axes</span><span class="ctag">Tournage CNC</span>
-        <span class="ctag">Rectification µm</span><span class="ctag">Électroérosion</span>
-        <span class="ctag">Découpe laser</span><span class="ctag">Acier inox</span>
-        <span class="ctag">Titane</span><span class="ctag">Aluminium</span>
-        <span class="ctag">Cuivre / Laiton</span><span class="ctag">Pièces unitaires</span>
-        <span class="ctag">Petites séries</span><span class="ctag">Grandes séries</span>
-        <span class="ctag">Proto rapide</span><span class="ctag">Contrôle 3D</span>
-        <span class="ctag">Aéronautique</span><span class="ctag">Médical</span>
+        <span class="ctag">Fraisage 5 axes</span>
+        <span class="ctag">Tournage CNC</span>
+        <span class="ctag">Rectification µm</span>
+        <span class="ctag">Électroérosion</span>
+        <span class="ctag">Découpe laser</span>
+        <span class="ctag">Acier inox</span>
+        <span class="ctag">Titane</span>
+        <span class="ctag">Aluminium</span>
+        <span class="ctag">Cuivre / Laiton</span>
+        <span class="ctag">Pièces unitaires</span>
+        <span class="ctag">Petites séries</span>
+        <span class="ctag">Grandes séries</span>
+        <span class="ctag">Proto rapide</span>
+        <span class="ctag">Contrôle 3D</span>
+        <span class="ctag">Aéronautique</span>
+        <span class="ctag">Médical</span>
         <span class="ctag">ISO 9001</span>
       </div>
     </div>
