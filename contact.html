@@ -87,10 +87,8 @@ header{position:fixed;top:0px;left:20px;right:20px;bottom:30px;z-index:200;heigh
 /* urgence badge */
 .urgence-card{border:1px solid var(--gold);background:rgba(245,168,0,.05);padding:18px 20px;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);position:relative;overflow:hidden}
 .urgence-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,168,0,.08),transparent);pointer-events:none}
-.urgence-label{font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.urgence-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:blink 1.2s ease-in-out infinite}
 .urgence-num{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;color:#fff}
-.urgence-note{font-family:'Share Tech Mono',monospace;font-size:.52rem;letter-spacing:1px;color:var(--dim);margin-top:4px}
+.urgence-note{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:1px;color:var(--dim);margin-top:4px}
 
 /* ── RIGHT : FORMULAIRE ── */
 .contact-form-wrap{padding:56px 60px 56px 48px;display:flex;flex-direction:column;justify-content:flex-start}
@@ -241,9 +239,8 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <div>
         <div class="info-block-title">Urgence industrielle</div>
         <div class="urgence-card">
-          <div class="urgence-label">Hotline 24h/24 — 7j/7</div>
           <div class="urgence-num">+41 22 342 84 91</div>
-          <div class="urgence-note">Intervention sous 4h sur site · Astreinte permanente</div>
+          <div class="urgence-note">Intervention rapide sur certaine pièces</div>
         </div>
       </div>
 
@@ -259,87 +256,95 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
     </div>
 
     <!-- FORMULAIRE -->
-    <div class="contact-form-wrap">
-      <div class="form-title">Formulaire de contact</div>
-      <form id="contact-form" novalidate>
-         <form
-          class="contact-form"
-          action="https://formsubmit.co/inofer@bluewin.ch"
-          method="POST"
-        >
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Nom <span class="req">*</span></label>
-            <input class="form-input" type="text" name="nom" placeholder="Dupont" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Prénom <span class="req">*</span></label>
-            <input class="form-input" type="text" name="prenom" placeholder="Jean"/>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Société</label>
-            <input class="form-input" type="text" name="societe" placeholder="ACME Industries"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Téléphone</label>
-            <input class="form-input" type="tel" name="tel" placeholder="+41223428491"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email <span class="req">*</span></label>
-          <input class="form-input" type="email" name="email" placeholder="j.dupont@societe.fr" required/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Objet de la demande <span class="req">*</span></label>
-          <div class="select-wrap">
-            <select class="form-select form-input" name="objet" required>
-              <option value="" disabled selected>Sélectionner…</option>
-              <option>Demande de devis</option>
-              <option>Maintenance préventive</option>
-              <option>Maintenance corrective / Urgence</option>
-              <option>Usinage CNC / Sous-traitance</option>
-              <option>Automatisation</option>
-              <option>Audit industriel</option>
-              <option>Formation technique</option>
-              <option>Autre</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Délai souhaité</label>
-          <div class="radio-group">
-            <label class="radio-btn"><input type="radio" name="delai" value="urgent"/><span class="radio-pill">Urgent &lt; 48h</span></label>
-            <label class="radio-btn"><input type="radio" name="delai" value="semaine"/><span class="radio-pill">Cette semaine</span></label>
-            <label class="radio-btn"><input type="radio" name="delai" value="mois" checked/><span class="radio-pill">Ce mois</span></label>
-            <label class="radio-btn"><input type="radio" name="delai" value="flexible"/><span class="radio-pill">Flexible</span></label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Message <span class="req">*</span></label>
-          <textarea class="form-input form-textarea" name="message" placeholder="Décrivez votre besoin, les machines concernées, les matériaux, les tolérances requises…" required></textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Plan / Cahier des charges (optionnel)</label>
-          <div class="file-drop" id="file-drop">
-            <input type="file" accept=".pdf,.dwg,.step,.dxf,.jpg,.png" id="file-input"/>
-            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <p><span id="texte-fichier">Cliquer pour joindre</span> ou glisser-déposer<br>PDF · DWG · STEP · DXF · JPG — Max 10 Mo</p>
-            <p class="file-name" id="file-name"></p>
-          </div>
-        </div>
-        <div class="form-submit">
-          <button type="submit" class="btn-submit">Envoyer le message</button>
-        </div>
-      </form>
-      <div class="form-success" id="form-success">
-        <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="success-title">Message envoyé !</div>
-        <p class="success-msg">Merci pour votre demande. Notre équipe technique vous recontactera dans les 24 heures ouvrées.</p>
-      </div>
-    </div>
-  </div>
+    <!-- FORMULAIRE -->
+     <div class="contact-form-wrap">
+       <div class="form-title">Formulaire de contact</div>
+
+       <form
+         id="contact-form"
+         action="https://formsubmit.co/inofer@bluewin.ch"
+         method="POST"
+         enctype="multipart/form-data"
+       >
+         <input type="hidden" name="_subject" value="Nouvelle demande — INOFER" />
+         <input type="hidden" name="_next" value="contact.html?merci=1" />
+         <input type="hidden" name="_captcha" value="false" />
+         <input type="text" name="_honey" style="display:none" />
+
+         <div class="form-row">
+           <div class="form-group">
+             <label class="form-label">Nom <span class="req">*</span></label>
+             <input class="form-input" type="text" name="nom" placeholder="Dupont" required/>
+           </div>
+           <div class="form-group">
+             <label class="form-label">Prénom <span class="req">*</span></label>
+             <input class="form-input" type="text" name="prenom" placeholder="Jean"/>
+           </div>
+         </div>
+         <div class="form-row">
+           <div class="form-group">
+             <label class="form-label">Société</label>
+             <input class="form-input" type="text" name="societe" placeholder="ACME Industries"/>
+           </div>
+           <div class="form-group">
+             <label class="form-label">Téléphone</label>
+             <input class="form-input" type="tel" name="tel" placeholder="+41223428491"/>
+           </div>
+         </div>
+         <div class="form-group">
+           <label class="form-label">Email <span class="req">*</span></label>
+           <input class="form-input" type="email" name="email" placeholder="j.dupont@societe.fr" required/>
+         </div>
+         <div class="form-group">
+           <label class="form-label">Objet de la demande <span class="req">*</span></label>
+           <div class="select-wrap">
+             <select class="form-select form-input" name="objet" required>
+               <option value="" disabled selected>Sélectionner…</option>
+               <option>Demande de devis</option>
+               <option>Maintenance préventive</option>
+               <option>Maintenance corrective / Urgence</option>
+               <option>Usinage CNC / Sous-traitance</option>
+               <option>Automatisation</option>
+               <option>Audit industriel</option>
+               <option>Formation technique</option>
+               <option>Autre</option>
+             </select>
+           </div>
+         </div>
+         <div class="form-group">
+           <label class="form-label">Délai souhaité</label>
+           <div class="radio-group">
+             <label class="radio-btn"><input type="radio" name="delai" value="urgent"/><span class="radio-pill">Urgent &lt; 48h</span></label>
+             <label class="radio-btn"><input type="radio" name="delai" value="semaine"/><span class="radio-pill">Cette semaine</span></label>
+             <label class="radio-btn"><input type="radio" name="delai" value="mois" checked/><span class="radio-pill">Ce mois</span></label>
+             <label class="radio-btn"><input type="radio" name="delai" value="flexible"/><span class="radio-pill">Flexible</span></label>
+           </div>
+         </div>
+         <div class="form-group">
+           <label class="form-label">Message <span class="req">*</span></label>
+           <textarea class="form-input form-textarea" name="message" placeholder="Décrivez votre besoin, les machines concernées, les matériaux, les tolérances requises…" required></textarea>
+         </div>
+         <div class="form-group">
+           <label class="form-label">Plan / Cahier des charges (optionnel)</label>
+           <div class="file-drop" id="file-drop">
+             <input type="file" name="fichier" accept=".pdf,.dwg,.step,.dxf,.jpg,.png" id="file-input"/>
+             <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+             <p><span id="texte-fichier">Cliquer pour joindre</span> ou glisser-déposer<br>PDF · DWG · STEP · DXF · JPG — Max 10 Mo</p>
+             <p class="file-name" id="file-name"></p>
+           </div>
+         </div>
+         <div class="form-submit">
+           <button type="submit" class="btn-submit">Envoyer le message</button>
+         </div>
+       </form>
+
+       <div class="form-success" id="form-success">
+         <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+         <div class="success-title">Message envoyé !</div>
+         <p class="success-msg">Merci pour votre demande. Notre équipe vous recontactera dans les 48 heures ouvrées.</p>
+       </div>
+     </div>
+   </div>
 
   <div class="ticker-wrap">
     <div class="ticker-track">
