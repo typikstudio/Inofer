@@ -544,7 +544,7 @@ footer {
 @media (max-width: 960px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; padding: 44px 32px 36px; } }
 @media (max-width: 560px) { .footer-top { grid-template-columns: 1fr; gap: 28px; padding: 36px 24px 28px; } }
 
-.ft-brand .logo-footer { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 5px; color: #fff; display: block; margin-bottom: 6px; }
+.ft-brand .logo-footer { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 5px; color: #fff; display: block; margin-bottom: 6px; margin-left: -120px;}
 .ft-brand .logo-footer span { color: var(--gold); }
 .ft-brand p { font-family: 'Exo 2', sans-serif; font-weight: 300; font-size: .82rem; line-height: 1.7; color: var(--dim); margin-top: 12px; max-width: 260px; }
 
