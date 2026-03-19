@@ -14,20 +14,21 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;overf
 #bg-canvas{position:fixed;inset:0;z-index:0;opacity:.35;pointer-events:none}
 .scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 4px)}
 
-header{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;background:linear-gradient(180deg,rgba(8,10,12,.98),rgba(8,10,12,.75));border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+header{position:fixed;top:0px;left:0px;right:0px;bottom:30px;z-index:100;height:130px; width:auto 1750px; display:flex;align-items:center;gap:0;padding:0 60px;justify-content:space-between;background:linear-gradient(180deg,rgba(8,10,12,.98),rgba(8,10,12,.75));border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
 .logo-mark{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:5px;color:#fff;display:flex;align-items:center;position:relative;text-decoration:none}
 .logo-mark .brk{color:var(--gold);font-size:2.2rem;line-height:1}
-.logo-mark .tagline{font-family:'Share Tech Mono',monospace;font-size:.5rem;letter-spacing:3px;color:var(--dim);text-transform:uppercase;position:absolute;bottom:-9px;left:0;white-space:nowrap}
+.logo-mark .tagline{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;position:absolute;bottom:-9px;left:0;white-space:nowrap; top:80px}
 .header-right{display:flex;align-items:center;gap:20px}
-.nav-back{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;display:flex;align-items:center;gap:7px;transition:color .2s}
+.nav-back{font-family:'Share Tech Mono',monospace;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;display:flex;align-items:center;gap:7px;transition:color .2s}
 .nav-back svg{width:14px;height:14px;stroke:var(--dim);fill:none;stroke-width:2;transition:stroke .2s}
 .nav-back:hover{color:var(--gold)}
 .nav-back:hover svg{stroke:var(--gold)}
 .status-badge{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:7px}
 .status-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 7px var(--gold);animation:blink 2s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .cta-header{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:9px 20px;border:none;cursor:pointer;clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);transition:background .2s,box-shadow .2s;text-decoration:none;display:inline-block;white-space:nowrap}
 .cta-header:hover{background:var(--gold2);box-shadow:0 0 26px var(--glow)}
+.cta-header::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 7px var(--gold);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 @media(max-width:600px){.status-badge{display:none}.header-right{gap:12px}}
 
 .page{position:relative;z-index:2;padding-top:64px}
@@ -47,7 +48,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;
 .hero-sub{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.9rem;color:var(--dim);margin-top:14px;z-index:2;position:relative;letter-spacing:1px}
 
 /* NAV SERVICES (ancres) */
-.service-nav{position:sticky;top:64px;z-index:100;display:flex;align-items:center;gap:0;padding:0 60px;border-bottom:1px solid var(--border);background:rgba(8,10,12,.95);backdrop-filter:blur(12px);overflow-x:auto;scrollbar-width:none}
+.service-nav{position:sticky;top:130px;z-index:100;display:flex;align-items:center;gap:0;padding:0 60px;border-bottom:1px solid var(--border);background:rgba(8,10,12,.95);backdrop-filter:blur(12px);overflow-x:auto;scrollbar-width:none}
 .service-nav::-webkit-scrollbar{display:none}
 @media(max-width:600px){.service-nav{padding:0 16px}}
 .snav-btn{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);background:transparent;border:none;padding:15px 18px;cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap;text-decoration:none;display:block}
@@ -146,11 +147,9 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
   border-bottom:1px solid var(--border)}
 @media(max-width:960px){.footer-top{grid-template-columns:1fr 1fr;gap:36px;padding:44px 32px 36px}}
 @media(max-width:560px){.footer-top{grid-template-columns:1fr;gap:28px;padding:36px 24px 28px}}
-.ft-brand .logo-footer{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:5px;
-  color:#fff;display:block;margin-bottom:6px}
-.ft-brand .logo-footer span{color:var(--gold)}
-.ft-brand>p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.82rem;line-height:1.7;
-  color:var(--dim);margin-top:12px;max-width:260px}
+.ft-brand .logo-footer { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 5px; color: #fff; display: block; margin-left: -120px;}
+.ft-brand .logo-footer span { color: var(--gold); }
+.ft-brand p { font-family: 'Exo 2', sans-serif; font-weight: 300; font-size: .82rem; line-height: 1.7; color: var(--dim); margin-top: 12px; max-width: 260px; }
 .ft-contact{margin-top:20px;display:flex;flex-direction:column;gap:8px}
 .ft-contact a{font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:1px;
   color:var(--dim);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
@@ -194,7 +193,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
 <div class="scanlines"></div>
 
 <header>
-  <a href="index.html" class="logo-mark"><span class="brk">[</span>IN<span style="color:var(--gold)">O</span>FER<span class="brk">]</span><span class="tagline">Industrie &amp; Précision Mécanique</span></a>
+  <a href="index.html" class="logo-mark"><img src="image/logo-head.webp" alt=""><span class="tagline">Industrie &amp; Précision Mécanique</span></a>
   <div class="header-right">
     <a href="index.html" class="nav-back"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Retour</a>
     <div class="status-badge">5 expertises</div>
@@ -245,7 +244,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
         <div class="svc-spec"><div class="svc-spec-label">Rapport</div><div class="svc-spec-value">Numérique sous 24h</div></div>
         <div class="svc-spec"><div class="svc-spec-label">Certification</div><div class="svc-spec-value">ISO 9001</div></div>
       </div>
-      <a href="contact.html" class="btn-service">Demander un programme</a>
     </div>
   </div>
 
@@ -261,19 +259,17 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <h2>MAINTENANCE<br>CORRECTIVE</h2>
       <p>Une panne ne prévient pas. Nos équipes d'astreinte sont mobilisables 24h/24 et 7j/7 pour intervenir sur site dans les 4 heures. Diagnostic, réparation, remise en production : nous minimisons chaque minute d'arrêt.</p>
       <ul class="svc-list">
-        <li>Astreinte téléphonique permanente 24h/7j</li>
-        <li>Intervention sur site sous 4h en France</li>
+        <li>Disponibilité téléphonique permanente 8h/5j</li>
         <li>Diagnostic électromécanique et électronique</li>
-        <li>Réparation ou remplacement de composants</li>
-        <li>Stock de pièces critiques disponible immédiatement</li>
+        <li>Réparation ou remplacement de pièces</li>
+        <li>Stock de pièces critiques disponible sous 48h</li>
       </ul>
       <div class="svc-specs">
-        <div class="svc-spec"><div class="svc-spec-label">Délai intervention</div><div class="svc-spec-value">&lt; 4h sur site</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Disponibilité</div><div class="svc-spec-value">24h / 7j / 365j</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Délai intervention</div><div class="svc-spec-value">&lt; Un minimum de 72h après perception de votre projet.</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Disponibilité</div><div class="svc-spec-value">48h / 5j</div></div>
         <div class="svc-spec"><div class="svc-spec-label">Machines</div><div class="svc-spec-value">Toutes marques</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Garantie</div><div class="svc-spec-value">Réparation 12 mois</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Garantie</div><div class="svc-spec-value">Prestation toute l'année</div></div>
       </div>
-      <a href="contact.html" class="btn-service">Déclarer une urgence</a>
     </div>
   </div>
 
@@ -301,7 +297,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
         <div class="svc-spec"><div class="svc-spec-label">Technologies</div><div class="svc-spec-value">PLC · SCADA · Cobot</div></div>
         <div class="svc-spec"><div class="svc-spec-label">Livraison</div><div class="svc-spec-value">Clés en main</div></div>
       </div>
-      <a href="contact.html" class="btn-service">Étude gratuite</a>
     </div>
   </div>
 
@@ -326,10 +321,9 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <div class="svc-specs">
         <div class="svc-spec"><div class="svc-spec-label">Précision max</div><div class="svc-spec-value">±0.001 mm</div></div>
         <div class="svc-spec"><div class="svc-spec-label">Matériaux</div><div class="svc-spec-value">Acier · Inox · Titane · Alu</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Délai devis</div><div class="svc-spec-value">Sous 24h</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Délai devis</div><div class="svc-spec-value">Sous 48h</div></div>
         <div class="svc-spec"><div class="svc-spec-label">Séries</div><div class="svc-spec-value">Unitaire → Grande série</div></div>
       </div>
-      <a href="parc.html" class="btn-service">Voir le parc machine</a>
     </div>
   </div>
 
@@ -357,7 +351,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
         <div class="svc-spec"><div class="svc-spec-label">Devis</div><div class="svc-spec-value">Gratuit et sans engagement</div></div>
         <div class="svc-spec"><div class="svc-spec-label">Délai rapport</div><div class="svc-spec-value">7 jours ouvrés</div></div>
       </div>
-      <a href="contact.html" class="btn-service">Demander un audit</a>
     </div>
   </div>
 
@@ -373,14 +366,14 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
         <div class="step-num">01</div>
         <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/><path d="M1.61 3.18A2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72"/><line x1="1" y1="1" x2="23" y2="23"/></svg></div>
         <div class="step-title">Prise de contact</div>
-        <div class="step-desc">Formulaire, email ou téléphone. Un ingénieur vous rappelle sous 2h ouvrées pour qualifier votre besoin.</div>
+        <div class="step-desc">Formulaire, email ou téléphone. Un ingénieur vous recontacte sous 48h ouvrées pour qualifier votre besoin.</div>
         <div class="step-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
       <div class="process-step">
         <div class="step-num">02</div>
         <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-        <div class="step-title">Devis sous 24h</div>
-        <div class="step-desc">Après analyse de votre cahier des charges, nous vous transmettons un devis détaillé sous 24h, gratuit et sans engagement.</div>
+        <div class="step-title">Devis sous 48h</div>
+        <div class="step-desc">Après analyse de votre cahier des charges, nous vous transmettons un devis détaillé sous 48h, gratuit et sans engagement.</div>
         <div class="step-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
       <div class="process-step">
@@ -439,7 +432,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <span class="ticker-sep">///</span>
       <span class="ticker-item">Audit & conseil technique</span>
       <span class="ticker-sep">///</span>
-      <span class="ticker-item">Intervention 24h/7j</span>
+      <span class="ticker-item">Intervention 48h/7j</span>
       <span class="ticker-sep">///</span>
       <span class="ticker-item">Maintenance préventive & corrective</span>
       <span class="ticker-sep">///</span>
@@ -449,24 +442,22 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <span class="ticker-sep">///</span>
       <span class="ticker-item">Audit & conseil technique</span>
       <span class="ticker-sep">///</span>
-      <span class="ticker-item">Intervention 24h/7j</span>
-      <span class="ticker-sep">///</span>
     </div>
   </div>
 
   <footer>
     <div class="footer-top">
       <div class="ft-brand">
-        <span class="logo-footer">[IN<span>O</span>FER]</span>
-        <p>Spécialiste en solutions industrielles de haute précision depuis 2004.</p>
+       <span class="logo-footer"><img src="image/logo-footer.webp" alt=""></span>
+          <p>Spécialiste en solutions industrielles de haute précision. Votre partenaire technique pour la maintenance, l'automatisation et l'intégration de lignes de production.</p>
         <div class="ft-contact">
-          <a href="tel:+33000000000">
+          <a href="tel:+41 22 342 84 91">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            +33 (0)X XX XX XX XX
+            +41 22 342 84 91
           </a>
-          <a href="mailto:contact@inofer.fr">
+          <a href="mailto:inofer@bluewin.ch">
             <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            contact@inofer.fr
+            inofer@bluewin.ch
           </a>
         </div>
         <div class="social-row">
@@ -524,7 +515,7 @@ const sections=document.querySelectorAll('[id]');
 const navBtns=document.querySelectorAll('.snav-btn');
 window.addEventListener('scroll',()=>{
   let cur='';
-  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id});
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-0)cur=s.id});
   navBtns.forEach(b=>{b.classList.toggle('active',b.getAttribute('href')==='#'+cur)});
 },{passive:true});
 </script>
