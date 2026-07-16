@@ -515,21 +515,12 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <a href="index.html">Accueil</a><span class="sep">›</span><span class="cur">Parc Machine</span>
     </div>
     <h1>PARC <em>MACHINE</em></h1>
-    <div class="hero-meta">
-      <div class="hmeta"><strong>6</strong>Machines</div>
-      <div class="hmeta"><strong>5 AX</strong>CNC Simultanés</div>
-      <div class="hmeta"><strong>48H</strong>Délai devis</div>
-      <div class="hmeta"><strong>±0.001</strong>Précision mm</div>
-    </div>
-  </section>
-
   <!-- FILTER BAR -->
   <div class="filter-bar">
     <button class="fbtn active" data-f="all">Toutes</button>
     <button class="fbtn" data-f="cnc">Fraisage CNC</button>
     <button class="fbtn" data-f="tournage">Tournage</button>
     <button class="fbtn" data-f="rectification">Rectification</button>
-    <button class="fbtn" data-f="edm">Électroérosion</button>
     <button class="fbtn" data-f="laser">Découpe Laser</button>
     <span class="filter-count" id="filter-count">6 machines</span>
   </div>
@@ -614,25 +605,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
         </div>
       </article>
 
-      <article class="mcard reveal" data-cat="edm" data-id="EDM-001">
-        <div class="mcard-photo">
-          <div class="mcard-scan"></div>
-          <img src="https://images.unsplash.com/photo-1562408590-e32931084e23?w=800&q=80" alt="CHARMILLES FORM 20" loading="lazy"/>
-          <span class="mcard-type">Électroérosion</span>
-        </div>
-        <div class="mcard-body">
-          <div class="mcard-id">EDM-001</div>
-          <div class="mcard-name">CHARMILLES FORM 20</div>
-          <div class="mcard-brand">GF Machining Solutions — EDM enfoncement</div>
-          <div class="mcard-specs">
-            <div class="mspec"><div class="mspec-lbl">Course X/Y/Z</div><div class="mspec-val">350/250/300 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Ra min</div><div class="mspec-val">0.1 µm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Précision</div><div class="mspec-val">±0.005 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Pièce max</div><div class="mspec-val">400 kg</div></div>
-          </div>
-        </div>
-      </article>
-
       <article class="mcard reveal" data-cat="laser" data-id="LASER-001">
         <div class="mcard-photo">
           <div class="mcard-scan"></div>
@@ -661,13 +633,11 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <span class="ticker-item">Fraisage 5 axes simultanés</span><span class="ticker-sep">///</span>
       <span class="ticker-item">Tournage haute précision</span><span class="ticker-sep">///</span>
       <span class="ticker-item">Rectification Ra 0.04 µm</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Électroérosion enfoncement</span><span class="ticker-sep">///</span>
       <span class="ticker-item">Découpe laser fibre 6 kW</span><span class="ticker-sep">///</span>
       <span class="ticker-item">Acier · Inox · Titane · Aluminium</span><span class="ticker-sep">///</span>
       <span class="ticker-item">Fraisage 5 axes simultanés</span><span class="ticker-sep">///</span>
       <span class="ticker-item">Tournage haute précision</span><span class="ticker-sep">///</span>
       <span class="ticker-item">Rectification Ra 0.04 µm</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Électroérosion enfoncement</span><span class="ticker-sep">///</span>
       <span class="ticker-item">Découpe laser fibre 6 kW</span><span class="ticker-sep">///</span>
       <span class="ticker-item">Acier · Inox · Titane · Aluminium</span><span class="ticker-sep">///</span>
     </div>
@@ -685,7 +655,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
         <span class="ctag">Fraisage 5 axes</span>
         <span class="ctag">Tournage CNC</span>
         <span class="ctag">Rectification µm</span>
-        <span class="ctag">Électroérosion</span>
         <span class="ctag">Découpe laser</span>
         <span class="ctag">Acier inox</span>
         <span class="ctag">Titane</span>
@@ -754,7 +723,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
           <li><a href="#">Fraisage 5 axes</a></li>
           <li><a href="#">Tournage CNC</a></li>
           <li><a href="#">Rectification</a></li>
-          <li><a href="#">Électroérosion</a></li>
           <li><a href="#">Découpe laser</a></li>
         </ul>
       </div>
@@ -769,7 +737,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="ft-copy">&copy; 2026 - Atypiquement réalisé par Typik Studio — Tous droits réservés — SIRET : 993 372 275 00012</span>
+      <span class="ft-copy"> 2026 - Atypiquement réalisé par Typik Studio — Tous droits réservés — SIRET : 993 372 275 00012</span>
       <span class="ft-iso">ISO 9001 certifié</span>
     </div>
   </footer>
@@ -828,7 +796,7 @@ const cards=document.querySelectorAll('.mcard');
 const countEl=document.getElementById('filter-count');
 const labelEl=document.getElementById('grid-label');
 const LABELS={all:'Tous les équipements',cnc:'Fraisage CNC',tournage:'Tournage',
-  rectification:'Rectification',edm:'Électroérosion',laser:'Découpe Laser'};
+  rectification:'Rectification',laser:'Découpe Laser'};
 fbtns.forEach(btn=>{
   btn.addEventListener('click',()=>{
     fbtns.forEach(b=>b.classList.remove('active'));
@@ -874,11 +842,6 @@ const DATA={
     brand:'Fritz Studer AG — Série S Universal',
     desc:"Rectifieuse cylindrique universelle pour l'usinage extérieur, intérieur et de forme. La technologie StuderWIN assure une précision dimensionnelle de l'ordre du micron.",
     specs:{'Distance pointes':'1 000 mm','Ø max pièce':'175 mm / 80 kg','Meule ext.':'Ø 500 × 63 mm','Précision Ø':'0.001 mm','Rugosité Ra':'0.04 µm','Résolution CN':'0.0001 mm'}},
-  'EDM-001':{img:'https://images.unsplash.com/photo-1562408590-e32931084e23?w=900&q=80',
-    badge:'Électroérosion par enfoncement',name:'CHARMILLES FORM 20',
-    brand:'GF Machining Solutions — Série FORM',
-    desc:"Machine d'électroérosion par enfoncement pour la réalisation de formes complexes impossibles à usiner par voie conventionnelle.",
-    specs:{'Course X/Y/Z':'350 / 250 / 300 mm','Poids pièce max':'400 kg','Ra min':'0.1 µm','Précision':'±0.005 mm','Courant max':'50 A','Diélectrique':'Huile / Eau'}},
   'LASER-001':{img:'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=900&q=80',
     badge:'Découpe laser fibre haute puissance',name:'TRUMPF TruLaser 3030',
     brand:'TRUMPF GmbH — Série TruLaser',
