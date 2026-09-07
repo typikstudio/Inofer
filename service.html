@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>INOFER · Services</title>
+<link rel="icon" type="image/webp" href="image/fiv-icon.webp" />
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -78,6 +79,16 @@ header{position:fixed;top:0px;left:0px;right:0px;bottom:30px;z-index:100;height:
 .section-eye-marche::before{content:'';width:20px;height:1px;background:var(--gold)}
 .svc-content h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3vw,3rem);letter-spacing:2px;color:#fff;line-height:.95;margin-bottom:18px}
 .svc-content p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.9rem;line-height:1.78;color:var(--text);margin-bottom:20px;border-left:2px solid var(--gold);padding-left:16px}
+.word-affiner{display:inline-flex;align-items:flex-end bottom}
+.word-affiner span{display:inline-block;color:var(--gold);line-height:1}
+.word-affiner span:nth-child(1){font-size:1.15em}
+.word-affiner span:nth-child(2){font-size:1.08em}
+.word-affiner span:nth-child(3){font-size:1.06em}
+.word-affiner span:nth-child(4){font-size:1.04em}
+.word-affiner span:nth-child(5){font-size:1em}
+.word-affiner span:nth-child(6){font-size:0.98em}
+.word-affiner span:nth-child(7){font-size:0.96em}
+.word-flou{filter:blur(.6px);opacity:.94;display:inline-block}
 .svc-list{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:28px}
 .svc-list li{font-family:'Exo 2',sans-serif;font-size:.85rem;color:var(--dim);display:flex;align-items:center;gap:10px}
 .svc-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
@@ -208,148 +219,140 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
     <div class="hero-line"></div>
     <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span class="cur">Services</span></div>
     <h1>NOS <em>SERVICES</em></h1>
-    <p class="hero-sub">5 expertises industrielles, du terrain à l'ingénierie avancée</p>
+    <p class="hero-sub">De l'étude à la pièce finie : tournage, fraisage, gravure et finition, sur un même site.</p>
   </section>
 
   <!-- NAV ANCRES -->
   <nav class="service-nav">
-    <a href="#maintenance-prev" class="snav-btn active">Maintenance préventive</a>
-    <a href="#maintenance-corr" class="snav-btn">Maintenance corrective</a>
-    <a href="#automatisation" class="snav-btn">Automatisation</a>
-    <a href="#usinage" class="snav-btn">Usinage CNC</a>
-    <a href="#audit" class="snav-btn">Audit &amp; Conseil</a>
+    <a href="#etude-projet" class="snav-btn active">Étude de projet</a>
+    <a href="#tournage" class="snav-btn">Tournage</a>
+    <a href="#fraisage" class="snav-btn">Fraisage</a>
+    <a href="#gravure-laser" class="snav-btn">Gravure laser</a>
+    <a href="#finition" class="snav-btn">Finition &amp; nettoyage</a>
   </nav>
 
-  <!-- 01 MAINTENANCE PRÉVENTIVE -->
-  <div class="service-section" id="maintenance-prev">
+  <!-- 01 ÉTUDE DE PROJET -->
+  <div class="service-section" id="etude-projet">
     <div class="svc-visual">
-      <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=900&q=80" alt="Maintenance préventive"/>
       <div class="svc-number">01</div>
-      <div class="svc-tag">Maintenance préventive</div>
+      <div class="svc-tag">Étude de projet</div>
     </div>
     <div class="svc-content">
       <div class="section-eye">Service 01</div>
-      <h2>MAINTENANCE<br>PRÉVENTIVE</h2>
-      <p>Anticiper une panne coûte toujours moins cher que la subir. Nos programmes de maintenance préventive sont construits sur mesure pour chaque type d'équipement et chaque cadence de production, avec un suivi planifié, documenté et traçable.</p>
+      <h2>DE L'ÉTUDE<br>À LA RÉALISATION</h2>
+      <p>Une idée à <span class="word-affiner"><span>a</span><span>f</span><span>f</span><span>i</span><span>n</span><span>e</span><span>r</span></span>, un projet encore <span class="word-flou">flou</span> ? Notre équipe vous accompagne du premier croquis à la pièce finie : étude de faisabilité, choix des matériaux, usinage, fabrication et assemblage. Nous assurons également la logistique, pour garantir les délais et la qualité demandés jusqu'à la livraison d'un produit prêt à l'emploi.</p>
       <ul class="svc-list">
-        <li>Inspection périodique selon plan de maintenance</li>
-        <li>Remplacement préventif des pièces d'usure</li>
-        <li>Contrôle géométrique et réglages machine</li>
-        <li>Lubrification, nettoyage, vérification fluides</li>
-        <li>Rapport d'intervention détaillé et préconisations</li>
+        <li>Étude de faisabilité et conseil technique en amont</li>
+        <li>Choix des matériaux et procédés adaptés à votre besoin</li>
+        <li>Usinage, fabrication et assemblage sous un même toit</li>
+        <li>Prototypage avant passage en série</li>
+        <li>Logistique et livraison d'un produit fini, prêt à l'emploi</li>
       </ul>
       <div class="svc-specs">
-        <div class="svc-spec"><div class="svc-spec-label">Périodicité</div><div class="svc-spec-value">Hebdo · Mensuelle · Annuelle</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Couverture</div><div class="svc-spec-value">France entière</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Rapport</div><div class="svc-spec-value">Numérique sous 24h</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Certification</div><div class="svc-spec-value">ISO 9001</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Point de départ</div><div class="svc-spec-value">Idée, plan ou simple croquis</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Accompagnement</div><div class="svc-spec-value">De l'étude à la livraison</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Devis</div><div class="svc-spec-value">Gratuit et sans engagement</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Délai devis</div><div class="svc-spec-value">Sous 48h</div></div>
       </div>
     </div>
   </div>
 
-  <!-- 02 MAINTENANCE CORRECTIVE -->
-  <div class="service-section reverse" id="maintenance-corr">
+  <!-- 02 TOURNAGE DE PRÉCISION -->
+  <div class="service-section reverse" id="tournage">
     <div class="svc-visual">
-      <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80" alt="Maintenance corrective"/>
       <div class="svc-number">02</div>
-      <div class="svc-tag">Maintenance corrective</div>
+      <div class="svc-tag">Tournage</div>
     </div>
     <div class="svc-content">
       <div class="section-eye">Service 02</div>
-      <h2>MAINTENANCE<br>CORRECTIVE</h2>
-      <p>Une panne ne prévient jamais. Nos équipes d'astreinte se mobilisent 24h/24 et 7j/7 pour intervenir sur site en moins de 4 heures. Diagnostic, réparation, remise en production : chaque minute d'arrêt compte, et nous la réduisons au maximum.</p>
+      <h2>TOURNAGE<br>DE PRÉCISION</h2>
+      <p>Le tournage reste au cœur de notre savoir-faire. Sur tour manuel Schaublin 102 ou sur notre tour CNC Schaublin 110 pour les séries, nous usinons vos pièces cylindriques avec la précision qui a fait la réputation de la mécanique suisse.</p>
       <ul class="svc-list">
-        <li>Disponibilité téléphonique permanente 8h/5j</li>
-        <li>Diagnostic électromécanique et électronique</li>
-        <li>Réparation ou remplacement de pièces</li>
-        <li>Stock de pièces critiques disponible sous 48h</li>
+        <li>Tournage manuel sur tour Schaublin 102</li>
+        <li>Tournage CNC sur tour Schaublin 110, pour la répétabilité en série</li>
+        <li>Filetages, gorges, diamètres de précision</li>
+        <li>Programmation via le logiciel de FAO Alpha-Cam</li>
       </ul>
       <div class="svc-specs">
-        <div class="svc-spec"><div class="svc-spec-label">Délai intervention</div><div class="svc-spec-value">Sous 4h sur site</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Disponibilité</div><div class="svc-spec-value">48h / 5j</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Machines</div><div class="svc-spec-value">Toutes marques</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Garantie</div><div class="svc-spec-value">Prestation toute l'année</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Tour manuel</div><div class="svc-spec-value">Schaublin 102</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Tour CNC</div><div class="svc-spec-value">Schaublin 110</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Matériaux</div><div class="svc-spec-value">Aluminium · Acier · Laiton · Bronze · Inox · Maillechort · Plastiques</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Délai devis</div><div class="svc-spec-value">Sous 48h</div></div>
       </div>
     </div>
   </div>
 
-  <!-- 03 AUTOMATISATION -->
-  <div class="service-section" id="automatisation">
+  <!-- 03 FRAISAGE TRADITIONNEL & CNC -->
+  <div class="service-section" id="fraisage">
     <div class="svc-visual">
-      <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=900&q=80" alt="Automatisation industrielle"/>
       <div class="svc-number">03</div>
-      <div class="svc-tag">Automatisation</div>
+      <div class="svc-tag">Fraisage</div>
     </div>
     <div class="svc-content">
       <div class="section-eye">Service 03</div>
-      <h2>AUTOMATISATION<br>INDUSTRIELLE</h2>
-      <p>Gagner en cadence tout en réduisant les risques opérateurs, c'est tout l'enjeu de l'automatisation. Nous concevons et intégrons des cellules clés en main : robotique, convoyage, vision industrielle, supervision SCADA.</p>
+      <h2>FRAISAGE<br>TRADITIONNEL &amp; CNC</h2>
+      <p>Nos fraiseuses traditionnelles, verticale et horizontale, et nos centres CNC Kitamura et Mikron VCE750 couvrent l'ensemble des besoins de fraisage, du surfaçage simple aux formes complexes. Notre planeuse complète l'atelier pour le surfaçage des grandes pièces.</p>
       <ul class="svc-list">
-        <li>Étude de faisabilité et simulation 3D</li>
-        <li>Intégration robots collaboratifs et industriels</li>
-        <li>Programmation automates Siemens, Schneider, Allen-Bradley</li>
-        <li>Systèmes de vision artificielle et contrôle qualité auto</li>
-        <li>Formation et accompagnement des équipes client</li>
+        <li>Fraisage traditionnel, vertical et horizontal</li>
+        <li>Fraisage CNC sur Kitamura et Mikron VCE750, pour les formes complexes et les séries</li>
+        <li>Surfaçage et planage sur planeuse</li>
+        <li>Programmation via le logiciel de FAO Alpha-Cam</li>
       </ul>
       <div class="svc-specs">
-        <div class="svc-spec"><div class="svc-spec-label">ROI moyen</div><div class="svc-spec-value">18 à 36 mois</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Gain cadence</div><div class="svc-spec-value">+30 à +80%</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Technologies</div><div class="svc-spec-value">PLC · SCADA · Cobot</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Livraison</div><div class="svc-spec-value">Clés en main</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Fraisage CNC</div><div class="svc-spec-value">Kitamura · Mikron VCE750</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Fraisage traditionnel</div><div class="svc-spec-value">Vertical · Horizontal</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Programmation</div><div class="svc-spec-value">FAO Alpha-Cam</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Délai devis</div><div class="svc-spec-value">Sous 48h</div></div>
       </div>
     </div>
   </div>
 
-  <!-- 04 USINAGE CNC -->
-  <div class="service-section reverse" id="usinage">
+  <!-- 04 GRAVURE LASER -->
+  <div class="service-section reverse" id="gravure-laser">
     <div class="svc-visual">
-      <img src="https://images.unsplash.com/photo-1562408590-e32931084e23?w=900&q=80" alt="Usinage CNC précision"/>
       <div class="svc-number">04</div>
-      <div class="svc-tag">Usinage CNC</div>
+      <div class="svc-tag">Gravure laser</div>
     </div>
     <div class="svc-content">
       <div class="section-eye">Service 04</div>
-      <h2>USINAGE CNC<br>HAUTE PRÉCISION</h2>
-      <p>Notre parc machine de dernière génération donne vie à vos pièces les plus exigeantes : fraisage 5 axes, tournage, rectification au micron, électroérosion, découpe laser. De la pièce unitaire à la grande série, la précision reste la même.</p>
+      <h2>GRAVURE<br>LASER</h2>
+      <p>Marquage permanent, numéros de série, logos ou repères techniques : la gravure laser complète notre offre d'usinage pour personnaliser et identifier vos pièces, sans altérer leurs propriétés mécaniques.</p>
       <ul class="svc-list">
-        <li>Fraisage 5 axes simultanés (MAZAK VARIAXIS, DMG MORI)</li>
-        <li>Tournage bibroche haute productivité</li>
-        <li>Rectification cylindrique Ra 0.04 µm</li>
-        <li>Électroérosion formes complexes</li>
-        <li>Découpe laser fibre acier / inox / alu jusqu'à 20 mm</li>
+        <li>Marquage et numérotation de pièces</li>
+        <li>Gravure de logos et repères techniques</li>
+        <li>Compatible avec l'ensemble des matières usinées</li>
+        <li>Combinable avec le tournage et le fraisage, sans changement d'atelier</li>
       </ul>
       <div class="svc-specs">
-        <div class="svc-spec"><div class="svc-spec-label">Précision max</div><div class="svc-spec-value">±0.001 mm</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Matériaux</div><div class="svc-spec-value">Acier · Inox · Titane · Alu</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Application</div><div class="svc-spec-value">Marquage · Traçabilité</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Compatible</div><div class="svc-spec-value">Métaux et plastiques</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Combinable avec</div><div class="svc-spec-value">Tournage · Fraisage</div></div>
         <div class="svc-spec"><div class="svc-spec-label">Délai devis</div><div class="svc-spec-value">Sous 48h</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Séries</div><div class="svc-spec-value">Unitaire → Grande série</div></div>
       </div>
     </div>
   </div>
 
-  <!-- 05 AUDIT & CONSEIL -->
-  <div class="service-section" id="audit">
+  <!-- 05 FINITION & NETTOYAGE -->
+  <div class="service-section" id="finition">
     <div class="svc-visual">
-      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80" alt="Audit industriel"/>
       <div class="svc-number">05</div>
-      <div class="svc-tag">Audit &amp; Conseil</div>
+      <div class="svc-tag">Finition &amp; nettoyage</div>
     </div>
     <div class="svc-content">
       <div class="section-eye">Service 05</div>
-      <h2>AUDIT &amp;<br>CONSEIL TECHNIQUE</h2>
-      <p>Votre outil de production mérite un regard expert et objectif. Nos ingénieurs mènent des audits complets pour identifier les axes d'amélioration, réduire vos coûts de maintenance et optimiser chaque process.</p>
+      <h2>FINITION<br>&amp; NETTOYAGE</h2>
+      <p>L'usinage ne s'arrête pas à la dernière passe d'outil. Nos machines de finition assurent l'ébavurage, le débit de matière et le nettoyage de précision, pour livrer des pièces prêtes à l'emploi, sans étape supplémentaire de votre côté.</p>
       <ul class="svc-list">
-        <li>Audit complet du parc machines (état, fiabilité, risques)</li>
-        <li>Analyse des coûts de maintenance et TCO</li>
-        <li>Plan de renouvellement priorisé sur 3 ans</li>
-        <li>Optimisation des gammes d'usinage et paramètres</li>
-        <li>Accompagnement aux choix d'investissements</li>
+        <li>Ébavurage et polissage sur Trowal</li>
+        <li>Débit de matière première sur débiteuse automatique</li>
+        <li>Nettoyage de précision par lavage ultra-son</li>
+        <li>Contrôle avant expédition</li>
       </ul>
       <div class="svc-specs">
-        <div class="svc-spec"><div class="svc-spec-label">Durée audit</div><div class="svc-spec-value">1 à 3 jours</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Livrable</div><div class="svc-spec-value">Rapport + plan d'action</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Devis</div><div class="svc-spec-value">Gratuit et sans engagement</div></div>
-        <div class="svc-spec"><div class="svc-spec-label">Délai rapport</div><div class="svc-spec-value">7 jours ouvrés</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Ébavurage</div><div class="svc-spec-value">Trowal</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Débit matière</div><div class="svc-spec-value">Débiteuse automatique</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Nettoyage</div><div class="svc-spec-value">Lavage ultra-son</div></div>
+        <div class="svc-spec"><div class="svc-spec-label">Délai devis</div><div class="svc-spec-value">Sous 48h</div></div>
       </div>
     </div>
   </div>
@@ -399,6 +402,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <h2>NOS MARCHÉS</h2>
     </div>
     <div class="secteur-grid">
+      <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="secteur-name">Horlogerie</div></div>
       <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div class="secteur-name">Aéronautique</div></div>
       <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><div class="secteur-name">Automobile</div></div>
       <div class="secteur-card"><div class="secteur-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="secteur-name">Énergie</div></div>
@@ -412,8 +416,8 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
   <!-- CTA -->
   <div class="cta-band">
     <div class="cta-copy">
-      <p>Passez à l'action</p>
-      <h2>UN DEVIS GRATUIT SOUS 48H</h2>
+      <p>Passez à l'action.</p>
+      <h2>UN DEVIS GRATUIT, UNE RÉPONSE SOUS 48H.</h2>
     </div>
     <div class="cta-actions">
       <a href="contact.html" class="btn-primary">Demander un devis</a>
@@ -449,7 +453,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
     <div class="footer-top">
       <div class="ft-brand">
        <span class="logo-footer"><img src="image/logo-footer.webp" alt=""></span>
-          <p>Expert en solutions industrielles de haute précision, INOFER accompagne vos projets de maintenance, d'automatisation et d'intégration de lignes de production.</p>
+          <p>Atelier de mécanique de précision depuis 1979, INOFER accompagne artisans, PME et grands groupes dans leurs projets d'étude, d'usinage et de fabrication de pièces mécaniques, avec la même exigence pour chacun.</p>
         <div class="ft-contact">
           <a href="tel:+41 22 342 84 91">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -479,11 +483,10 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <div class="ft-col">
         <h4>Capacités</h4>
         <ul>
-          <li><a href="#">Fraisage 5 axes</a></li>
-          <li><a href="#">Tournage CNC</a></li>
-          <li><a href="#">Rectification</a></li>
-          <li><a href="#">Électroérosion</a></li>
-          <li><a href="#">Découpe laser</a></li>
+          <li><a href="service.html#tournage">Tournage</a></li>
+          <li><a href="service.html#fraisage">Fraisage traditionnel &amp; CNC</a></li>
+          <li><a href="service.html#gravure-laser">Gravure laser</a></li>
+          <li><a href="service.html#finition">Finition &amp; nettoyage</a></li>
         </ul>
       </div>
       <div class="ft-col">
@@ -498,7 +501,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
     </div>
     <div class="footer-bottom">
       <span class="ft-copy">&copy; 2026 - Réalisé par Typik Studio · Tous droits réservés · SIRET 993 372 275 00012</span>
-      <span class="ft-iso">ISO 9001 certifié</span>
     </div>
 </div>
 

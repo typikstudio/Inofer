@@ -108,6 +108,7 @@ const gx = gc.getContext('2d');
 let gAngle  = 0;
 let gSpeed  = .007;
 let gTarget = .007;
+let gPulseT = 0;
 
 function drawGear(a) {
   const W = gc.width, H = gc.height, cx = W / 2, cy = H / 2;
@@ -123,11 +124,14 @@ const bR = 80;      // base légèrement ajustée
 const hR = 22;      // centre un peu plus gros
   const step  = Math.PI * 2 / teeth;
 
-  /* -- ambient glow ring -- */
+  /* -- ambient glow ring, respiration lumineuse lente -- */
+  gPulseT += .012;
+  const pulse = (Math.sin(gPulseT) + 1) / 2;      // 0 → 1 en boucle douce
+  const glowStrength = .10 + pulse * .07;          // varie légèrement l'intensité
   const ag = gx.createRadialGradient(0, 0, iR * .4, 0, 0, oR * 1.2);
   ag.addColorStop(0,   'rgba(245,168,0,0)');
-  ag.addColorStop(.75, 'rgba(245,168,0,.03)');
-  ag.addColorStop(1,   'rgba(245,168,0,.13)');
+  ag.addColorStop(.75, `rgba(245,168,0,${.02 + pulse * .015})`);
+  ag.addColorStop(1,   `rgba(245,168,0,${glowStrength})`);
   gx.beginPath();
   gx.arc(0, 0, oR * 1.2, 0, Math.PI * 2);
   gx.fillStyle = ag;

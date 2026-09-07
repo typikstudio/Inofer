@@ -450,7 +450,9 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
   transform:scale(.96) translateY(12px);transition:transform .28s}
 .lightbox.open .lb-box{transform:scale(1) translateY(0)}
 @media(max-width:700px){.lb-box{grid-template-columns:1fr;width:97vw}}
-.lb-photo{position:relative;overflow:hidden;min-height:340px;background:#0a0c0f}
+.lb-photo{position:relative;overflow:hidden;min-height:340px;background:#0a0c0f;display:flex;align-items:center;justify-content:center}
+.lb-photo-placeholder{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--dim);border:1px dashed var(--border2);padding:8px 16px}
 .lb-photo img{width:100%;height:100%;object-fit:cover;display:block;
   transition:transform .6s cubic-bezier(.23,1,.32,1)}
 .lightbox.open .lb-photo img{transform:scale(1.04)}
@@ -487,7 +489,42 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
   text-transform:uppercase;color:var(--gold);background:transparent;padding:10px 18px;
   border:1px solid var(--border);text-decoration:none;display:inline-block;transition:all .2s;cursor:pointer}
 .lb-cta2:hover{border-color:var(--gold);background:var(--glow2)}
+
+/* ── PLAN DE L'ATELIER ── */
+.floorplan-section{padding:64px 60px 72px;border-bottom:1px solid var(--border)}
+@media(max-width:700px){.floorplan-section{padding:44px 24px 56px}}
+.floorplan-header{margin-bottom:36px;max-width:640px}
+.floorplan-header h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.2vw,3rem);
+  letter-spacing:2px;color:#fff;line-height:.95;margin:4px 0 12px}
+.floorplan-header h2 em{font-style:normal;color:var(--gold)}
+.floorplan-note{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.85rem;
+  line-height:1.7;color:var(--dim)}
+.floorplan-wrap{border:1px solid var(--border);background:var(--bg2);padding:20px;position:relative}
+#floorplan-svg{width:100%;height:auto;display:block}
+.fp-zone{fill:rgba(245,168,0,.03);stroke:var(--border2);stroke-width:1.5;stroke-dasharray:5 4}
+.fp-zone-label{font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:2px;
+  text-transform:uppercase;fill:var(--dim)}
+.fp-marker{cursor:pointer}
+.fp-marker circle{fill:var(--bg2);stroke:var(--gold);stroke-width:2;transition:fill .2s,stroke-width .2s;filter:drop-shadow(0 0 6px rgba(245,168,0,.35))}
+.fp-marker text{font-family:'Exo 2',sans-serif;font-weight:700;font-size:15px;fill:var(--gold);
+  text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.fp-marker:hover circle,.fp-marker.active circle{fill:var(--gold);stroke-width:3}
+.fp-marker:hover text,.fp-marker.active text{fill:var(--bg)}
+.fp-pulse{fill:none;stroke:var(--gold);stroke-width:1.5;opacity:.55;animation:fpPulse 2.4s ease-out infinite}
+@keyframes fpPulse{0%{r:16;opacity:.55}100%{r:30;opacity:0}}
+
+.floorplan-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:8px;margin-top:24px}
+.fp-leg-item{display:flex;align-items:center;gap:10px;padding:10px 14px;
+  border:1px solid var(--border2);background:rgba(245,168,0,.02);cursor:pointer;transition:all .2s}
+.fp-leg-item:hover,.fp-leg-item.active{border-color:var(--gold);background:rgba(245,168,0,.07)}
+.fp-leg-num{flex-shrink:0;width:22px;height:22px;border:1px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:'Exo 2',sans-serif;
+  font-weight:700;font-size:.68rem;color:var(--gold)}
+.fp-leg-item.active .fp-leg-num{background:var(--gold);color:var(--bg)}
+.fp-leg-name{font-family:'Exo 2',sans-serif;font-size:.78rem;color:var(--text)}
 </style>
+
 </head>
 <body>
 <canvas id="bg-canvas"></canvas>
@@ -515,136 +552,110 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <a href="index.html">Accueil</a><span class="sep">›</span><span class="cur">Parc Machine</span>
     </div>
     <h1>PARC <em>MACHINE</em></h1>
+    <p style="font-family:'Exo 2',sans-serif;font-weight:300;font-size:.9rem;color:var(--dim);margin-top:14px;letter-spacing:1px;position:relative;z-index:2">Des machines traditionnelles et à commande numérique, entretenues et calibrées, pour répondre à vos exigences les plus strictes.</p>
     <div class="hero-meta">
       
     </div>
   </section>
 
-  <!-- FILTER BAR -->
-  <div class="filter-bar">
-    <button class="fbtn active" data-f="all">Toutes</button>
-    <button class="fbtn" data-f="cnc">Fraisage CNC</button>
-    <button class="fbtn" data-f="tournage">Tournage</button>
-    <button class="fbtn" data-f="rectification">Rectification</button>
-    <button class="fbtn" data-f="laser">Découpe Laser</button>
-    <span class="filter-count" id="filter-count">6 machines</span>
-  </div>
+  <!-- PLAN DE L'ATELIER -->
+  <section class="floorplan-section">
+    <div class="floorplan-header">
+      <div class="section-eye" style="margin-bottom:0">Implantation</div>
+      <h2>PLAN DE<br><em>L'ATELIER</em></h2>
+      <p class="floorplan-note">Vue schématique de l'atelier, à titre indicatif. Cliquez sur un point (ou une ligne de la liste ci-dessous) pour découvrir chaque machine.</p>
+    </div>
 
-  <!-- GRILLE MACHINES -->
-  <section class="grid-section">
-    <div class="grid-label" id="grid-label">Équipements : 6 machines</div>
-    <div class="machine-grid" id="machine-grid">
+    <div class="floorplan-wrap">
+      <svg id="floorplan-svg" viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg">
+        <!-- contour atelier -->
+        <rect x="10" y="10" width="980" height="600" fill="none" stroke="var(--border)" stroke-width="2"/>
 
-      <article class="mcard reveal" data-cat="cnc" data-id="CNC-001">
-        <div class="mcard-photo">
-          <div class="mcard-scan"></div>
-          <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1000&q=80" alt="MAZAK VARIAXIS" loading="lazy"/>
-          <span class="mcard-type">Centre 5 axes</span>
-        </div>
-        <div class="mcard-body">
-          <div class="mcard-id">Tours Schaublin 102</div>
-          <div class="mcard-name">Tours Schaublin 102</div>
-          <div class="mcard-brand">Yamazaki Mazak, 5 axes simultanés</div>
-          <div class="mcard-specs">
-            <div class="mspec"><div class="mspec-lbl">Course X/Y/Z</div><div class="mspec-val">700/650/510 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Broche</div><div class="mspec-val">12 000 tr/min</div></div>
-            <div class="mspec"><div class="mspec-lbl">Précision</div><div class="mspec-val">±0.003 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Magasin</div><div class="mspec-val">40 outils</div></div>
-          </div>
-        </div>
-      </article>
+        <!-- zones -->
+        <rect class="fp-zone" x="30" y="30" width="230" height="250"/>
+        <text class="fp-zone-label" x="46" y="56">Débit matière</text>
 
-      <article class="mcard reveal" data-cat="cnc" data-id="CNC-002">
-        <div class="mcard-photo">
-          <div class="mcard-scan"></div>
-          <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80" alt="DMG MORI" loading="lazy"/>
-          <span class="mcard-type">Fraisage 5 axes</span>
-        </div>
-        <div class="mcard-body">
-          <div class="mcard-id">CNC-002</div>
-          <div class="mcard-name">DMG MORI DMU 50</div>
-          <div class="mcard-brand">DMG Mori, fraisage universel</div>
-          <div class="mcard-specs">
-            <div class="mspec"><div class="mspec-lbl">Course X/Y/Z</div><div class="mspec-val">500/450/400 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Broche</div><div class="mspec-val">18 000 tr/min</div></div>
-            <div class="mspec"><div class="mspec-lbl">Précision</div><div class="mspec-val">±0.004 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Magasin</div><div class="mspec-val">30 outils</div></div>
-          </div>
-        </div>
-      </article>
+        <rect class="fp-zone" x="280" y="30" width="290" height="250"/>
+        <text class="fp-zone-label" x="296" y="56">Tournage</text>
 
-      <article class="mcard reveal" data-cat="tournage" data-id="TOUR-001">
-        <div class="mcard-photo">
-          <div class="mcard-scan"></div>
-          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80" alt="NAKAMURA-TOME" loading="lazy"/>
-          <span class="mcard-type">Tour bibroche</span>
-        </div>
-        <div class="mcard-body">
-          <div class="mcard-id">TOUR-001</div>
-          <div class="mcard-name">NAKAMURA-TOME WT-300</div>
-          <div class="mcard-brand">Nakamura-Tome, bibroche bi-tourelle</div>
-          <div class="mcard-specs">
-            <div class="mspec"><div class="mspec-lbl">Ø max</div><div class="mspec-val">300 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Longueur max</div><div class="mspec-val">450 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Broche</div><div class="mspec-val">5 000 tr/min</div></div>
-            <div class="mspec"><div class="mspec-lbl">Outils</div><div class="mspec-val">2 × 12</div></div>
-          </div>
-        </div>
-      </article>
+        <rect class="fp-zone" x="590" y="30" width="380" height="250"/>
+        <text class="fp-zone-label" x="606" y="56">Fraisage traditionnel</text>
 
-      <article class="mcard reveal" data-cat="rectification" data-id="RECT-001">
-        <div class="mcard-photo">
-          <div class="mcard-scan"></div>
-          <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&q=80" alt="STUDER S33" loading="lazy"/>
-          <span class="mcard-type">Rectifieuse CNC</span>
-        </div>
-        <div class="mcard-body">
-          <div class="mcard-id">RECT-001</div>
-          <div class="mcard-name">STUDER S33</div>
-          <div class="mcard-brand">Fritz Studer AG, rectification cylindrique</div>
-          <div class="mcard-specs">
-            <div class="mspec"><div class="mspec-lbl">Distance pointes</div><div class="mspec-val">1 000 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Ø max pièce</div><div class="mspec-val">175 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Précision Ø</div><div class="mspec-val">0.001 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Ra min</div><div class="mspec-val">0.04 µm</div></div>
-        </div>
-      </article>
+        <rect class="fp-zone" x="30" y="320" width="330" height="270"/>
+        <text class="fp-zone-label" x="46" y="346">Fraisage CNC</text>
 
-      <article class="mcard reveal" data-cat="laser" data-id="LASER-001">
-        <div class="mcard-photo">
-          <div class="mcard-scan"></div>
-          <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80" alt="TRUMPF TruLaser" loading="lazy"/>
-          <span class="mcard-type">Découpe Laser</span>
-        </div>
-        <div class="mcard-body">
-          <div class="mcard-id">LASER-001</div>
-          <div class="mcard-name">TRUMPF TruLaser 3030</div>
-          <div class="mcard-brand">TRUMPF GmbH, laser fibre 6 kW</div>
-          <div class="mcard-specs">
-            <div class="mspec"><div class="mspec-lbl">Format tôle</div><div class="mspec-val">3000 × 1500 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Épaisseur max</div><div class="mspec-val">Acier 20 mm</div></div>
-            <div class="mspec"><div class="mspec-lbl">Puissance</div><div class="mspec-val">6 000 W</div></div>
-            <div class="mspec"><div class="mspec-lbl">Vitesse</div><div class="mspec-val">140 m/min</div></div>
-          </div>
-        </div>
-      </article>
+        <rect class="fp-zone" x="380" y="320" width="230" height="270"/>
+        <text class="fp-zone-label" x="396" y="346">Gravure</text>
 
+        <rect class="fp-zone" x="630" y="320" width="340" height="270"/>
+        <text class="fp-zone-label" x="646" y="346">Finition &amp; contrôle</text>
+
+        <!-- marqueurs -->
+        <g class="fp-marker" data-id="M1" transform="translate(145,190)">
+          <circle class="fp-pulse" r="16"/>
+          <circle r="16"/><text y="1">1</text>
+        </g>
+        <g class="fp-marker" data-id="M2" transform="translate(370,160)">
+          <circle r="16"/><text y="1">2</text>
+        </g>
+        <g class="fp-marker" data-id="M3" transform="translate(490,160)">
+          <circle r="16"/><text y="1">3</text>
+        </g>
+        <g class="fp-marker" data-id="M4" transform="translate(680,160)">
+          <circle r="16"/><text y="1">4</text>
+        </g>
+        <g class="fp-marker" data-id="M5" transform="translate(800,160)">
+          <circle r="16"/><text y="1">5</text>
+        </g>
+        <g class="fp-marker" data-id="M6" transform="translate(920,160)">
+          <circle r="16"/><text y="1">6</text>
+        </g>
+        <g class="fp-marker" data-id="M7" transform="translate(140,470)">
+          <circle r="16"/><text y="1">7</text>
+        </g>
+        <g class="fp-marker" data-id="M8" transform="translate(260,470)">
+          <circle r="16"/><text y="1">8</text>
+        </g>
+        <g class="fp-marker" data-id="M9" transform="translate(495,470)">
+          <circle r="16"/><text y="1">9</text>
+        </g>
+        <g class="fp-marker" data-id="M10" transform="translate(750,470)">
+          <circle r="16"/><text y="1">10</text>
+        </g>
+        <g class="fp-marker" data-id="M11" transform="translate(870,470)">
+          <circle r="16"/><text y="1">11</text>
+        </g>
+      </svg>
+
+      <div class="floorplan-legend" id="floorplan-legend">
+        <div class="fp-leg-item" data-id="M1"><span class="fp-leg-num">1</span><span class="fp-leg-name">Débiteuse automatique</span></div>
+        <div class="fp-leg-item" data-id="M2"><span class="fp-leg-num">2</span><span class="fp-leg-name">Tour Schaublin 102</span></div>
+        <div class="fp-leg-item" data-id="M3"><span class="fp-leg-num">3</span><span class="fp-leg-name">Tour CNC Schaublin 110</span></div>
+        <div class="fp-leg-item" data-id="M4"><span class="fp-leg-num">4</span><span class="fp-leg-name">Fraiseuse traditionnelle verticale</span></div>
+        <div class="fp-leg-item" data-id="M5"><span class="fp-leg-num">5</span><span class="fp-leg-name">Fraiseuse traditionnelle horizontale</span></div>
+        <div class="fp-leg-item" data-id="M6"><span class="fp-leg-num">6</span><span class="fp-leg-name">Planeuse</span></div>
+        <div class="fp-leg-item" data-id="M7"><span class="fp-leg-num">7</span><span class="fp-leg-name">Fraiseuse CNC Kitamura</span></div>
+        <div class="fp-leg-item" data-id="M8"><span class="fp-leg-num">8</span><span class="fp-leg-name">Fraiseuse CNC Mikron VCE750</span></div>
+        <div class="fp-leg-item" data-id="M9"><span class="fp-leg-num">9</span><span class="fp-leg-name">Gravure laser</span></div>
+        <div class="fp-leg-item" data-id="M10"><span class="fp-leg-num">10</span><span class="fp-leg-name">Trowal (ébavurage)</span></div>
+        <div class="fp-leg-item" data-id="M11"><span class="fp-leg-num">11</span><span class="fp-leg-name">Lavage ultra-son</span></div>
+      </div>
     </div>
   </section>
 
   <!-- TICKER -->
   <div class="ticker-wrap">
     <div class="ticker-track">
-      <span class="ticker-item">Fraisage 5 axes simultanés</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Tournage haute précision</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Rectification Ra 0.04 µm</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Découpe laser fibre 6 kW</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Acier · Inox · Titane · Aluminium</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Fraisage 5 axes simultanés</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Tournage haute précision</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Rectification Ra 0.04 µm</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Découpe laser fibre 6 kW</span><span class="ticker-sep">///</span>
-      <span class="ticker-item">Acier · Inox · Titane · Aluminium</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Tournage sur Schaublin 102 &amp; 110</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Fraisage traditionnel &amp; CNC</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Gravure laser</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Finition Trowal &amp; lavage ultra-son</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Aluminium · Acier · Laiton · Bronze · Inox · Maillechort</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Tournage sur Schaublin 102 &amp; 110</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Fraisage traditionnel &amp; CNC</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Gravure laser</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Finition Trowal &amp; lavage ultra-son</span><span class="ticker-sep">///</span>
+      <span class="ticker-item">Aluminium · Acier · Laiton · Bronze · Inox · Maillechort</span><span class="ticker-sep">///</span>
     </div>
   </div>
 
@@ -653,26 +664,28 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
     <div class="cap-left">
       <div class="cap-label">Capacités techniques</div>
       <h2>CE QUE NOUS<br><em>MAÎTRISONS</em></h2>
-      <p>De la pièce unitaire de précision à la grande série industrielle, notre parc couvre l'intégralité des procédés de fabrication avancés.</p>
+      <p>De la pièce unitaire de précision à la grande série industrielle, notre parc couvre l'intégralité des procédés de fabrication modernes, sans sous-traitance cachée.</p>
     </div>
     <div class="cap-right">
       <div class="cap-tags">
-        <span class="ctag">Fraisage 5 axes</span>
+        <span class="ctag">Tournage traditionnel</span>
         <span class="ctag">Tournage CNC</span>
-        <span class="ctag">Rectification µm</span>
-        <span class="ctag">Découpe laser</span>
-        <span class="ctag">Acier inox</span>
-        <span class="ctag">Titane</span>
+        <span class="ctag">Fraisage traditionnel</span>
+        <span class="ctag">Fraisage CNC</span>
+        <span class="ctag">Gravure laser</span>
+        <span class="ctag">Ébavurage Trowal</span>
+        <span class="ctag">Lavage ultra-son</span>
         <span class="ctag">Aluminium</span>
-        <span class="ctag">Cuivre / Laiton</span>
+        <span class="ctag">Acier</span>
+        <span class="ctag">Laiton</span>
+        <span class="ctag">Bronze</span>
+        <span class="ctag">Inox</span>
+        <span class="ctag">Maillechort</span>
+        <span class="ctag">Matières plastiques</span>
         <span class="ctag">Pièces unitaires</span>
         <span class="ctag">Petites séries</span>
         <span class="ctag">Grandes séries</span>
-        <span class="ctag">Proto rapide</span>
-        <span class="ctag">Contrôle 3D</span>
-        <span class="ctag">Aéronautique</span>
-        <span class="ctag">Médical</span>
-        <span class="ctag">ISO 9001</span>
+        <span class="ctag">FAO Alpha-Cam</span>
       </div>
     </div>
   </div>
@@ -681,7 +694,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
   <div class="cta-band">
     <div class="cta-copy">
       <span class="eyebrow">Votre projet, notre expertise</span>
-      <h2>DEVIS SOUS 48H<br>Ouvert</h2>
+      <h2>UN PROJET EN COURS DE CHIFFRAGE ?</h2>
       <p>Envoyez-nous votre plan ou votre cahier des charges. Un ingénieur vous répond dans la journée avec une proposition technique et tarifaire complète.</p>
     </div>
     <div class="cta-actions">
@@ -695,7 +708,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
     <div class="footer-top">
       <div class="ft-brand">
        <span class="logo-footer"><img src="image/logo-footer.webp" alt=""></span>
-          <p>Expert en solutions industrielles de haute précision, INOFER accompagne vos projets de maintenance, d'automatisation et d'intégration de lignes de production.</p>
+          <p>Atelier de mécanique de précision depuis 1979, INOFER accompagne artisans, PME et grands groupes dans leurs projets d'étude, d'usinage et de fabrication de pièces mécaniques, avec la même exigence pour chacun.</p>
         <div class="ft-contact">
           <a href="tel:+41 22 342 84 91">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -725,10 +738,10 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
       <div class="ft-col">
         <h4>Capacités</h4>
         <ul>
-          <li><a href="#">Fraisage 5 axes</a></li>
-          <li><a href="#">Tournage CNC</a></li>
-          <li><a href="#">Rectification</a></li>
-          <li><a href="#">Découpe laser</a></li>
+          <li><a href="service.html#tournage">Tournage</a></li>
+          <li><a href="service.html#fraisage">Fraisage traditionnel &amp; CNC</a></li>
+          <li><a href="service.html#gravure-laser">Gravure laser</a></li>
+          <li><a href="service.html#finition">Finition &amp; nettoyage</a></li>
         </ul>
       </div>
       <div class="ft-col">
@@ -743,7 +756,6 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
     </div>
     <div class="footer-bottom">
       <span class="ft-copy"> 2026 - Réalisé par Typik Studio · Tous droits réservés · SIRET 993 372 275 00012</span>
-      <span class="ft-iso">ISO 9001 certifié</span>
     </div>
   </footer>
 
@@ -752,7 +764,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
 <!-- LIGHTBOX -->
 <div id="lightbox" class="lightbox">
   <div class="lb-box">
-    <div class="lb-photo"><img id="lb-img" src="" alt=""/></div>
+    <div class="lb-photo"><span class="lb-photo-placeholder">Photo à venir</span></div>
     <div class="lb-content">
       <button id="lb-close" class="lb-close">
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -795,81 +807,74 @@ const pts=Array.from({length:55},()=>({
   requestAnimationFrame(loop);
 })();
 
-// ── FILTRES ──
-const fbtns=document.querySelectorAll('.fbtn');
-const cards=document.querySelectorAll('.mcard');
-const countEl=document.getElementById('filter-count');
-const labelEl=document.getElementById('grid-label');
-const LABELS={all:'Tous les équipements',cnc:'Fraisage CNC',tournage:'Tournage',
-  rectification:'Rectification',laser:'Découpe Laser'};
-fbtns.forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    fbtns.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const f=btn.dataset.f;let count=0;
-    cards.forEach((c,i)=>{
-      const show=f==='all'||c.dataset.cat===f;
-      if(show){c.style.display='';count++;setTimeout(()=>c.classList.add('in'),i*50)}
-      else{c.classList.remove('in');setTimeout(()=>{c.style.display='none'},260)}
-    });
-    setTimeout(()=>{
-      countEl.textContent=count+' machine'+(count>1?'s':'');
-      labelEl.textContent=LABELS[f]+' : '+count+' machine'+(count>1?'s':'');
-    },300);
-  });
-});
-
-// ── REVEAL AU SCROLL ──
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('in'),i*65)});
-},{threshold:.1});
-cards.forEach(c=>obs.observe(c));
-
-// ── LIGHTBOX DATA ──
+// ── PLAN INTERACTIF : DONNÉES MACHINES ──
 const DATA={
-  'CNC-001':{img:'https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=900&q=80',
-    badge:"Centre d'usinage 5 axes simultanés",name:'MAZAK VARIAXIS i-700',
-    brand:'Yamazaki Mazak Corporation, série Variaxis',
-    desc:"Centre d'usinage 5 axes simultanés de dernière génération. Idéal pour les pièces complexes en aéronautique, médical et moule. Équipé du système SmoothX pour des trajectoires ultra-fluides.",
-    specs:{'Course X/Y/Z':'700 / 650 / 510 mm','Broche':'12 000 tr/min','Magasin':'40 outils','Précision':'±0.003 mm','Table':'Ø 700 mm / 500 kg','Puissance':'22 kW'}},
-  'CNC-002':{img:'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80',
-    badge:'Fraisage universel 5 axes',name:'DMG MORI DMU 50',
-    brand:'DMG Mori Seiki, série DMU',
-    desc:'Machine de fraisage universel à 5 axes avec tête pivotante. Polyvalente et compacte, elle traite aussi bien les petites pièces de précision que les grands alésages.',
-    specs:{'Course X/Y/Z':'500 / 450 / 400 mm','Broche':'18 000 tr/min','Magasin':'30 outils','Précision':'±0.004 mm','Inclinaison':'-5° / +110°','Puissance':'15 kW'}},
-  'TOUR-001':{img:'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80',
-    badge:'Tour bibroche bi-tourelle CNC',name:'NAKAMURA-TOME WT-300',
-    brand:'Nakamura-Tome Precision Industry, série WT',
-    desc:"Tour CNC bibroche bi-tourelle pour la production en série haute précision. Deux broches opposées permettent l'usinage complet en un seul chargement.",
-    specs:{'Ø max tournage':'300 mm','Longueur max':'450 mm','Broche principale':'5 000 tr/min','Outils motorisés':'6 000 tr/min',"Nombre d'outils":'2 × 12','Puissance':'22 kW'}},
-  'RECT-001':{img:'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=900&q=80',
-    badge:'Rectifieuse cylindrique universelle CNC',name:'STUDER S33',
-    brand:'Fritz Studer AG, série S Universal',
-    desc:"Rectifieuse cylindrique universelle pour l'usinage extérieur, intérieur et de forme. La technologie StuderWIN assure une précision dimensionnelle de l'ordre du micron.",
-    specs:{'Distance pointes':'1 000 mm','Ø max pièce':'175 mm / 80 kg','Meule ext.':'Ø 500 × 63 mm','Précision Ø':'0.001 mm','Rugosité Ra':'0.04 µm','Résolution CN':'0.0001 mm'}},
-  'LASER-001':{img:'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=900&q=80',
-    badge:'Découpe laser fibre haute puissance',name:'TRUMPF TruLaser 3030',
-    brand:'TRUMPF GmbH, série TruLaser',
-    desc:"Centre de découpe laser fibre haute puissance. Tête BrightLine Fiber intégrée pour une qualité de coupe optimale sur acier, inox, aluminium et laiton.",
-    specs:{'Format tôle':'3 000 × 1 500 mm','Épaisseur max':'Acier 20 mm / Alu 15 mm','Puissance laser':'6 000 W','Vitesse coupe':'140 m/min','Précision':'±0.05 mm','Puissance élec.':'30 kVA'}}
+  M1:{badge:'Préparation matière',name:'Débiteuse automatique',
+    brand:'Zone débit matière',
+    desc:"Sert à couper la matière première (barres, tubes) à la longueur voulue avant usinage. L'automatisation garantit des coupes régulières et rapides, en amont du tournage ou du fraisage.",
+    specs:{'Fonction':'Débit de matière','Étape':'Avant usinage'}},
+  M2:{badge:'Tournage traditionnel',name:'Tour Schaublin 102',
+    brand:'Zone tournage',
+    desc:"Tour d'établi traditionnel, réputé dans l'horlogerie et la mécanique de précision suisse. Il usine des pièces cylindriques par tournage manuel : diamètres, filetages, gorges, avec une grande précision malgré sa taille compacte.",
+    specs:{'Fonction':'Tournage manuel','Origine':'Schaublin, Suisse'}},
+  M3:{badge:'Tournage CNC',name:'Tour CNC Schaublin 110',
+    brand:'Zone tournage',
+    desc:"Version à commande numérique du tour Schaublin. Les mouvements sont automatisés et programmés, ce qui garantit une répétabilité parfaite d'une pièce à l'autre : idéal pour les séries.",
+    specs:{'Fonction':'Tournage CNC','Programmation':'FAO Alpha-Cam'}},
+  M4:{badge:'Fraisage traditionnel',name:'Fraiseuse verticale',
+    brand:'Zone fraisage traditionnel',
+    desc:"L'axe de l'outil est perpendiculaire à la table. Elle sert surtout au surfaçage, au perçage, aux rainures et aux formes complexes sur le dessus d'une pièce.",
+    specs:{'Fonction':'Fraisage vertical','Type':'Traditionnel'}},
+  M5:{badge:'Fraisage traditionnel',name:'Fraiseuse horizontale',
+    brand:'Zone fraisage traditionnel',
+    desc:"L'axe de l'outil est parallèle à la table. Plus adaptée aux gros enlèvements de matière et à certains types de rainurage.",
+    specs:{'Fonction':'Fraisage horizontal','Type':'Traditionnel'}},
+  M6:{badge:'Surfaçage',name:'Planeuse',
+    brand:'Zone fraisage traditionnel',
+    desc:"Dédiée au surfaçage de grandes surfaces planes, pour obtenir une planéité et un état de surface précis sur des pièces qu'une fraiseuse classique usinerait moins efficacement.",
+    specs:{'Fonction':'Planage','Type':'Traditionnel'}},
+  M7:{badge:'Fraisage CNC',name:'Fraiseuse CNC Kitamura',
+    brand:'Zone fraisage CNC',
+    desc:"Centre d'usinage à commande numérique. Tout est programmé et automatisé : trajectoires, vitesses, changements d'outils. Permet d'usiner des formes complexes avec une précision et une répétabilité constantes, notamment en série.",
+    specs:{'Fonction':'Fraisage CNC','Programmation':'FAO Alpha-Cam'}},
+  M8:{badge:'Fraisage CNC',name:'Fraiseuse CNC Mikron VCE750',
+    brand:'Zone fraisage CNC',
+    desc:"Centre d'usinage CNC complémentaire, pour les formes 3D complexes et les séries. Comme la Kitamura, elle est pilotée par programmation FAO.",
+    specs:{'Fonction':'Fraisage CNC','Programmation':'FAO Alpha-Cam'}},
+  M9:{badge:'Marquage',name:'Gravure laser',
+    brand:'Zone gravure',
+    desc:"Marquage permanent, numéros de série, logos ou repères techniques : la gravure laser complète l'offre d'usinage pour personnaliser et identifier les pièces, sans altérer leurs propriétés mécaniques.",
+    specs:{'Fonction':'Marquage & traçabilité','Compatible':'Métaux et plastiques'}},
+  M10:{badge:'Finition',name:'Trowal',
+    brand:'Zone finition & contrôle',
+    desc:"Machine de finition par vibration ou tonnelage. Les pièces sont placées avec des médias abrasifs dans une cuve qui vibre ou tourne, ce qui permet d'ébavurer, d'arrondir les arêtes et de polir plusieurs pièces à la fois.",
+    specs:{'Fonction':'Ébavurage & polissage','Étape':'Après usinage'}},
+  M11:{badge:'Nettoyage',name:'Lavage ultra-son',
+    brand:'Zone finition & contrôle',
+    desc:"Bac de nettoyage qui utilise des ultrasons dans un liquide pour déloger les résidus d'usinage (huile, copeaux fins, poussières) des pièces, y compris dans les recoins difficiles d'accès. Dernière étape avant contrôle et livraison.",
+    specs:{'Fonction':'Nettoyage de précision','Étape':'Avant livraison'}}
 };
 
-// ── LIGHTBOX INTERACTIONS ──
+// ── PLAN INTERACTIF : INTERACTIONS ──
 const lb=document.getElementById('lightbox');
-cards.forEach(card=>{
-  card.addEventListener('click',()=>{
-    const d=DATA[card.dataset.id];if(!d)return;
-    document.getElementById('lb-img').src=d.img;
-    document.getElementById('lb-id-txt').textContent=card.dataset.id+' : '+d.badge;
-    document.getElementById('lb-name').textContent=d.name;
-    document.getElementById('lb-brand').textContent=d.brand;
-    document.getElementById('lb-desc').textContent=d.desc;
-    document.getElementById('lb-specs').innerHTML=Object.entries(d.specs)
-      .map(([l,v])=>`<div class="lbspec"><div class="lbspec-lbl">${l}</div><div class="lbspec-val">${v}</div></div>`)
-      .join('');
-    lb.classList.add('open');document.body.style.overflow='hidden';
-  });
-});
+const markers=document.querySelectorAll('.fp-marker');
+const legItems=document.querySelectorAll('.fp-leg-item');
+
+function openMachine(id){
+  const d=DATA[id];if(!d)return;
+  document.getElementById('lb-id-txt').textContent=d.badge;
+  document.getElementById('lb-name').textContent=d.name;
+  document.getElementById('lb-brand').textContent=d.brand;
+  document.getElementById('lb-desc').textContent=d.desc;
+  document.getElementById('lb-specs').innerHTML=Object.entries(d.specs)
+    .map(([l,v])=>`<div class="lbspec"><div class="lbspec-lbl">${l}</div><div class="lbspec-val">${v}</div></div>`)
+    .join('');
+  markers.forEach(m=>m.classList.toggle('active',m.dataset.id===id));
+  legItems.forEach(l=>l.classList.toggle('active',l.dataset.id===id));
+  lb.classList.add('open');document.body.style.overflow='hidden';
+}
+markers.forEach(m=>m.addEventListener('click',()=>openMachine(m.dataset.id)));
+legItems.forEach(l=>l.addEventListener('click',()=>openMachine(l.dataset.id)));
 document.getElementById('lb-close').addEventListener('click',()=>{lb.classList.remove('open');document.body.style.overflow='';});
 lb.addEventListener('click',e=>{if(e.target===lb){lb.classList.remove('open');document.body.style.overflow='';}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){lb.classList.remove('open');document.body.style.overflow='';}});
