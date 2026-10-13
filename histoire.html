@@ -27,7 +27,7 @@ header{position:fixed;top:0px;left:20px;right:20px;bottom:30px;z-index:200;heigh
 .nav-back svg{width:14px;height:14px;stroke:var(--dim);fill:none;stroke-width:2;transition:stroke .2s}
 .nav-back:hover{color:var(--gold)}
 .nav-back:hover svg{stroke:var(--gold)}
-.status-badge{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:2px;color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.status-badge{font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:2px;color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:7px}
 .status-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 7px var(--gold);animation:blink 2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 @media(max-width:600px){.status-badge{display:none}.header-right{gap:12px}}
@@ -86,7 +86,7 @@ header{position:fixed;top:0px;left:20px;right:20px;bottom:30px;z-index:200;heigh
 @media(max-width:600px){.hero{padding:0 24px 36px}}
 .hero-hex{position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0L56 16L56 48L28 64L0 48L0 16Z' fill='none' stroke='%23F5A800' stroke-width='.8'/%3E%3C/svg%3E")}
 .hero-line{position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.breadcrumb{font-family:'Share Tech Mono',monospace;font-size:20px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:14px;display:flex;align-items:center;gap:8px;z-index:2;position:relative}
+.breadcrumb{font-family:'Share Tech Mono',monospace;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:14px;display:flex;align-items:center;gap:8px;z-index:2;position:relative}
 .breadcrumb a{color:var(--dim);text-decoration:none;transition:color .2s}
 .breadcrumb a:hover{color:var(--gold)}
 .breadcrumb .sep{color:var(--border)}
@@ -94,28 +94,28 @@ header{position:fixed;top:0px;left:20px;right:20px;bottom:30px;z-index:200;heigh
 .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,6.5rem);line-height:.88;letter-spacing:3px;color:#fff;z-index:2;position:relative}
 .hero h1 em{font-style:normal;color:transparent;-webkit-text-stroke:2px var(--gold)}
 .hero-meta{display:flex;align-items:center;gap:0;margin-top:16px;z-index:2;position:relative;flex-wrap:wrap}
-.hero-stat{font-family:'Share Tech Mono',monospace;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:7px;padding:0 20px;border-right:1px solid var(--border)}
+.hero-stat{font-family:'Share Tech Mono',monospace;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:var(--text);display:flex;align-items:center;gap:7px;padding:0 20px;border-right:1px solid var(--border)}
 .hero-stat:first-child{padding-left:0}
 .hero-stat:last-child{border-right:none}
-.hero-stat strong{color:var(--gold);font-size:.78rem}
+.hero-stat strong{color:var(--gold);font-size:.95rem}
 
 /* INTRO */
 .intro-band{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
 @media(max-width:760px){.intro-band{grid-template-columns:1fr}}
 .intro-copy{padding:56px 52px 56px 60px;border-right:1px solid var(--border)}
 @media(max-width:760px){.intro-copy{padding:40px 28px;border-right:none;border-bottom:1px solid var(--border)}}
-.section-eye{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.section-eye{font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:10px}
 .section-eye::before{content:'';width:20px;height:1px;background:var(--gold)}
 .intro-copy h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,3.5vw,3.6rem);line-height:.92;letter-spacing:2px;color:#fff;margin-bottom:22px}
 .intro-copy h2 em{font-style:normal;color:var(--gold)}
-.intro-copy p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.95rem;line-height:1.82;color:var(--text);border-left:2px solid var(--gold);padding-left:18px;margin-bottom:18px}
-.intro-copy p:last-of-type{margin-bottom:0;border-left:none;padding-left:0;color:var(--dim)}
+.intro-copy p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.98rem;line-height:1.82;color:var(--text);border-left:2px solid var(--gold);padding-left:18px;margin-bottom:18px}
+.intro-copy p:last-of-type{margin-bottom:0;border-left:none;padding-left:0;color:var(--text)}
 .intro-values{padding:56px 52px 56px 52px;display:flex;flex-direction:column;justify-content:center;gap:18px}
 @media(max-width:760px){.intro-values{padding:40px 28px}}
 .value-item{display:flex;align-items:flex-start;gap:16px;padding:18px;border:1px solid var(--border);background:rgba(245,168,0,.025);clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)}
 .value-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);line-height:1;opacity:.35;flex-shrink:0;width:36px;text-align:center}
 .value-text h4{font-family:'Exo 2',sans-serif;font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--text);margin-bottom:4px}
-.value-text p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:14px;line-height:1.6;color:var(--dim)}
+.value-text p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.85rem;line-height:1.6;color:var(--text)}
 
 /* TIMELINE */
 .timeline-section{padding:72px 60px;border-bottom:1px solid var(--border)}
@@ -144,10 +144,10 @@ header{position:fixed;top:0px;left:20px;right:20px;bottom:30px;z-index:200;heigh
 .tl-content{padding:24px 0 24px 36px;border-bottom:1px solid rgba(245,168,0,.07)}
 @media(max-width:600px){.tl-content{padding:18px 0 18px 22px}}
 .tl-item:last-child .tl-content{border-bottom:none}
-.tl-tag{font-family:'Share Tech Mono',monospace;font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;opacity:.7}
+.tl-tag{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;opacity:.8}
 .tl-content h3{font-family:'Exo 2',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;color:#d8e4ee;margin-bottom:6px;transition:color .3s}
 .tl-item:hover .tl-content h3{color:#fff}
-.tl-content p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.85rem;line-height:1.72;color:var(--dim);max-width:580px}
+.tl-content p{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.9rem;line-height:1.72;color:var(--text);max-width:580px}
 
 /* EQUIPE */
 .equipe-section{padding:72px 60px;border-bottom:1px solid var(--border)}
@@ -161,8 +161,8 @@ header{position:fixed;top:0px;left:20px;right:20px;bottom:30px;z-index:200;heigh
 .team-avatar{width:52px;height:52px;border-radius:50%;background:rgba(245,168,0,.08);border:1px solid rgba(245,168,0,.3);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
 .team-avatar svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.6}
 .team-name{font-family:'Exo 2',sans-serif;font-weight:700;font-size:18px;color:#d8e4ee;margin-bottom:3px}
-.team-role{font-family:'Share Tech Mono',monospace;font-size:14pxrem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.team-desc{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.78rem;line-height:1.65;color:var(--dim)}
+.team-role{font-family:'Share Tech Mono',monospace;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.team-desc{font-family:'Exo 2',sans-serif;font-weight:300;font-size:.85rem;line-height:1.65;color:var(--text)}
 
 /* CHIFFRES */
 .chiffres{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -173,13 +173,13 @@ header{position:fixed;top:0px;left:20px;right:20px;bottom:30px;z-index:200;heigh
 @media(max-width:760px){.chiffre:nth-child(2){border-right:none}.chiffre:nth-child(3){border-top:1px solid var(--border)}}
 .chiffre::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(245,168,0,.04),transparent 60%)}
 .chiffre-num{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;color:var(--gold);letter-spacing:2px;line-height:1;text-shadow:0 0 24px var(--glow);display:block}
-.chiffre-lbl{font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-top:6px;display:block}
+.chiffre-lbl{font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--text);margin-top:6px;display:block}
 
 /* CTA */
 .cta-band{position:relative;overflow:hidden;padding:52px 60px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
 @media(max-width:700px){.cta-band{padding:40px 24px;flex-direction:column;align-items:flex-start}}
 .cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 100% at 80% 50%,rgba(245,168,0,.06),transparent);pointer-events:none}
-.cta-copy p{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.cta-copy p{font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
 .cta-copy h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:2px;color:#fff;line-height:1}
 .cta-actions{display:flex;gap:14px;flex-wrap:wrap}
 .btn-primary{font-family:'Exo 2',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:14px 32px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:all .25s;text-decoration:none;display:inline-block;cursor:pointer}
@@ -190,7 +190,7 @@ header{position:fixed;top:0px;left:20px;right:20px;bottom:30px;z-index:200;heigh
 /* TICKER */
 .ticker-wrap{overflow:hidden;height:36px;background:rgba(8,10,12,.9);display:flex;align-items:center;border-bottom:1px solid var(--border)}
 .ticker-track{display:flex;white-space:nowrap;animation:ticker 40s linear infinite}
-.ticker-item{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:2px;color:var(--dim);padding:0 6px}
+.ticker-item{font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:2px;color:var(--dim);padding:0 6px}
 .ticker-sep{color:var(--gold);padding:0 10px}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
@@ -203,10 +203,10 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
 @media(max-width:560px){.footer-top{grid-template-columns:1fr;gap:28px;padding:36px 24px 28px}}
 .ft-brand .logo-footer { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 5px; color: #fff; display: block; margin-left: -120px;}
 .ft-brand .logo-footer span { color: var(--gold); }
-.ft-brand p { font-family: 'Exo 2', sans-serif; font-weight: 300; font-size: .82rem; line-height: 1.7; color: var(--dim); margin-top: 12px; max-width: 260px; }
+.ft-brand p { font-family: 'Exo 2', sans-serif; font-weight: 300; font-size: .92rem; line-height: 1.7; color: var(--text); margin-top: 12px; max-width: 280px; }
 .ft-contact{margin-top:20px;display:flex;flex-direction:column;gap:8px}
-.ft-contact a{font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:1px;
-  color:var(--dim);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
+.ft-contact a{font-family:'Share Tech Mono',monospace;font-size:15px;letter-spacing:1px;
+  color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
 .ft-contact a:hover{color:var(--gold)}
 .ft-contact svg{width:11px;height:11px;stroke:var(--gold);fill:none;stroke-width:2;flex-shrink:0}
 .social-row{display:flex;gap:9px;margin-top:20px;flex-wrap:wrap}
@@ -216,11 +216,11 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
 .sbtn svg{width:15px;height:15px;stroke:var(--dim);fill:none;stroke-width:1.8;transition:stroke .22s}
 .sbtn:hover{border-color:var(--gold);background:rgba(245,168,0,.09)}
 .sbtn:hover svg{stroke:var(--gold)}
-.ft-col h4{font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:3px;
+.ft-col h4{font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:3px;
   text-transform:uppercase;color:var(--gold);margin-bottom:18px;padding-bottom:10px;
   border-bottom:1px solid var(--border2)}
 .ft-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
-.ft-col ul li a{font-family:'Exo 2',sans-serif;font-size:.8rem;color:var(--dim);
+.ft-col ul li a{font-family:'Exo 2',sans-serif;font-size:.85rem;color:var(--dim);
   text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:6px}
 .ft-col ul li a::before{content:'›';color:var(--gold);opacity:0;
   transition:opacity .2s,transform .2s;transform:translateX(-4px)}
@@ -230,13 +230,13 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
   flex-wrap:wrap;gap:14px;padding:18px 60px}
 @media(max-width:960px){.footer-bottom{padding:16px 32px}}
 @media(max-width:560px){.footer-bottom{padding:14px 24px;flex-direction:column;align-items:flex-start}}
-.ft-copy{font-family:'Share Tech Mono',monospace;font-size:.54rem;letter-spacing:2px;
+.ft-copy{font-family:'Share Tech Mono',monospace;font-size:.64rem;letter-spacing:2px;
   color:var(--dim);text-transform:uppercase}
 .ft-legal{display:flex;gap:20px;flex-wrap:wrap}
-.ft-legal a{font-family:'Share Tech Mono',monospace;font-size:.53rem;letter-spacing:1.5px;
+.ft-legal a{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:1.5px;
   color:var(--dim);text-decoration:none;text-transform:uppercase;transition:color .2s}
 .ft-legal a:hover{color:var(--gold)}
-.ft-iso{font-family:'Share Tech Mono',monospace;font-size:.53rem;letter-spacing:2px;
+.ft-iso{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:2px;
   color:var(--dim);display:flex;align-items:center;gap:7px}
 .ft-iso::before{content:'';width:5px;height:5px;border-radius:50%;
   background:var(--gold);box-shadow:0 0 7px var(--gold)}
@@ -417,75 +417,55 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
   </div>
 
   <footer>
-    <div class="ft-brand">
-          <span class="logo-footer"><img src="image/logo-footer.webp" alt=""></span>
+    <div class="footer-top">
+      <div class="ft-brand">
+        <span class="logo-footer"><img src="image/logo-footer.webp" alt=""></span>
           <p>Atelier de mécanique de précision depuis 1979, INOFER accompagne artisans, PME et grands groupes dans leurs projets d'étude, d'usinage et de fabrication de pièces mécaniques, avec la même exigence pour chacun.</p>
-          <div class="ft-contact-info">
-            <a href="tel:+41 22 342 84 91 ">
-              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                +41 22 342 84 91
-            </a>
-            <a href="mailto:contact@inofer.fr">
-              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              inofer@bluewin.ch
-            </a>
-            <span>
-              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Rue des Noirettes 32, Carouge, Suisse
-            </span>
-          </div>
-          <div class="social-row">
-            <a href="#" class="social-btn" title="LinkedIn" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="Facebook" aria-label="Facebook">
-              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="Instagram" aria-label="Instagram">
-              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="X / Twitter" aria-label="X / Twitter">
-              <svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20" stroke-linecap="round"/></svg>
-            </a>
-          </div>
+        <div class="ft-contact">
+          <a href="tel:+41 22 342 84 91 ">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 6.29 6.29l1.31-1.31a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +41 22 342 84 91
+          </a>
+          <a href="mailto:contact@inofer.fr">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            inofer@bluewin.ch
+          </a>
         </div>
-
-        <div class="ft-col">
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="service.html">Services</a></li>
-            <li><a href="parc.html">Parc Machine</a></li>
-            <li><a href="histoire.html">Notre histoire</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
+        <div class="social-row">
+          <a href="#" class="sbtn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="sbtn"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="sbtn"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         </div>
-
-        <div class="ft-col">
-          <h4>Services</h4>
-          <ul>
-            <li><a href="service.html#etude-projet">Étude de projet</a></li>
-            <li><a href="service.html#tournage">Tournage</a></li>
-            <li><a href="service.html#fraisage">Fraisage</a></li>
-            <li><a href="service.html#gravure-laser">Gravure laser</a></li>
-            <li><a href="service.html#finition">Finition &amp; nettoyage</a></li>
-          </ul>
-        </div>
-
-        <div class="ft-col">
-          <h4>Informations</h4>
-          <ul>
-            <li><a href="mentions-legales.html">Mentions légales</a></li>
-            <li><a href="politique-confidentialite.html">Politique de confidentialité</a></li>
-            <li><a href="cgv.html">CGV</a></li>
-          </ul>
-        </div>
-
       </div>
-
-      <div class="footer-bottom">
-        <span class="ft-copy">&copy; 2026 Inofer - Réalisé par Typik Studio · Tous droits réservés · SIRET 993 372 275 00012</span>
+      <div class="ft-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="service.html">Services</a></li>
+          <li><a href="parc.html">Parc Machine</a></li>
+          <li><a href="histoire.html">Notre histoire</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </div>
+      <div class="ft-col">
+        <h4>Capacités</h4>
+        <ul>
+          <li><a href="service.html#tournage">Tournage</a></li>
+          <li><a href="service.html#fraisage">Fraisage traditionnel &amp; CNC</a></li>
+          <li><a href="service.html#gravure-laser">Gravure laser</a></li>
+          <li><a href="service.html#finition">Finition &amp; nettoyage</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">CGV</a></li>
+          <li><a href="#">Certifications</a></li>
+        </ul>
+      </div>
+    </div>
 </div>
 
 <script>
