@@ -458,6 +458,11 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
 .lightbox.open .lb-photo img{transform:scale(1.04)}
 .lb-photo::after{content:'';position:absolute;inset:0;
   background:linear-gradient(135deg,transparent 50%,rgba(8,10,12,.7));pointer-events:none}
+.lb-photo-ref{position:absolute;bottom:12px;left:12px;z-index:5;
+  font-family:'Share Tech Mono',monospace;font-size:.56rem;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--gold2);background:rgba(8,10,12,.85);
+  border:1px solid var(--border);padding:5px 11px;
+  clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%)}
 .lb-close{position:absolute;top:14px;right:14px;z-index:10;width:30px;height:30px;
   background:rgba(245,168,0,.07);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
@@ -766,7 +771,7 @@ footer{position:relative;z-index:2;background:linear-gradient(180deg,#0a0c0f,#06
 <!-- LIGHTBOX -->
 <div id="lightbox" class="lightbox">
   <div class="lb-box">
-    <div class="lb-photo"><span class="lb-photo-placeholder">Photo à venir</span></div>
+    <div class="lb-photo" id="lb-photo"><span class="lb-photo-placeholder" id="lb-photo-placeholder">Photo à venir</span></div>
     <div class="lb-content">
       <button id="lb-close" class="lb-close">
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -818,11 +823,13 @@ const DATA={
   M2:{badge:'Tournage traditionnel',name:'Tour Schaublin 102',
     brand:'Zone tournage',
     desc:"Tour d'établi traditionnel, réputé dans l'horlogerie et la mécanique de précision suisse. Il usine des pièces cylindriques par tournage manuel : diamètres, filetages, gorges, avec une grande précision malgré sa taille compacte.",
-    specs:{'Fonction':'Tournage manuel','Origine':'Schaublin, Suisse'}},
+    specs:{'Fonction':'Tournage manuel','Origine':'Schaublin, Suisse'},
+    img:'https://media.exapro.com/product/2026/06/P260601008/9435b192effb427807982f14c7ecdb35/moulders-spindle-moulding-machines-type-102-n-manufacturer-schaublin-group-toolmakers-lathe-subgroup-toolmakers-lathe-stock-023660-102-n-p260601008_7.webp'},
   M3:{badge:'Tournage CNC',name:'Tour CNC Schaublin 110',
     brand:'Zone tournage',
     desc:"Version à commande numérique du tour Schaublin. Les mouvements sont automatisés et programmés, ce qui garantit une répétabilité parfaite d'une pièce à l'autre : idéal pour les séries.",
-    specs:{'Fonction':'Tournage CNC','Programmation':'FAO Alpha-Cam'}},
+    specs:{'Fonction':'Tournage CNC','Programmation':'FAO Alpha-Cam'},
+    img:'https://cdn.cncbote-maschinen.de/wp-content/uploads/2019/04/138251_9.jpg'},
   M4:{badge:'Fraisage traditionnel',name:'Fraiseuse verticale',
     brand:'Zone fraisage traditionnel',
     desc:"L'axe de l'outil est perpendiculaire à la table. Elle sert surtout au surfaçage, au perçage, aux rainures et aux formes complexes sur le dessus d'une pièce.",
@@ -838,11 +845,13 @@ const DATA={
   M7:{badge:'Fraisage CNC',name:'Fraiseuse CNC Kitamura',
     brand:'Zone fraisage CNC',
     desc:"Centre d'usinage à commande numérique. Tout est programmé et automatisé : trajectoires, vitesses, changements d'outils. Permet d'usiner des formes complexes avec une précision et une répétabilité constantes, notamment en série.",
-    specs:{'Fonction':'Fraisage CNC','Programmation':'FAO Alpha-Cam'}},
+    specs:{'Fonction':'Fraisage CNC','Programmation':'FAO Alpha-Cam'},
+    img:'https://media.exapro.com/product/2026/02/P260217073/2f923c04e45dc8449db96b0aa84079c0/kitamura-mycenter-4xif-p260217073_2.jpeg'},
   M8:{badge:'Fraisage CNC',name:'Fraiseuse CNC Mikron VCE750',
     brand:'Zone fraisage CNC',
     desc:"Centre d'usinage CNC complémentaire, pour les formes 3D complexes et les séries. Comme la Kitamura, elle est pilotée par programmation FAO.",
-    specs:{'Fonction':'Fraisage CNC','Programmation':'FAO Alpha-Cam'}},
+    specs:{'Fonction':'Fraisage CNC','Programmation':'FAO Alpha-Cam'},
+    img:'https://media.exapro.com/product/2026/04/P260415317/3dc5df6e34fed35404f96905b5c05a07/machining-centers-vertical-haas-mikron-vce-750-p260415317_2.jpg'},
   M9:{badge:'Marquage',name:'Gravure laser',
     brand:'Zone gravure',
     desc:"Marquage permanent, numéros de série, logos ou repères techniques : la gravure laser complète l'offre d'usinage pour personnaliser et identifier les pièces, sans altérer leurs propriétés mécaniques.",
@@ -850,7 +859,8 @@ const DATA={
   M10:{badge:'Finition',name:'Trowal',
     brand:'Zone finition & contrôle',
     desc:"Machine de finition par vibration ou tonnelage. Les pièces sont placées avec des médias abrasifs dans une cuve qui vibre ou tourne, ce qui permet d'ébavurer, d'arrondir les arêtes et de polir plusieurs pièces à la fois.",
-    specs:{'Fonction':'Ébavurage & polissage','Étape':'Après usinage'}},
+    specs:{'Fonction':'Ébavurage & polissage','Étape':'Après usinage'},
+    img:'https://media.exapro.com/product/2026/09/P260923040/c11f31cd95ef12b63b1214f79457ab9c/miscellaneous-machine-tools-walther-trowal-ca-650-p260923040_1.jpeg'},
   M11:{badge:'Nettoyage',name:'Lavage ultra-son',
     brand:'Zone finition & contrôle',
     desc:"Bac de nettoyage qui utilise des ultrasons dans un liquide pour déloger les résidus d'usinage (huile, copeaux fins, poussières) des pièces, y compris dans les recoins difficiles d'accès. Dernière étape avant contrôle et livraison.",
@@ -871,6 +881,12 @@ function openMachine(id){
   document.getElementById('lb-specs').innerHTML=Object.entries(d.specs)
     .map(([l,v])=>`<div class="lbspec"><div class="lbspec-lbl">${l}</div><div class="lbspec-val">${v}</div></div>`)
     .join('');
+  const photoBox=document.getElementById('lb-photo');
+  if(d.img){
+    photoBox.innerHTML=`<img src="${d.img}" alt="${d.name}"><span class="lb-photo-ref">Photo de référence · modèle identique</span>`;
+  }else{
+    photoBox.innerHTML=`<span class="lb-photo-placeholder" id="lb-photo-placeholder">Photo à venir</span>`;
+  }
   markers.forEach(m=>m.classList.toggle('active',m.dataset.id===id));
   legItems.forEach(l=>l.classList.toggle('active',l.dataset.id===id));
   lb.classList.add('open');document.body.style.overflow='hidden';
